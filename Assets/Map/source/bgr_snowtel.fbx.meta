@@ -1,0 +1,251 @@
+fileFormatVersion: 2
+guid: 2ee9110d8e14e53418c0b971875981e3
+ModelImporter:
+  serializedVersion: 21300
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: barrel_xmas-material
+    second: {fileID: 2100000, guid: 1ccf415311e88d74883cd382325c52aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: barrel_xmas_ribbon-material
+    second: {fileID: 2100000, guid: 6e0b48db675a50147a9cb323bac2e63c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bgr_snowtel-material
+    second: {fileID: 2100000, guid: 1974f7cdaefb06c43b88b7f7349b093b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bgr_snowtel_lit-material
+    second: {fileID: 2100000, guid: dc9b980b5d8e1974387ad6d677cd4c44, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bgr_snowtel_metal-material
+    second: {fileID: 2100000, guid: 1f8c09f6912a25c44a6ca8ba6d5ec41c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bgr_snowtel_specular-material
+    second: {fileID: 2100000, guid: 93594f8d9628bcf44b65b21a9b020a0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: conveyor_belt-material
+    second: {fileID: 2100000, guid: 726ac17567bb07b4f9e76feb48763781, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crate_xmas-material
+    second: {fileID: 2100000, guid: bf7b2daf79091554e8e3e4ceaa0f3ed8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: crate_xmas_ribbon-material
+    second: {fileID: 2100000, guid: 2d284defcb670ff44a68b61421465320, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: flashing_bulb_1-material
+    second: {fileID: 2100000, guid: 9e390143cdea9674db4f5f760fe83b48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: flashing_bulb_2-material
+    second: {fileID: 2100000, guid: 9bfbc0f5dfdb15c4e9cbd4b8b9f82d48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gale_stuff-material
+    second: {fileID: 2100000, guid: 4d774cfc9f34df24e80f523c232730f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: grass_4-material
+    second: {fileID: 2100000, guid: 9b4ae07042107c74b9883f90b9deb68c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lou_stuff-material
+    second: {fileID: 2100000, guid: 766f289531e74fc419c7fc823a046b9f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mike_stuff-material
+    second: {fileID: 2100000, guid: b934cb41cf723fb42ae11816ef2fbbaa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rangedbot-material
+    second: {fileID: 2100000, guid: e30d96f0cfe73ae4ab6ad103c376598c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rangedbot_lit-material
+    second: {fileID: 2100000, guid: d2351982109e5a5459f59e088500d8d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rangedbot_metal-material
+    second: {fileID: 2100000, guid: 2bc6a3a39b099c044bf9a0014c70ccc9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: starr_hat-material
+    second: {fileID: 2100000, guid: b723302a62bf8344e94554918018fdae, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: barrel_xmas
+    second: {fileID: 2800000, guid: b9e859291af69e846bb4d5fece771f8f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: bgr_snowtel_tex
+    second: {fileID: 2800000, guid: 3835f14b71e7a5446a2fd9d35ef1583a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: conveyor
+    second: {fileID: 2800000, guid: e862190e9806190439658ca5a5f9a6f3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: crate_xmas
+    second: {fileID: 2800000, guid: a2380eb44824f234ea29cc784c06e14a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: dynamike_tex
+    second: {fileID: 2800000, guid: b46495a7115178742a76b25b49d5a04e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: gale_tex
+    second: {fileID: 2800000, guid: e48f9c588eb68794e83defda927d228e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: grass_4
+    second: {fileID: 2800000, guid: 59e8bfda2f19b5541ba0855474619f83, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lou_tex
+    second: {fileID: 2800000, guid: 6a071ce55ec91854ea424a9ab0c54e0d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: rangedbot_tex
+    second: {fileID: 2800000, guid: 654c489f0ecc17b4c8f77b796201b8a0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: starr_hat
+    second: {fileID: 2800000, guid: f0f1e23735b22a0478b03f81350782da, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
