@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour {
     /* public vars */
     public GameObject mainCamera;
     public Transform target;
+
     public float smoothTime = 0.3F;
     public float distanceToTarget = -10.0f;
 
