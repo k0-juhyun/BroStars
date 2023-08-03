@@ -48,9 +48,9 @@ public class CameraHandler : MonoBehaviour
         float targetZPos = target.transform.position.z + distanceZFromTarget;
         float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
-        float targetXPos = target.transform.position.x + distanceXFromTarget;
-        float currentXPos = Mathf.SmoothDamp(this.transform.position.x, targetXPos, ref currentVelocity, smoothTime);
+        this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
 
-        this.transform.position = new Vector3(currentXPos, startYPos, currentZpos);
+        if (currentZpos > -91 && currentZpos < -115)
+            Debug.LogError("¹üÀ§ ¹þ¾î³²");
     }
 }
