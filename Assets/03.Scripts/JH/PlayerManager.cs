@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    MoveHandler moveHandler;
+    AttackHandler attackHandler;
+
+    private void Awake()
     {
-        
+        moveHandler = GetComponent<MoveHandler>();
+        attackHandler = GetComponent<AttackHandler>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        moveHandler.HandleMovement();
+        attackHandler.HandleAttack();
     }
 }

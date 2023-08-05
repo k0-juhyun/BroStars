@@ -1,81 +1,221 @@
 fileFormatVersion: 2
 guid: 1720006968e944c8ba5dbf447deb34c4
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: Head
-    100002: HeadTop_End
-    100004: Hips
-    100006: //RootNode
-    100008: LeftArm
-    100010: LeftFoot
-    100012: LeftForeArm
-    100014: LeftHand
-    100016: LeftHandIndex1
-    100018: LeftHandIndex2
-    100020: LeftHandIndex3
-    100022: LeftHandIndex4
-    100024: LeftLeg
-    100026: LeftShoulder
-    100028: LeftToe_End
-    100030: LeftToeBase
-    100032: LeftUpLeg
-    100034: Neck
-    100036: RightArm
-    100038: RightFoot
-    100040: RightForeArm
-    100042: RightHand
-    100044: RightHandIndex1
-    100046: RightHandIndex2
-    100048: RightHandIndex3
-    100050: RightHandIndex4
-    100052: RightLeg
-    100054: RightShoulder
-    100056: RightToe_End
-    100058: RightToeBase
-    100060: RightUpLeg
-    100062: Spine
-    100064: Spine1
-    100066: Spine2
-    400000: Head
-    400002: HeadTop_End
-    400004: Hips
-    400006: //RootNode
-    400008: LeftArm
-    400010: LeftFoot
-    400012: LeftForeArm
-    400014: LeftHand
-    400016: LeftHandIndex1
-    400018: LeftHandIndex2
-    400020: LeftHandIndex3
-    400022: LeftHandIndex4
-    400024: LeftLeg
-    400026: LeftShoulder
-    400028: LeftToe_End
-    400030: LeftToeBase
-    400032: LeftUpLeg
-    400034: Neck
-    400036: RightArm
-    400038: RightFoot
-    400040: RightForeArm
-    400042: RightHand
-    400044: RightHandIndex1
-    400046: RightHandIndex2
-    400048: RightHandIndex3
-    400050: RightHandIndex4
-    400052: RightLeg
-    400054: RightShoulder
-    400056: RightToe_End
-    400058: RightToeBase
-    400060: RightUpLeg
-    400062: Spine
-    400064: Spine1
-    400066: Spine2
-    7400000: Take 001
-    9500000: //RootNode
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Head
+  - first:
+      1: 100002
+    second: HeadTop_End
+  - first:
+      1: 100004
+    second: Hips
+  - first:
+      1: 100006
+    second: //RootNode
+  - first:
+      1: 100008
+    second: LeftArm
+  - first:
+      1: 100010
+    second: LeftFoot
+  - first:
+      1: 100012
+    second: LeftForeArm
+  - first:
+      1: 100014
+    second: LeftHand
+  - first:
+      1: 100016
+    second: LeftHandIndex1
+  - first:
+      1: 100018
+    second: LeftHandIndex2
+  - first:
+      1: 100020
+    second: LeftHandIndex3
+  - first:
+      1: 100022
+    second: LeftHandIndex4
+  - first:
+      1: 100024
+    second: LeftLeg
+  - first:
+      1: 100026
+    second: LeftShoulder
+  - first:
+      1: 100028
+    second: LeftToe_End
+  - first:
+      1: 100030
+    second: LeftToeBase
+  - first:
+      1: 100032
+    second: LeftUpLeg
+  - first:
+      1: 100034
+    second: Neck
+  - first:
+      1: 100036
+    second: RightArm
+  - first:
+      1: 100038
+    second: RightFoot
+  - first:
+      1: 100040
+    second: RightForeArm
+  - first:
+      1: 100042
+    second: RightHand
+  - first:
+      1: 100044
+    second: RightHandIndex1
+  - first:
+      1: 100046
+    second: RightHandIndex2
+  - first:
+      1: 100048
+    second: RightHandIndex3
+  - first:
+      1: 100050
+    second: RightHandIndex4
+  - first:
+      1: 100052
+    second: RightLeg
+  - first:
+      1: 100054
+    second: RightShoulder
+  - first:
+      1: 100056
+    second: RightToe_End
+  - first:
+      1: 100058
+    second: RightToeBase
+  - first:
+      1: 100060
+    second: RightUpLeg
+  - first:
+      1: 100062
+    second: Spine
+  - first:
+      1: 100064
+    second: Spine1
+  - first:
+      1: 100066
+    second: Spine2
+  - first:
+      4: 400000
+    second: Head
+  - first:
+      4: 400002
+    second: HeadTop_End
+  - first:
+      4: 400004
+    second: Hips
+  - first:
+      4: 400006
+    second: //RootNode
+  - first:
+      4: 400008
+    second: LeftArm
+  - first:
+      4: 400010
+    second: LeftFoot
+  - first:
+      4: 400012
+    second: LeftForeArm
+  - first:
+      4: 400014
+    second: LeftHand
+  - first:
+      4: 400016
+    second: LeftHandIndex1
+  - first:
+      4: 400018
+    second: LeftHandIndex2
+  - first:
+      4: 400020
+    second: LeftHandIndex3
+  - first:
+      4: 400022
+    second: LeftHandIndex4
+  - first:
+      4: 400024
+    second: LeftLeg
+  - first:
+      4: 400026
+    second: LeftShoulder
+  - first:
+      4: 400028
+    second: LeftToe_End
+  - first:
+      4: 400030
+    second: LeftToeBase
+  - first:
+      4: 400032
+    second: LeftUpLeg
+  - first:
+      4: 400034
+    second: Neck
+  - first:
+      4: 400036
+    second: RightArm
+  - first:
+      4: 400038
+    second: RightFoot
+  - first:
+      4: 400040
+    second: RightForeArm
+  - first:
+      4: 400042
+    second: RightHand
+  - first:
+      4: 400044
+    second: RightHandIndex1
+  - first:
+      4: 400046
+    second: RightHandIndex2
+  - first:
+      4: 400048
+    second: RightHandIndex3
+  - first:
+      4: 400050
+    second: RightHandIndex4
+  - first:
+      4: 400052
+    second: RightLeg
+  - first:
+      4: 400054
+    second: RightShoulder
+  - first:
+      4: 400056
+    second: RightToe_End
+  - first:
+      4: 400058
+    second: RightToeBase
+  - first:
+      4: 400060
+    second: RightUpLeg
+  - first:
+      4: 400062
+    second: Spine
+  - first:
+      4: 400064
+    second: Spine1
+  - first:
+      4: 400066
+    second: Spine2
+  - first:
+      74: 7400000
+    second: Take 001
+  - first:
+      95: 9500000
+    second: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -84,6 +224,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -93,7 +234,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -107,34 +248,47 @@ ModelImporter:
     globalScale: 100
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -144,13 +298,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 100
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
