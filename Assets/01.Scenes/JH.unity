@@ -48456,7 +48456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 806039265351225869}
   lookPoint: {fileID: 1909098750}
-  moveSpeed: 0
+  moveSpeed: 2
 --- !u!114 &2137620486
 MonoBehaviour:
   m_ObjectHideFlags: 0

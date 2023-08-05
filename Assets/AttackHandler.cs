@@ -41,6 +41,8 @@ public class AttackHandler : MonoBehaviour
             print("11");
 
             transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
+
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
     }
 }
