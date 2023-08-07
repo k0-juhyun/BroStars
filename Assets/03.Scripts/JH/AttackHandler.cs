@@ -5,7 +5,8 @@ public class AttackHandler : MonoBehaviour
     public Joystick attackJoystick;
     public Joystick skillJoystick;
     private AnimatorHandler animatorHandler;
-    public LineRenderer LR;
+    public LineRenderer attackLR;
+    public LineRenderer specialLR;
 
     private Transform attackLookPoint;
     private Transform rayTransform;
@@ -47,9 +48,9 @@ public class AttackHandler : MonoBehaviour
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
-            if (LR.gameObject.activeInHierarchy == false)
+            if (attackLR.gameObject.activeInHierarchy == false)
             {
-                LR.gameObject.SetActive(true);
+                attackLR.gameObject.SetActive(true);
             }
 
             attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 6.1f, attackJoystick.Vertical + transform.position.z);
@@ -58,20 +59,20 @@ public class AttackHandler : MonoBehaviour
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            LR.SetPosition(0, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z));
+            attackLR.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, TrailDistance))
             {
-                LR.SetPosition(1, hit.point);
+                attackLR.SetPosition(1, hit.point);
             }
             else
             {
-                LR.SetPosition(1, transform.position + transform.forward * TrailDistance);
+                attackLR.SetPosition(1, transform.position + transform.forward * TrailDistance);
             }
         }
         else
         {
-            LR.gameObject.SetActive(false);
+            attackLR.gameObject.SetActive(false);
         }
     }
 
@@ -79,9 +80,9 @@ public class AttackHandler : MonoBehaviour
     {
         if (Mathf.Abs(skillJoystick.Horizontal) > 0.5f || Mathf.Abs(skillJoystick.Vertical) > 0.5f)
         {
-            if (LR.gameObject.activeInHierarchy == false)
+            if (specialLR.gameObject.activeInHierarchy == false)
             {
-                LR.gameObject.SetActive(true);
+                specialLR.gameObject.SetActive(true);
             }
 
             attackLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 6.1f, skillJoystick.Vertical + transform.position.z);
@@ -90,16 +91,16 @@ public class AttackHandler : MonoBehaviour
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            LR.SetPosition(0, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z));
+            specialLR.SetPosition(0, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z));
 
             for (int i = 1; i < 10; i++)
             {
-                LR.SetPosition(i, new Vector3(LR.GetPosition(i - 1).x + skillJoystick.Horizontal, 0, LR.GetPosition(i - 1).z + skillJoystick.Vertical));
+                specialLR.SetPosition(i, new Vector3(specialLR.GetPosition(i - 1).x + skillJoystick.Horizontal, 0, specialLR.GetPosition(i - 1).z + skillJoystick.Vertical));
             }
         }
         else
         {
-            LR.gameObject.SetActive(false);
+            specialLR.gameObject.SetActive(false);
         }
     }
 }

@@ -18,5 +18,6 @@ public class PlayerManager : MonoBehaviour
         moveHandler.HandleMovement();
         attackHandler.HandleNormalAttack();
         attackHandler.HandleSpecialAttack();
+        attackHandler.HandleUltimateAttack();
     }
 }
