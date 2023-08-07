@@ -2,30 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShellyMove : MonoBehaviour
+public class J_MoveHandler : MonoBehaviour
 {
-    [SerializeField]
-    public float speed = 5f;
+    #region Component Values
     [SerializeField]
     bl_Joystick joystick;
-
     [SerializeField]
-    Transform PlayerSprite;
+    Transform lookPoint;
+    //애니메이터
+    #endregion
 
+    #region Boolean Values
+    bool moveFlag;
+    #endregion
 
-    bool Movement;
+    #region Float Values
+    [Header("Move Speed")]
+    public float moveSpeed = 5f;
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    //움직임
+    public void HandleMovement()
     {
-        PlayerSprite.position = new Vector3(joystick.Horizontal + transform.position.x,6.1f,joystick.Vertical + transform.position.z);
+        //움직임 컨트롤러 값
+        if(joystick.Horizontal > 0  || joystick.Horizontal <0 || joystick.Vertical >0 || joystick.Vertical <0)
+        {
+            lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 6.1f, joystick.Vertical + transform.position.z);
+            transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z)); ;
+            transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);   
+            transform.Translate(Vector3.forward * moveSpeed *Time.fixedDeltaTime);
+            //애니메이터
 
-        transform.LookAt(new Vector3(PlayerSprite.position.x, 6.1f, PlayerSprite.position.z));
+            //bool 움직임
+            moveFlag = true;
+        }
+        else if( moveFlag == true)
+        {
+            moveFlag = false;
+        }
+        //PlayerSprite.position = new Vector3(joystick.Horizontal + transform.position.x,6.1f,joystick.Vertical + transform.position.z);
+
         //float h = Input.GetAxis ("Horizontal");   
         //float v = Input.GetAxis("Vertical");
         //Vector3 dir = h * Vector3.right + v * Vector3.forward;
@@ -35,11 +57,9 @@ public class ShellyMove : MonoBehaviour
         //transform.position += dir * speed * Time.deltaTime; 
 
 
-        //transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);   
 
         //if(joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
         //{
-        //    transform.Translate(Vector3.forward * Time.deltaTime);
         //    //애니메이션 walks true
 
 
