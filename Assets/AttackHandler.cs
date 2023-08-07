@@ -10,6 +10,8 @@ public class AttackHandler : MonoBehaviour
 
     [SerializeField]
     Joystick joystick;
+
+    AnimatorHandler animatorHandler;
     #endregion
 
     #region Transform Values
@@ -19,14 +21,17 @@ public class AttackHandler : MonoBehaviour
     Transform Player;
     #endregion
 
+    #region Float Values
     [Header("Attack Distance")]
     public float AttackDistance;
+    #endregion
 
     RaycastHit hit;
 
     private void Awake()
     {
         Player = GetComponent<Transform>();
+        animatorHandler = GetComponent<AnimatorHandler>();
     }
 
     public void HandleAttack()
@@ -38,7 +43,7 @@ public class AttackHandler : MonoBehaviour
 
         if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
         {
-            print("11");
+            animatorHandler.playerTargetAnim("Punching");
 
             transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
 

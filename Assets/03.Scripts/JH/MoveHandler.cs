@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class MoveHandler : MonoBehaviour
 {
-    [SerializeField]
-    Joystick joystick;
 
     #region Component Values
     [SerializeField]
     [Header("Look Point")]
     Transform lookPoint;
-    Animator anim;
+
+    [SerializeField]
+    Joystick joystick;
+
+    AnimatorHandler animatorHandler;
     #endregion
 
     #region Boolean Values
@@ -25,7 +27,7 @@ public class MoveHandler : MonoBehaviour
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        animatorHandler = GetComponent<AnimatorHandler>();
     }
 
     public void HandleMovement()
@@ -40,7 +42,7 @@ public class MoveHandler : MonoBehaviour
 
             transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed);
 
-            anim.Play("Walking");
+            animatorHandler.playerTargetAnim("Walking");
 
             moveFlag = true;
         }
