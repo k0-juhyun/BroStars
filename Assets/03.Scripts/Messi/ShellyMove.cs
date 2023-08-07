@@ -23,9 +23,9 @@ public class ShellyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerSprite.position = new Vector3(joystick.Horizontal + transform.position.x,-1.54f,joystick.Vertical + transform.position.z);
+        PlayerSprite.position = new Vector3(joystick.Horizontal + transform.position.x,6.1f,joystick.Vertical + transform.position.z);
 
-        transform.LookAt(new Vector3(PlayerSprite.position.x, 0, PlayerSprite.position.z));
+        transform.LookAt(new Vector3(PlayerSprite.position.x, 6.1f, PlayerSprite.position.z));
         //float h = Input.GetAxis ("Horizontal");   
         //float v = Input.GetAxis("Vertical");
         //Vector3 dir = h * Vector3.right + v * Vector3.forward;
@@ -33,24 +33,44 @@ public class ShellyMove : MonoBehaviour
         //dir.Normalize();
 
         //transform.position += dir * speed * Time.deltaTime; 
-        transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);   
-
-        if(joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical >0 || joystick.Vertical < 0)
-        {
-            transform.Translate(Vector3.forward * Time.deltaTime);
-
-            //애니메이션 walks true
 
 
-            //무브먼트 실행
-            Movement = true;
-        }
-        else if (Movement == true)
-        {
-            //애니메이션 walk,false
-            Movement = false;
-        }
+        //transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);   
 
+        //if(joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
+        //{
+        //    transform.Translate(Vector3.forward * Time.deltaTime);
+        //    //애니메이션 walks true
+
+
+        //    //무브먼트 실행
+        //    Movement = true;
+        //}
+        //else if (Movement == true)
+        //{
+        //    //애니메이션 walk,false
+        //    Movement = false;
+        //}
+
+        //if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
+        //{
+        //    lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 6.1f, joystick.Vertical + transform.position.z);
+
+        //    transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
+
+        //    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+        //    transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed);
+
+        //    animatorHandler.playerTargetAnim("Walking");
+
+        //    moveFlag = true;
+        //}
+
+        //else if (moveFlag == true)
+        //{
+        //    moveFlag = false;
+        //}
 
 
     }
