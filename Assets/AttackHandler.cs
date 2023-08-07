@@ -1,46 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttackHandler : MonoBehaviour
 {
-    #region Component Values
-    [SerializeField]
-    LineRenderer lineRenderer;
-
-    [SerializeField]
-    Joystick joystick;
-
+    public Joystick joystick;
     AnimatorHandler animatorHandler;
-    #endregion
+    Rigidbody rb;
 
-    #region Transform Values
-    [SerializeField]
-    [Header("Look Point")]
-    Transform lookPoint;
-    Transform Player;
-    #endregion
+    private Transform lookPoint;
+    private Transform Player;
+    public Transform[] Fists;
 
-    #region Float Values
-    [Header("Attack Distance")]
     public float AttackDistance;
-    #endregion
-
-    RaycastHit hit;
 
     private void Awake()
     {
+        lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    public void HandleAttack()
+    public void HandleNormalAttack()
     {
-        if (Mathf.Abs(joystick.Horizontal) > 0.5f || Mathf.Abs(joystick.Vertical) > 0.5f)
-        {
-            print("22");
-        }
-
         if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
         {
             animatorHandler.playerTargetAnim("Punching");
@@ -48,6 +32,14 @@ public class AttackHandler : MonoBehaviour
             transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
+    }
+
+    public void HandleSpecialAttack()
+    {
+        if (Mathf.Abs(joystick.Horizontal) > 0.5f || Mathf.Abs(joystick.Vertical) > 0.5f)
+        {
+            
         }
     }
 }

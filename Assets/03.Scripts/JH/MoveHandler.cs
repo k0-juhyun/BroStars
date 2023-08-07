@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class MoveHandler : MonoBehaviour
 {
-
     #region Component Values
     [SerializeField]
-    [Header("Look Point")]
-    Transform lookPoint;
-
-    [SerializeField]
     Joystick joystick;
-
     AnimatorHandler animatorHandler;
+    #endregion
+
+    #region Transform Values
+    Transform lookPoint;
     #endregion
 
     #region Boolean Values
@@ -21,12 +19,13 @@ public class MoveHandler : MonoBehaviour
     #endregion
 
     #region Float Values
-    [Header("Move Speed")]
+    [Header("Info")]
     public float moveSpeed;
     #endregion
 
     private void Awake()
     {
+        lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
     }
 
