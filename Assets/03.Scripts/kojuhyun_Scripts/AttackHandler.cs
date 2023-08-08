@@ -1,27 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackHandler : MonoBehaviour
 {
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
+
+    [Header("JoyStick")]
     public Joystick attackJoystick;
     public Joystick skillJoystick;
 
+    [Header("Line Renderer")]
     public LineRenderer attackLR;
     public LineRenderer specialLR;
 
     private Transform attackLookPoint;
     private Transform skillLookPoint;
     private Transform Player;
+    public Transform lineRendererStartTransform;
 
-    public float TrailDistance;
-    public float launchForce = 10f;
+    private float TrailDistance = 2;
+    private float launchForce = 10;
+    private float launchDuration = 2;
+    private float maxLaunchDistance = 10f;
+
+    private Vector3 launchDirection = Vector3.forward;
 
     RaycastHit hit;
 
     private void Awake()
     {
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
+        skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
@@ -80,13 +91,13 @@ public class AttackHandler : MonoBehaviour
 
     public void HandleUltimateAttack()
     {
-        Vector3 startPos = new Vector3(transform.position.x,transform.position.y, transform.position.z+2.4f);
-        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0f, skillJoystick.Vertical).normalized;
+        Vector3 startPos = lineRendererStartTransform.position;
+        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.15f, skillJoystick.Vertical).normalized;
         Vector3 startVelocity = joystickDirection * launchForce;
 
         DrawTrajectory(startPos, startVelocity, 10, 0.1f);
 
-        if (Mathf.Abs(skillJoystick.Horizontal) > 0.1f || Mathf.Abs(skillJoystick.Vertical) > 0.1f)
+        if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
         {
 
             if (specialLR.gameObject.activeInHierarchy == false)
@@ -98,9 +109,7 @@ public class AttackHandler : MonoBehaviour
 
             transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
 
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-
-            LaunchPlayer(startVelocity);
+            transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
@@ -119,16 +128,30 @@ public class AttackHandler : MonoBehaviour
         {
             float time = i * timeStep;
             Vector3 position = startPos + startVelocity * time + Physics.gravity * time * time * 0.5f;
-            position.y += 1f;
-            positions[i] = Quaternion.Euler(-30f, 0f, 0f) * position;
+            position.y += 0.1f;
+            positions[i] = Quaternion.Euler(0f, 0f, 0f) * position;
         }
 
         specialLR.SetPositions(positions);
     }
     #endregion
 
-    private void LaunchPlayer(Vector3 startVelocity)
+    private IEnumerator LaunchPlayer()
     {
-        rb.AddForce(startVelocity, ForceMode.VelocityChange);
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = transform.position + launchDirection * maxLaunchDistance;
+
+        while (elapsedTime < launchDuration)
+        {
+            float t = elapsedTime / launchDuration;
+            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, t);
+            transform.position = newPosition;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition;
     }
 }

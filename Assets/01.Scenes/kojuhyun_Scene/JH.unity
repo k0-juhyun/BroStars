@@ -23137,6 +23137,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1088639812}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1088652279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1088652280}
+  m_Layer: 11
+  m_Name: lineRenderer Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1088652280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088652279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450653415396536}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1089231608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48866,9 +48897,7 @@ MonoBehaviour:
   skillJoystick: {fileID: 2125202804}
   attackLR: {fileID: 581991782}
   specialLR: {fileID: 209172384}
-  lineRendererTransform: {fileID: 6341415605871046624}
-  TrailDistance: 2
-  launchForce: 10
+  lineRendererStartTransform: {fileID: 1088652280}
 --- !u!136 &2137620488
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -49510,6 +49539,7 @@ Transform:
   - {fileID: 1016056863916359982}
   - {fileID: 6341415605871046624}
   - {fileID: 5452297625766967020}
+  - {fileID: 1088652280}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
