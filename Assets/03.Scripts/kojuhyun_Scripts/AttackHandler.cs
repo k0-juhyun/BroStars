@@ -6,6 +6,7 @@ public class AttackHandler : MonoBehaviour
 {
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
+    Joystick joystick;
 
     [Header("JoyStick")]
     public Joystick attackJoystick;
@@ -22,15 +23,17 @@ public class AttackHandler : MonoBehaviour
 
     private float TrailDistance = 2;
     private float launchForce = 10;
-    private float launchDuration = 2;
-    private float maxLaunchDistance = 10f;
+    private float launchAngle = 45f;
+    private float launchHeight = 3f;
 
-    private Vector3 launchDirection = Vector3.forward;
+
+    private bool isLaunching;
 
     RaycastHit hit;
 
     private void Awake()
     {
+        joystick = FindObjectOfType<Joystick>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
@@ -87,7 +90,6 @@ public class AttackHandler : MonoBehaviour
             attackLR.gameObject.SetActive(false);
         }
     }
-    #endregion
 
     public void HandleUltimateAttack()
     {
@@ -99,23 +101,35 @@ public class AttackHandler : MonoBehaviour
 
         if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
         {
-
-            if (specialLR.gameObject.activeInHierarchy == false)
+            if (!isLaunching)
             {
-                specialLR.gameObject.SetActive(true);
+                isLaunching = true;
+
+                if (specialLR.gameObject.activeInHierarchy == false)
+                {
+                    specialLR.gameObject.SetActive(true);
+                }
+
+                skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.1f, skillJoystick.Vertical + transform.position.z);
+
+                transform.LookAt(new Vector3(skillJoystick.Horizontal, 0.15f, skillJoystick.Vertical));
+
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                if(joystick.input == Vector2.zero)
+                {
+                    LaunchPlayer();
+                }
             }
-
-            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.1f, skillJoystick.Vertical + transform.position.z);
-
-            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
-
-            transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
+            isLaunching = false;
+
             specialLR.gameObject.SetActive(false);
         }
     }
+    #endregion
+
 
     #region 포물선 그리기
     private void DrawTrajectory(Vector3 startPos, Vector3 startVelocity, int numPoints, float timeStep)
@@ -136,22 +150,27 @@ public class AttackHandler : MonoBehaviour
     }
     #endregion
 
-    private IEnumerator LaunchPlayer()
+    private void LaunchPlayer()
     {
-        float elapsedTime = 0f;
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = transform.position + launchDirection * maxLaunchDistance;
+        Vector3 direction = new Vector3(skillJoystick.Horizontal, 0.15f, skillJoystick.Vertical).normalized;
 
-        while (elapsedTime < launchDuration)
+        float radianAngle = launchAngle * Mathf.Deg2Rad;
+        float totalFlightTime = (2 * launchForce * Mathf.Sin(radianAngle)) / Physics.gravity.magnitude;
+        float timeStep = totalFlightTime / specialLR.positionCount;
+
+        Vector3 currentPosition = transform.position;
+
+        for (int i = 0; i < specialLR.positionCount; i++)
         {
-            float t = elapsedTime / launchDuration;
-            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, t);
-            transform.position = newPosition;
+            float t = i * timeStep;
+            float xPos = currentPosition.x + direction.x * launchForce * t;
+            float yPos = currentPosition.y + direction.y * launchForce * t - 0.5f * Physics.gravity.magnitude * t * t + launchHeight;
+            float zPos = currentPosition.z + direction.z * launchForce * t;
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            Vector3 newPos = new Vector3(xPos, yPos, zPos);
+            specialLR.SetPosition(i, newPos);
         }
 
-        transform.position = targetPosition;
+        rb.velocity = direction * launchForce;
     }
 }
