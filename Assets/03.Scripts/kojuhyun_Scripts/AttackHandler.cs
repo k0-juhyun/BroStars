@@ -2,31 +2,32 @@ using UnityEngine;
 
 public class AttackHandler : MonoBehaviour
 {
+    private AnimatorHandler animatorHandler;
+    private Rigidbody rb;
     public Joystick attackJoystick;
     public Joystick skillJoystick;
-    private AnimatorHandler animatorHandler;
+
     public LineRenderer attackLR;
     public LineRenderer specialLR;
 
     private Transform attackLookPoint;
-    private Transform rayTransform;
+    private Transform skillLookPoint;
     private Transform Player;
 
     public float TrailDistance;
+    public float launchForce = 10f;
 
     RaycastHit hit;
-
-    public Vector3[] Points;
 
     private void Awake()
     {
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
-
-        Points = new Vector3[9];
+        rb = GetComponent<Rigidbody>();
     }
 
+    #region 공격
     public void HandleNormalAttack()
     {
         if (attackJoystick.Horizontal > 0 || attackJoystick.Horizontal < 0 || attackJoystick.Vertical > 0 || attackJoystick.Vertical < 0)
@@ -53,9 +54,9 @@ public class AttackHandler : MonoBehaviour
                 attackLR.gameObject.SetActive(true);
             }
 
-            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 6.1f, attackJoystick.Vertical + transform.position.z);
+            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.1f, attackJoystick.Vertical + transform.position.z);
 
-            transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
+            transform.LookAt(new Vector3(attackLookPoint.position.x, 4.1f, attackLookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
@@ -75,32 +76,59 @@ public class AttackHandler : MonoBehaviour
             attackLR.gameObject.SetActive(false);
         }
     }
+    #endregion
 
     public void HandleUltimateAttack()
     {
-        if (Mathf.Abs(skillJoystick.Horizontal) > 0.5f || Mathf.Abs(skillJoystick.Vertical) > 0.5f)
+        Vector3 startPos = new Vector3(transform.position.x,transform.position.y, transform.position.z+2.4f);
+        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0f, skillJoystick.Vertical).normalized;
+        Vector3 startVelocity = joystickDirection * launchForce;
+
+        DrawTrajectory(startPos, startVelocity, 10, 0.1f);
+
+        if (Mathf.Abs(skillJoystick.Horizontal) > 0.1f || Mathf.Abs(skillJoystick.Vertical) > 0.1f)
         {
+
             if (specialLR.gameObject.activeInHierarchy == false)
             {
                 specialLR.gameObject.SetActive(true);
             }
 
-            attackLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 6.1f, skillJoystick.Vertical + transform.position.z);
+            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.1f, skillJoystick.Vertical + transform.position.z);
 
-            transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
+            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            specialLR.SetPosition(0, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z));
-
-            for (int i = 1; i < 10; i++)
-            {
-                specialLR.SetPosition(i, new Vector3(specialLR.GetPosition(i - 1).x + skillJoystick.Horizontal, 0, specialLR.GetPosition(i - 1).z + skillJoystick.Vertical));
-            }
+            LaunchPlayer(startVelocity);
         }
         else
         {
             specialLR.gameObject.SetActive(false);
         }
+    }
+
+    #region 포물선 그리기
+    private void DrawTrajectory(Vector3 startPos, Vector3 startVelocity, int numPoints, float timeStep)
+    {
+        specialLR.positionCount = numPoints;
+
+        Vector3[] positions = new Vector3[numPoints];
+
+        for (int i = 0; i < numPoints; i++)
+        {
+            float time = i * timeStep;
+            Vector3 position = startPos + startVelocity * time + Physics.gravity * time * time * 0.5f;
+            position.y += 1f;
+            positions[i] = Quaternion.Euler(-30f, 0f, 0f) * position;
+        }
+
+        specialLR.SetPositions(positions);
+    }
+    #endregion
+
+    private void LaunchPlayer(Vector3 startVelocity)
+    {
+        rb.AddForce(startVelocity, ForceMode.VelocityChange);
     }
 }
