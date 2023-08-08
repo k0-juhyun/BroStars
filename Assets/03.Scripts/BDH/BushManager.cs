@@ -9,8 +9,8 @@ using UnityEngine;
 
 public class BushManager : MonoBehaviour
 {
+    public GameObject playerComponent; 
 
-    [Header("부쉬 변수")]
     // 부쉬 레이어 변수.
     private int layer;
 
@@ -29,24 +29,67 @@ public class BushManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {     
-         // 부쉬 대상으로 플레이어의 범위를 측정하는 OverlapSphere 사용,
-         Collider[] colArrays = Physics.OverlapSphere(this.transform.position, outOfRadius, layer);
+    {
+        // 부쉬 대상으로 플레이어의 범위를 측정하는 OverlapSphere 사용,
+        Collider[] colArrays = Physics.OverlapSphere(this.transform.position, outOfRadius, layer);
 
         // OverlapSphere의 내부에 있는 경우. Grass를 식별한다. 
         if (colArrays.Length > 0)
-        {          
-            
+        {
+            float minDist = Mathf.Infinity;
+
             for (int i = 0; i < colArrays.Length; i++)
             {
-                // 예외처리 -> 자기 자신은 제외 
-                if (colArrays[i].name == "Player") continue;
-
                 float dist = Vector3.Distance(this.transform.position, colArrays[i].gameObject.transform.position);
                
                 if(dist < rangeRadius)
                 {
-                  
+                    if(dist < minDist)
+                    {
+                        minDist = dist;
+                        
+                        // 두 가지 조건으로 플레이어가 부쉬 안에 있다고 판단 ( minDist < 0.5f && 
+                        if(minDist < 0.5f)
+                        {
+
+                            // 플레이어가 부쉬안에 있다.
+                           // print("플레이어가 부쉬 안");
+                        }
+                        else
+                        {
+                            // 플레이어가 부쉬 밖에 있다. 
+                            //print("플레이어가 부쉬 밖");
+                        }
+                        
+                    }
+
+                    
+
+                    if (dist < 0.2f)
+                    {
+                        // 플레이어가 페이드인 효과가 적용되면서 투명화가 진행된다. 
+
+                        //// Shelly_GEO의 컴포넌트의 갯수
+                        //int length = playerComponent.transform.childCount;
+
+                        //for (int index = 0; index < length; index++)
+                        //{
+                        //    // 플레이어의 SkinnedMeshRenderer 컴포넌트를 가져온다. 
+                        //    SkinnedMeshRenderer playerRenderer = playerComponent.transform.GetChild(index).GetComponent<SkinnedMeshRenderer>();
+                        //    // SkinnedMeshRenderer 컬러값을 가져온다. 
+                        //    Color playerMaterialColor = playerRenderer.materials[0].color;
+                        //    // SkinnedMeshRenderer 알파 값을 변경합니다.
+                        //    playerMaterialColor.a = 0f;
+                        //    //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
+                        //    playerRenderer.materials[0].color = playerMaterialColor;
+                        //}
+
+                    }
+                    else
+                    {
+                        //print(dist);
+                    }
+                   
                     // MeshRenderer 컴포넌트를 가져온다. 
                     mRenderer = colArrays[i].gameObject.GetComponent<MeshRenderer>();       
 
@@ -72,13 +115,23 @@ public class BushManager : MonoBehaviour
 
                     //  MeshRenderer 변경된 컬러 값을 재질에 적용합니다.
                     mRenderer.materials[0].color = materialColor;
+
+                    
+
                 }
 
             }
-
         }
      
     }
+
+  /*  private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Grass"))
+        {
+            print("잔디잔디");
+        }
+    }*/
 
 
     // 페이드 인 효과로 발생하면서 투명화가 진행된다.

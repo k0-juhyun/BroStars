@@ -9,6 +9,8 @@ public class Zem : MonoBehaviour
     // 잼이 회전할 목표 회전 값을 저장하는 변수.
     Quaternion zemRotation;
 
+    private bool isGround = false; 
+
     AudioSource audioSource;
     // 잼 생성 시 재생할 오디오 클립. 
     public AudioClip createSound;
@@ -32,9 +34,10 @@ public class Zem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(this.transform.position.y <= 0.3f + 5f)
+        
+        if(this.transform.position.y <= 0.3f + 4f)
         {
-            GetComponent<Rigidbody>().useGravity = false;
+            //GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<BoxCollider>().enabled = true; 
         }
@@ -45,6 +48,7 @@ public class Zem : MonoBehaviour
 
     }
 
+   
     //private void OnTriggerEnter(Collider other)
     //{
     //    if (other.CompareTag("Player") ||
