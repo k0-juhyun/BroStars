@@ -115,15 +115,16 @@ public class AttackHandler : MonoBehaviour
                 transform.LookAt(new Vector3(skillJoystick.Horizontal, 0.15f, skillJoystick.Vertical));
 
                 transform.eulerAngles = new Vector3(0, 0, 0);
-                if(joystick.input == Vector2.zero)
-                {
-                    LaunchPlayer();
-                }
             }
         }
         else
         {
-            isLaunching = false;
+            if (isLaunching)
+            {
+                isLaunching = false;
+
+                LaunchPlayer();
+            }
 
             specialLR.gameObject.SetActive(false);
         }

@@ -13,7 +13,7 @@ public class CameraHandler : MonoBehaviour
     #region GameObject Value
     [HideInInspector]
     public GameObject mainCamera;
-    public Transform target;
+    private Transform target;
     #endregion
 
     #region Float Value
@@ -38,8 +38,7 @@ public class CameraHandler : MonoBehaviour
         mainCamera = this.gameObject;
 
         playerManager = FindObjectOfType<PlayerManager>();
-        //target = playerManager.gameObject.GetComponent<Transform>();
-        
+        target = playerManager.gameObject.GetComponent<Transform>();
     }
 
     private void LateUpdate()
