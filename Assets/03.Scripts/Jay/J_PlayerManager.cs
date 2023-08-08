@@ -17,6 +17,6 @@ public class J_PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         moveHandler.HandleMovement();
-        attackHandler.HandleAttack();
+        attackHandler.HandleNormalAttack();
     }
 }

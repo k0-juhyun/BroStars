@@ -6,7 +6,7 @@ public class J_MoveHandler : MonoBehaviour
 {
     #region Component Values
     [SerializeField]
-    bl_Joystick joystick;
+    Joystick joystick;
     [SerializeField]
     Transform lookPoint;
     //애니메이터
@@ -24,7 +24,8 @@ public class J_MoveHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
+
     }
 
     //움직임
