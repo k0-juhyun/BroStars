@@ -101,8 +101,7 @@ public class J_attackHandler : MonoBehaviour
         if (attackJoystick.Horizontal > 0 || attackJoystick.Horizontal < 0 || attackJoystick.Vertical > 0 || attackJoystick.Vertical < 0)
         {
             //라인랜더러
-            attackLR.SetPosition(0,new Vector3(transform.position.x, transform.position.y, transform.position.z));
-            
+            //attackLR.SetPosition(0,new Vector3(transform.position.x, transform.position.y, transform.position.z));
 
             //총알 생성
             //GameObject bullet = Instantiate(bulletFactory);
@@ -134,16 +133,14 @@ public class J_attackHandler : MonoBehaviour
                 var particleClone = Instantiate(Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                 Destroy(particleClone.gameObject, 2);
                 hitInfo.transform.SendMessage("DeductPoints", DamageAmount, SendMessageOptions.DontRequireReceiver);
-                attackLR.SetPosition(1, hitInfo.point);
-                //DrawFanShape();
+                DrawFanShape();
                 Debug.DrawLine(transform.position, hitInfo.point);
-
             }
 
         }
         else
         {
-            attackLR.SetPosition(1, transform.position + transform.forward * attackFireRange);
+           // attackLR.SetPosition(1, transform.position + transform.forward * attackFireRange);
         }
 
     }
@@ -156,7 +153,8 @@ public class J_attackHandler : MonoBehaviour
         float currentAngle = startAngle;
 
         Vector3[] positions = new Vector3[fanSegments + 2];
-        positions[0] = Vector3.zero; // 부채꼴의 중심점 (원의 중심)
+        positions[0] = transform.position; // 부채꼴의 중심점 (원의 중심)
+        Debug.Log(positions[0]);
 
         for (int i = 1; i <= fanSegments + 1; i++)
         {
@@ -166,8 +164,6 @@ public class J_attackHandler : MonoBehaviour
             positions[i] = new Vector3(x, y, 0f);
             currentAngle += deltaAngle;
         }
-        
-
         attackLR.SetPositions(positions);
     }
     #endregion
