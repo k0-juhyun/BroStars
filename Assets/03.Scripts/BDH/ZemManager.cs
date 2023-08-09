@@ -10,7 +10,6 @@ public class ZemManager : MonoBehaviour
     public GameObject rangeObject;
     // zem을 생성할 오브젝트의 BoxCollider  
     BoxCollider rangeCollider;
-  
 
     // zem을 생성할 오브젝트의 BoxCollider의 중심 위치
     private float centerX;
@@ -20,16 +19,15 @@ public class ZemManager : MonoBehaviour
     {
         StartCoroutine(RandomCreateCoroutine());
         rangeCollider = rangeObject.GetComponent<BoxCollider>();
- 
+
     }
 
     private void Start()
     {
-      
 
         // BoxCollider의 중심 위치를 가져온다. 
         centerX = rangeCollider.bounds.center.x;
-        centerZ = rangeCollider.bounds.center.z; 
+        centerZ = rangeCollider.bounds.center.z;
 
     }
 
@@ -41,7 +39,7 @@ public class ZemManager : MonoBehaviour
             yield return new WaitForSeconds(7f);
             // Zem을 생성할 위치는 BoxCollider의 중심 위치
             Vector3 zemsRandomPosition = new Vector3(centerX, rangeObject.transform.position.y, centerZ);
-           
+
             GameObject zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
 
             // CreateRandomPosition()의 위치를 목표 지점으로 설정한다. 
@@ -58,7 +56,7 @@ public class ZemManager : MonoBehaviour
         }
     }
 
-   
+
 
     // 잼이 떨어지는 위치(EndPoint) 를 생성하는 메소드
     Vector3 CreateRandomPosition()
@@ -78,10 +76,10 @@ public class ZemManager : MonoBehaviour
 
         // 잼을 떨어지는 위치를 지정한다.
         Vector3 createPosition = originPosition + randomPosition;
-        
-        return createPosition; 
+
+        return createPosition;
     }
 
-   
+
 
 }
