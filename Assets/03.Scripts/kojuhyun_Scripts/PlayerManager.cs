@@ -15,7 +15,8 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveHandler.HandleMovement();
+        
+       // moveHandler.HandleMovement();
         attackHandler.HandleNormalAttack();
         attackHandler.HandleSpecialAttack();
         attackHandler.HandleUltimateAttack();

@@ -29,9 +29,9 @@ public class DynamicJoystick : Joystick
     {
         // AttackHandler 스크립트의 HandleUltimateAttack() 함수 호출
         AttackHandler attackHandler = FindObjectOfType<AttackHandler>();
-        if (attackHandler != null)
+        if (attackHandler != null && this.gameObject.name== "SkillJoyStick")
         {
-            attackHandler.HandleUltimateAttack();
+            attackHandler.LaunchPlayer(Horizontal,Vertical);
         }
 
         // 조이스틱 배경 이미지를 비활성화

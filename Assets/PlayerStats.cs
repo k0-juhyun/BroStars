@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int curHp;
+    public int maxHp;
+    public int AttackDamage;
+    public int SkillDamage;
+
+    private void Start()
     {
-        
+        curHp = maxHp;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int HandleHP(int damage)
     {
-        
+        curHp += damage;
+        return curHp;
     }
 }
