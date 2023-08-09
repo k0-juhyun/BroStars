@@ -13,7 +13,7 @@ public class DynamicJoystick : Joystick
     {
         MoveThreshold = moveThreshold;
         base.Start();
-        //background.gameObject.SetActive(false);
+        background.gameObject.SetActive(true);
     }
 
     public override void OnPointerDown(PointerEventData eventData)
@@ -24,20 +24,14 @@ public class DynamicJoystick : Joystick
 
     }
 
-    // 손뗏을때 호출
     public override void OnPointerUp(PointerEventData eventData)
     {
-        // AttackHandler 스크립트의 HandleUltimateAttack() 함수 호출
         AttackHandler attackHandler = FindObjectOfType<AttackHandler>();
         if (attackHandler != null && this.gameObject.name== "SkillJoyStick")
         {
             attackHandler.LaunchPlayer(Horizontal,Vertical);
         }
 
-        // 조이스틱 배경 이미지를 비활성화
-        background.gameObject.SetActive(false);
-
-        // 부모 클래스의 OnPointerUp 함수를 호출
         base.OnPointerUp(eventData);
     }
 

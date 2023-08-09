@@ -21,14 +21,11 @@ public class AttackHandler : MonoBehaviour
     private Transform skillLookPoint;
     private Transform Player;
     public Transform lineRendererStartTransform;
-    public Transform lineRendererPivotTransform;
 
     private float TrailDistance = 2;
     private float launchForce = 10;
 
     private bool isLaunching;
-
-    private Vector3 test;
 
     RaycastHit hit;
 
@@ -102,35 +99,23 @@ public class AttackHandler : MonoBehaviour
 
         if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
         {
-            lineRendererPivotTransform.Rotate(Vector3.right, skillJoystick.Vertical);
-            lineRendererPivotTransform.Rotate(Vector3.forward, -skillJoystick.Horizontal);
-
-            if (!isLaunching)
+            if (specialLR.gameObject.activeInHierarchy == false)
             {
-                isLaunching = true;
-
-                if (specialLR.gameObject.activeInHierarchy == false)
-                {
-                    specialLR.gameObject.SetActive(true);
-                }
-
-                skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.1f, skillJoystick.Vertical + transform.position.z);
-
-                transform.LookAt(new Vector3(skillJoystick.Horizontal, 0.15f, skillJoystick.Vertical));
-
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                specialLR.gameObject.SetActive(true);
             }
+
+            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
+
+            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.11f, skillLookPoint.position.z)); ;
+
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
         else
         {
-            if (isLaunching)
-            {
-                isLaunching = false;
-            }
-
             specialLR.gameObject.SetActive(false);
         }
     }
+
     #endregion
 
     #region 포물선 그리기
@@ -150,10 +135,13 @@ public class AttackHandler : MonoBehaviour
     }
     #endregion
 
+    #region 플레이어 던지기
     public void LaunchPlayer(float h, float v)
     {
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
         Vector3 startVelocity = joystickDirection * launchForce;
         GetComponent<Rigidbody>().velocity = startVelocity;
     }
+    #endregion
+
 }

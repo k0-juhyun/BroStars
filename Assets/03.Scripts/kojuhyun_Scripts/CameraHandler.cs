@@ -6,30 +6,29 @@ public class CameraHandler : MonoBehaviour
 {
     public static CameraHandler instance;
 
-    #region Components
     PlayerManager playerManager;
-    #endregion
 
-    #region GameObject Value
     [HideInInspector]
     public GameObject mainCamera;
-    private Transform target;
-    #endregion
 
-    #region Float Value
-    private float currentVelocity = 0;
-    private float startXPos;
-    private float startYPos;
+    private Transform target;
 
     [Header("Camera Settings")]
     public float smoothTime = 0.3f;
     public float distanceZFromTarget = -5;
     public float distanceXFromTarget = -5;
-    #endregion
+    public float shakeDuration = 2f;
+    public float shakeSpeed = 22;
+    public float magnitude = 1;
+    public float rotationDamper = 2;
+    private float currentVelocity = 0;
+    private float startXPos;
+    private float startYPos;
+
+    public bool isPlaying;
 
     private void Awake()
     {
-        
         instance = this;
 
         this.startXPos = this.transform.position.x;
@@ -52,6 +51,14 @@ public class CameraHandler : MonoBehaviour
         this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
 
         if (currentZpos > -91 && currentZpos < -115)
-            Debug.LogError("¹üÀ§ ¹þ¾î³²");
+    }
+    
+    IEnumerator HandleShake()
+    {
+        var cameraTransform = mainCamera.transform;
+        var cameraOriginRotation = cameraTransform.rotation.eulerAngles;
+        var direction = (transform.position - cameraTransform.position).normalized;
+        var time = 0;
+        yield return null;
     }
 }
