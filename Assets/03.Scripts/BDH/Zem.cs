@@ -21,7 +21,7 @@ public class Zem : MonoBehaviour
     {
         //audioSource = GetComponent<AudioSource>();
         GetComponent<BoxCollider>().enabled = false;
-        //this.transform.rotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
+     
     }
 
     // Start is called before the first frame update
