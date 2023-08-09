@@ -68,13 +68,13 @@ public class AttackHandler : MonoBehaviour
                 attackLR.gameObject.SetActive(true);
             }
 
-            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.1f, attackJoystick.Vertical + transform.position.z);
+            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
 
-            transform.LookAt(new Vector3(attackLookPoint.position.x, 4.1f, attackLookPoint.position.z));
+            transform.LookAt(new Vector3(attackLookPoint.position.x, 4.11f, attackLookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            attackLR.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
+            attackLR.SetPosition(0, new Vector3(transform.position.x, 4.11f, transform.position.z));
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, TrailDistance))
             {
@@ -82,7 +82,8 @@ public class AttackHandler : MonoBehaviour
             }
             else
             {
-                attackLR.SetPosition(1, transform.position + transform.forward * TrailDistance);
+                Vector3 yUp = new Vector3(0, 0.1f, 0);
+                attackLR.SetPosition(1, transform.position + transform.forward * TrailDistance + yUp);
             }
         }
         else
@@ -153,6 +154,7 @@ public class AttackHandler : MonoBehaviour
 
     private void LaunchPlayer()
     {
+        animatorHandler.playerTargetAnim("Jumping");
         Vector3 direction = new Vector3(skillJoystick.Horizontal, 0.15f, skillJoystick.Vertical).normalized;
 
         float radianAngle = launchAngle * Mathf.Deg2Rad;
