@@ -41,7 +41,7 @@ public class MoveHandler : MonoBehaviour
 
             transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed);
 
-            animatorHandler.playerTargetAnim("Walking");
+            animatorHandler.playTargetAnim("Walking");
 
             moveFlag = true;
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraHandler : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CameraHandler : MonoBehaviour
 
     [HideInInspector]
     public GameObject mainCamera;
+    public Image DamagedImage;
 
     private Transform target;
 
@@ -51,6 +53,7 @@ public class CameraHandler : MonoBehaviour
 
     IEnumerator HandleCamerShake(float duration)
     {
+        DamagedImage.gameObject.SetActive(true);
         float endTime = Time.time + duration;
 
         while (Time.time < endTime)
@@ -63,6 +66,7 @@ public class CameraHandler : MonoBehaviour
         }
 
         this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z);
+        DamagedImage.gameObject.SetActive(false);
         playerStats.isDamaged = false; 
     }
 }

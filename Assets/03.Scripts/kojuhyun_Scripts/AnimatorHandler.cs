@@ -11,8 +11,13 @@ public class AnimatorHandler : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void playerTargetAnim(string target)
+    public void playTargetAnim(string target)
     {
         anim.Play(target);
+    }
+
+    public void SetTriggerParameters(string target)
+    {
+        anim.SetTrigger(target);
     }
 }
