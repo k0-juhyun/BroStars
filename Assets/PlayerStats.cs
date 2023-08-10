@@ -16,10 +16,9 @@ public class PlayerStats : MonoBehaviour
 
     public int HandleHP(int damage)
     {
-        if(damage < 0) 
+        if(damage < 0)
         {
-            // camshake
-            // player twinkle
+            // CamShake
         }
         else if(damage > 0) 
         {

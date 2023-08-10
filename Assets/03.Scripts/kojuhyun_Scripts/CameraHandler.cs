@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CameraHandler : MonoBehaviour
 {
-    public static CameraHandler instance;
-
     PlayerManager playerManager;
 
     [HideInInspector]
@@ -17,24 +15,16 @@ public class CameraHandler : MonoBehaviour
     public float smoothTime = 0.3f;
     public float distanceZFromTarget = -5;
     public float distanceXFromTarget = -5;
-    public float shakeDuration = 2f;
-    public float shakeSpeed = 22;
-    public float magnitude = 1;
-    public float rotationDamper = 2;
-    private float currentVelocity = 0;
     private float startXPos;
     private float startYPos;
-
-    public bool isPlaying;
-
+    private float currentVelocity = 0;
+ 
     private void Awake()
     {
-        instance = this;
+        mainCamera = this.gameObject;
 
         this.startXPos = this.transform.position.x;
         this.startYPos = this.transform.position.y;
-
-        mainCamera = this.gameObject;
 
         playerManager = FindObjectOfType<PlayerManager>();
         target = playerManager.gameObject.GetComponent<Transform>();
@@ -49,14 +39,5 @@ public class CameraHandler : MonoBehaviour
         float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
         this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
-    }
-    
-    IEnumerator HandleShake()
-    {
-        var cameraTransform = mainCamera.transform;
-        var cameraOriginRotation = cameraTransform.rotation.eulerAngles;
-        var direction = (transform.position - cameraTransform.position).normalized;
-        var time = 0;
-        yield return null;
     }
 }
