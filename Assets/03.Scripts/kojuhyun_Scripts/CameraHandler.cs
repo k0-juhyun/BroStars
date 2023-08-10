@@ -49,8 +49,6 @@ public class CameraHandler : MonoBehaviour
         float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
         this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
-
-        if (currentZpos > -91 && currentZpos < -115)
     }
     
     IEnumerator HandleShake()
