@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraHandler : MonoBehaviour
 {
     PlayerManager playerManager;
+    PlayerStats playerStats;
 
     [HideInInspector]
     public GameObject mainCamera;
@@ -18,7 +19,8 @@ public class CameraHandler : MonoBehaviour
     private float startXPos;
     private float startYPos;
     private float currentVelocity = 0;
- 
+    public float shakeMagnitude = 0.1f;
+
     private void Awake()
     {
         mainCamera = this.gameObject;
@@ -27,6 +29,7 @@ public class CameraHandler : MonoBehaviour
         this.startYPos = this.transform.position.y;
 
         playerManager = FindObjectOfType<PlayerManager>();
+        playerStats = FindObjectOfType<PlayerStats>();
         target = playerManager.gameObject.GetComponent<Transform>();
     }
 
@@ -39,5 +42,27 @@ public class CameraHandler : MonoBehaviour
         float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
         this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
+
+        if (playerStats.isDamaged)
+        {
+            StartCoroutine(HandleCamerShake(0.5f));
+        }
+    }
+
+    IEnumerator HandleCamerShake(float duration)
+    {
+        float endTime = Time.time + duration;
+
+        while (Time.time < endTime)
+        {
+            Vector3 shakeOffset = Random.insideUnitSphere * shakeMagnitude;
+            shakeOffset.z = 0;
+            this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z) + shakeOffset;
+
+            yield return null;
+        }
+
+        this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z);
+        playerStats.isDamaged = false; 
     }
 }

@@ -7,12 +7,14 @@ public class PlayerManager : MonoBehaviour
     MoveHandler moveHandler;
     AttackHandler attackHandler;
     PlayerStats playerStats;
+    CameraHandler cameraHandler;
 
     private void Awake()
     {
         moveHandler = GetComponent<MoveHandler>();
         attackHandler = GetComponent<AttackHandler>();
         playerStats = GetComponent<PlayerStats>();
+        cameraHandler = FindObjectOfType<CameraHandler>();
     }
 
     private void FixedUpdate()

@@ -9,6 +9,7 @@ public class PlayerStats : MonoBehaviour
     public int AttackDamage;
     public int SkillDamage;
 
+    public bool isDamaged;
     private void Start()
     {
         curHp = maxHp;
@@ -18,7 +19,7 @@ public class PlayerStats : MonoBehaviour
     {
         if(damage < 0)
         {
-            // CamShake
+            isDamaged = true; // 피격 상태 설정
         }
         else if(damage > 0) 
         {
