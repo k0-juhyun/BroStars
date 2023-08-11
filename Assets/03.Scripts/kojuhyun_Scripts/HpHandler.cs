@@ -10,6 +10,9 @@ public class HpHandler : MonoBehaviour
     [Header("HP Bar")]
     public Slider HpBar;
 
+    [Header("Particle System")]
+    public GameObject HealPrefab;
+
     [Header("플레이어 스탯")]
     public float curHp;
     public float maxHp;
@@ -24,17 +27,18 @@ public class HpHandler : MonoBehaviour
     private void Awake()
     {
         curHp = maxHp;
+
         bushManager = GetComponent<BushManager>();
     }
 
     public float HandleHP(float damage)
     {
-        if(damage < 0)
+        if (damage < 0)
         {
             isDamaged = true; // 피격 상태 설정
         }
 
-        else if(damage > 0) 
+        else if (damage > 0)
         {
             // heal
         }
@@ -48,6 +52,11 @@ public class HpHandler : MonoBehaviour
         if (bushManager.isBush && curHp < maxHp)
         {
             HandleHP(1);
+            HealPrefab.SetActive(true);
+        }
+        else
+        {
+            HealPrefab.SetActive(false);
         }
     }
 

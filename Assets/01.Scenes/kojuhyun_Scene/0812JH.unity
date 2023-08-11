@@ -17263,6 +17263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HpBar: {fileID: 0}
+  HealPrefab: {fileID: 0}
   curHp: 0
   maxHp: 0
   AttackDamage: 0
@@ -46584,6 +46585,95 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1709428288}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1709616401
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 543450653415396536}
+    m_Modifications:
+    - target: {fileID: 117216, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_Name
+      value: HealPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 117216, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19815594, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: lengthInSec
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 19815594, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 19815594, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19969382, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38a0d21635e1b7e44b27550ba6a3358d, type: 3}
+--- !u!4 &1709616402 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 427192, guid: 38a0d21635e1b7e44b27550ba6a3358d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1709616401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1709616403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 117216, guid: 38a0d21635e1b7e44b27550ba6a3358d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1709616401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1709702615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60409,6 +60499,7 @@ Transform:
   - {fileID: 1016056863916359982}
   - {fileID: 1498452866}
   - {fileID: 557536334}
+  - {fileID: 1709616402}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -62470,6 +62561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HpBar: {fileID: 1248015523}
+  HealPrefab: {fileID: 1709616403}
   curHp: 0
   maxHp: 5800
   AttackDamage: 360
