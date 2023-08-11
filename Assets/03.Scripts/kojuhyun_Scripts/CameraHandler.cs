@@ -50,7 +50,7 @@ public class CameraHandler : MonoBehaviour
 
         this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
 
-        if (currentZpos > -91 && currentZpos < -115)
+        //if (currentZpos > -91 && currentZpos < -115)
     }
     
     IEnumerator HandleShake()
@@ -58,7 +58,7 @@ public class CameraHandler : MonoBehaviour
         var cameraTransform = mainCamera.transform;
         var cameraOriginRotation = cameraTransform.rotation.eulerAngles;
         var direction = (transform.position - cameraTransform.position).normalized;
-        var time = 0;
+        //var time = 0;
         yield return null;
     }
 }

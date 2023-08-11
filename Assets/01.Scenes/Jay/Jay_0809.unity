@@ -34964,10 +34964,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1600838088}
-  target: {fileID: 0}
   smoothTime: 0.3
   distanceZFromTarget: -110
   distanceXFromTarget: 0
+  shakeDuration: 2
+  shakeSpeed: 22
+  magnitude: 1
+  rotationDamper: 2
+  isPlaying: 0
 --- !u!114 &1600838095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50144,7 +50148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -28, y: -30}
+  m_AnchoredPosition: {x: -27.999939, y: -30}
   m_SizeDelta: {x: 960, y: 645}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &806039265351225869

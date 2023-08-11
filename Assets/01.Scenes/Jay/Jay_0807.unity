@@ -6986,7 +6986,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: df746ab0d3056ec48a12f4d10264cf79,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: df746ab0d3056ec48a12f4d10264cf79,
         type: 3}
@@ -12845,6 +12845,7 @@ MonoBehaviour:
   snapY: 0
   background: {fileID: 898232724}
   handle: {fileID: 45477599}
+  input: {x: 0, y: 0}
   moveThreshold: 1
 --- !u!114 &607165762
 MonoBehaviour:
@@ -29979,12 +29980,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1438839877}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1439809023 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 949727125493627595, guid: 8c1129a331ac95e4dae48a6d0b757827,
-    type: 3}
-  m_PrefabInstance: {fileID: 74546840261363548}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1440444283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34675,10 +34670,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1600838088}
-  target: {fileID: 1439809023}
   smoothTime: 0.3
   distanceZFromTarget: -110
   distanceXFromTarget: 0
+  shakeDuration: 2
+  shakeSpeed: 22
+  magnitude: 1
+  rotationDamper: 2
+  isPlaying: 0
 --- !u!114 &1600838095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48390,8 +48389,7 @@ MonoBehaviour:
   skillJoystick: {fileID: 0}
   attackLR: {fileID: 0}
   specialLR: {fileID: 0}
-  TrailDistance: 0
-  Points: []
+  lineRendererStartTransform: {fileID: 0}
 --- !u!136 &2137620488
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -48922,6 +48920,7 @@ MonoBehaviour:
   snapY: 0
   background: {fileID: 806039264314667601}
   handle: {fileID: 806039263617331515}
+  input: {x: 0, y: 0}
   moveThreshold: 1
 --- !u!114 &806039265351225870
 MonoBehaviour:
