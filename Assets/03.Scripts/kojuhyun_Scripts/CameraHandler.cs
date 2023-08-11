@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CameraHandler : MonoBehaviour
 {
     PlayerManager playerManager;
-    PlayerStats playerStats;
+    HpHandler playerStats;
     J_PlayerManager jPlayerManager;
 
     [HideInInspector]
@@ -32,7 +32,7 @@ public class CameraHandler : MonoBehaviour
         this.startYPos = this.transform.position.y;
 
         playerManager = FindObjectOfType<PlayerManager>();
-        playerStats = FindObjectOfType<PlayerStats>();
+        playerStats = FindObjectOfType<HpHandler>();
         target = GameObject.FindWithTag("Player").GetComponent<Transform>();
     }
 

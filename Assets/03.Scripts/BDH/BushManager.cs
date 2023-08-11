@@ -25,7 +25,7 @@ public class BushManager : MonoBehaviour
     private float rangeRadius = 2.0f;
 
     // 플레이어가 부쉬 범위안에 속하는 지 판단하는 변수 
-    private bool isBush;
+    public bool isBush;
 
     // Start is called before the first frame update
     void Start()
@@ -124,7 +124,6 @@ public class BushManager : MonoBehaviour
         if (other.gameObject.CompareTag("Grass"))
         {
             isBush = true;
-
         }
     }
 
