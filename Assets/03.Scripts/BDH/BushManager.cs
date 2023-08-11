@@ -60,7 +60,7 @@ public class BushManager : MonoBehaviour
                         if (minDist < 0.5f && isBush == true)
                         {
                             // 플레이어가 페이드인 효과가 적용되면서 투명화가 진행된다. 
-                            IsPlayerTransparent(0.5f);
+                            IsPlayerTransparent(0.2f);
                         }
                         else if (isBush == false)
                         {
