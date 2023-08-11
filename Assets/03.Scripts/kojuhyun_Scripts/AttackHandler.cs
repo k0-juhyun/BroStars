@@ -22,12 +22,16 @@ public class AttackHandler : MonoBehaviour
     private Transform Player;
     public Transform lineRendererStartTransform;
 
+    [Header("Normal Attack Event")]
+    public GameObject fistEffect;
+    public GameObject[] elprimoFists;
+ 
     private float TrailDistance = 2;
     private float launchForce = 10;
 
-    private float maxHeightY; // The maximum y position reached
-    private bool hasReachedMaxHeight;  // Flag to track if the player has reached max height
-    private bool isDescending; // Flag to track if the player is descending
+    private float maxHeightY;
+    private bool hasReachedMaxHeight;
+    private bool isDescending;
 
 
     RaycastHit hit;
@@ -52,7 +56,6 @@ public class AttackHandler : MonoBehaviour
         if (hasReachedMaxHeight && transform.position.y < maxHeightY && !isDescending)
         {
             isDescending = true;
-            // Trigger the "flying" animation here
             animatorHandler.SetTriggerParameters("MaxHeight");
         }
     }
@@ -161,11 +164,24 @@ public class AttackHandler : MonoBehaviour
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
         Vector3 startVelocity = joystickDirection * launchForce;
 
-        maxHeightY = transform.position.y; // Store the initial max height
-        hasReachedMaxHeight = false;        // Reset the max height flag
-        isDescending = false;               // Reset the descending flag
+        maxHeightY = transform.position.y; 
+        hasReachedMaxHeight = false;       
+        isDescending = false;        
 
         GetComponent<Rigidbody>().velocity = startVelocity;
+    }
+    #endregion
+
+    #region 일반 공격 애니메이션 이벤트
+    public void NormalAttackEventHandler()
+    {
+        GameObject _fistEffect = Instantiate(fistEffect, elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
+        Rigidbody _fist = _fistEffect.GetComponent<Rigidbody>();
+
+        if(_fistEffect != null)
+        {
+            _fist.velocity = elprimoFists[0].transform.forward * 2;
+        }
     }
     #endregion
 
