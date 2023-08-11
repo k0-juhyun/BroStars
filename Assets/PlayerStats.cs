@@ -21,6 +21,7 @@ public class PlayerStats : MonoBehaviour
         {
             isDamaged = true; // 피격 상태 설정
         }
+
         else if(damage > 0) 
         {
             // heal
