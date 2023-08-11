@@ -42,9 +42,9 @@ public class shellyFire : MonoBehaviour
         //if(Input.GetButtonDown("Fire1"))
         //{
         //    //총알이 나옴
-        //    GameObject bullet = Instantiate(bFactory);
-        //    bullet.transform.position = firePos.transform.position;
-        //    bullet.transform.rotation = firePos.transform.rotation;
+        //    GameObject shellybullet = Instantiate(bFactory);
+        //    shellybullet.transform.position = firePos.transform.position;
+        //    shellybullet.transform.rotation = firePos.transform.rotation;
         //}
 
         //총알의 사거리만큼 총알이 날아가도록 하고싶다

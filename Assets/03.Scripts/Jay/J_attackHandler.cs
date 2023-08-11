@@ -1,11 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class J_attackHandler : MonoBehaviour
 {
+
+    Joystick joystick;
+    private AnimatorHandler animatorHandler;
+    private Rigidbody rb;
     //기본공격 조이스틱
     public Joystick attackJoystick;
     //특수공격 조이스틱
@@ -18,6 +24,7 @@ public class J_attackHandler : MonoBehaviour
     //총알공장
 
     GameObject bulletFactory;
+    public Transform bulletSpawnPoint;
 
     //공격포인트
     Transform attackLookPoint;
@@ -45,19 +52,29 @@ public class J_attackHandler : MonoBehaviour
     #endregion
     //레이캐스트 맞는곳
     RaycastHit hitInfo;
-    #region FanShapeRenderer
-    public int fanSegments = 30; // 부채꼴을 얼마나 세분화할지 결정하는 변수
-    public float radius = 1.0f; // 부채꼴의 반지름
-    public float startAngle = 30.0f; // 시작 각도 (degree)
-    public float endAngle = 150.0f; // 종료 각도 (degree)
-    #endregion
+    #region 부채꼴
+    public Transform target;    // 부채꼴에 포함되는지 판별할 타겟
+    public float angleRange = 30f;
+    public float radius = 3f;
 
+    Color _blue = new Color(0f, 0f, 1f, 0.2f);
+    Color _red = new Color(1f, 0f, 0f, 0.2f);
+
+    bool isCollision = false;
+
+    #endregion
 
     // Start is called before the first frame update
     void Awake()
     {
+        joystick = FindObjectOfType<Joystick>();
+
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
+        //skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         player = GetComponent<Transform>();
+        animatorHandler = GetComponent<AnimatorHandler>();
+        rb = GetComponent<Rigidbody>();
+        
         //애니메이터
     }
 
@@ -101,12 +118,10 @@ public class J_attackHandler : MonoBehaviour
         if (attackJoystick.Horizontal > 0 || attackJoystick.Horizontal < 0 || attackJoystick.Vertical > 0 || attackJoystick.Vertical < 0)
         {
             //라인랜더러
-            attackLR.SetPosition(0,new Vector3(transform.position.x, transform.position.y, transform.position.z));
-            
+            //attackLR.SetPosition(0,new Vector3(transform.position.x, transform.position.y, transform.position.z));
 
             //총알 생성
-            //GameObject bullet = Instantiate(bulletFactory);
-            
+
             //RaycastHit
             ShootRay();
 
@@ -134,15 +149,19 @@ public class J_attackHandler : MonoBehaviour
                 var particleClone = Instantiate(Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                 Destroy(particleClone.gameObject, 2);
                 hitInfo.transform.SendMessage("DeductPoints", DamageAmount, SendMessageOptions.DontRequireReceiver);
-                attackLR.SetPosition(1, hitInfo.point);
-                //DrawFanShape();
+                DrawFanShape();
+                if (attackLR.positionCount > 0)
+                {
+                    //Instantiate(bulletFactory, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                }
                 Debug.DrawLine(transform.position, hitInfo.point);
 
             }
-
+            
         }
         else
         {
+            attackLR.positionCount = 0;
             attackLR.SetPosition(1, transform.position + transform.forward * attackFireRange);
         }
 
@@ -150,25 +169,54 @@ public class J_attackHandler : MonoBehaviour
     #region FanShapeRenderer
     void DrawFanShape()
     {
-        attackLR.positionCount = fanSegments + 2; // 시작점과 종료점을 추가하기 위해 +2
+        Vector3 interV = target.position - transform.position;
 
-        float deltaAngle = (endAngle - startAngle) / fanSegments;
-        float currentAngle = startAngle;
-
-        Vector3[] positions = new Vector3[fanSegments + 2];
-        positions[0] = Vector3.zero; // 부채꼴의 중심점 (원의 중심)
-
-        for (int i = 1; i <= fanSegments + 1; i++)
+        //나와 타겟 사이 거리가 반경보다 작을 때
+        if (interV.magnitude <= radius)
         {
-            // 각도에 따라 점의 위치 계산
-            float x = Mathf.Cos(currentAngle * Mathf.Deg2Rad) * radius;
-            float y = Mathf.Sin(currentAngle * Mathf.Deg2Rad) * radius;
-            positions[i] = new Vector3(x, y, 0f);
-            currentAngle += deltaAngle;
-        }
-        
+            float dot = Vector3.Dot(interV.normalized, transform.forward);
+            float theta = Mathf.Acos(dot);
+            float degree = Mathf.Rad2Deg * theta;
 
-        attackLR.SetPositions(positions);
+            // 시야각 결정하기
+            bool isCollision = degree <= angleRange / 2f;
+
+            if (isCollision)
+            {
+                // 부채꼴 모양 꼭지점 계산
+                int vertexCount = 30; // 부드럽게 계산
+                Vector3[] vertices = new Vector3[vertexCount + 1];
+                vertices[0] = transform.position;
+                float angleStep = angleRange / vertexCount;
+
+                for (int i = 0; i < vertexCount; i++)
+                {
+                    float angle = -angleRange / 2 + i * angleStep;
+                    Vector3 direction = Quaternion.Euler(0, angle, 0) * transform.forward;
+                    vertices[i + 1] = transform.position + direction * radius;
+                }
+
+                // 라인렌더러의 위치
+                attackLR.positionCount = vertices.Length;
+                attackLR.SetPositions(vertices);
+            }
+            else
+            {
+                // 라인렌더러 위치 초기화
+                attackLR.positionCount = 0;
+            }
+        }
+        else
+        {
+            // 라인렌더러 위치 초기화
+            attackLR.positionCount = 0;
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+
+       
     }
     #endregion
     #region EnemyDamage 
