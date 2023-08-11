@@ -48,17 +48,18 @@ public class BushManager : MonoBehaviour
             for (int i = 0; i < colArrays.Length; i++)
             {
                 float dist = Vector3.Distance(this.transform.position, colArrays[i].gameObject.transform.position);
-
+              
                 if (dist < rangeRadius)
                 {
                     if (dist < minDist)
                     {
                         minDist = dist;
-
+                     
                         // 두 가지 조건으로 플레이어가 부쉬 안에 있다고 판단 ( minDist < 0.5f && Capsule Collider의 조건으로 판단)
                         // 플레이어가 부쉬안에 있다. (정상적으로 작동한다.) 
                         if (minDist < 0.5f && isBush == true)
                         {
+                            print("투명해져라.");
                             // 플레이어가 페이드인 효과가 적용되면서 투명화가 진행된다. 
                             IsPlayerTransparent(0.2f);
                         }
@@ -114,24 +115,26 @@ public class BushManager : MonoBehaviour
             //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
             playerRenderer.materials[0].color = playerMaterialColor;
 
-            print(playerRenderer.name);
+            
         }
     }
-
 
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Grass"))
         {
             isBush = true;
+
         }
     }
+
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Grass"))
         {
             isBush = false;
+            
         }
     }
 
