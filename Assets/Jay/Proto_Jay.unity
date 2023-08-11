@@ -2975,6 +2975,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 98705089}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &102259772 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1153020729012411032, guid: c2d2d5cc93a668d46992a164a12a72e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5446907106606185444}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &105117092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15174,6 +15180,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 664071249}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &674522479 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1067913130999156918, guid: c2d2d5cc93a668d46992a164a12a72e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5446907106606185444}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &674522481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674522479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aba38bb539265f478f85bc13ec28397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxBulletcount: 5
+  bulletPrefabs: {fileID: 7432803646438753741, guid: 5dcb69eff1a3fbf4f8b0d29551d75cc4,
+    type: 3}
+  bulletSpawnPoint: {fileID: 102259772}
 --- !u!1001 &675253804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37503,14 +37531,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1600838088}
+  DamagedImage: {fileID: 0}
   smoothTime: 0.3
   distanceZFromTarget: -110
   distanceXFromTarget: 0
-  shakeDuration: 2
-  shakeSpeed: 22
-  magnitude: 1
-  rotationDamper: 2
-  isPlaying: 0
+  shakeMagnitude: 0.1
 --- !u!114 &1600838095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52158,7 +52183,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -215.95, y: 104}
+  m_AnchoredPosition: {x: -215.95, y: 198.6}
   m_SizeDelta: {x: 960, y: 645}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2125202804
@@ -55119,6 +55144,7 @@ MonoBehaviour:
   maxHp: 5800
   AttackDamage: 360
   SkillDamage: 800
+  isDamaged: 0
 --- !u!4 &5934187917925713978
 Transform:
   m_ObjectHideFlags: 0

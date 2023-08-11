@@ -162,7 +162,7 @@ public class J_attackHandler : MonoBehaviour
         else
         {
             attackLR.positionCount = 0;
-            attackLR.SetPosition(1, transform.position + transform.forward * attackFireRange);
+           // attackLR.SetPosition(1, transform.position + transform.forward * attackFireRange);
         }
 
     }
@@ -174,49 +174,67 @@ public class J_attackHandler : MonoBehaviour
         //나와 타겟 사이 거리가 반경보다 작을 때
         if (interV.magnitude <= radius)
         {
-            float dot = Vector3.Dot(interV.normalized, transform.forward);
-            float theta = Mathf.Acos(dot);
-            float degree = Mathf.Rad2Deg * theta;
+            #region 수정전
+            //    float dot = Vector3.Dot(interV.normalized, transform.forward);
+            //    float theta = Mathf.Acos(dot);
+            //    float degree = Mathf.Rad2Deg * theta;
 
-            // 시야각 결정하기
-            bool isCollision = degree <= angleRange / 2f;
+            //    // 시야각 결정하기
+            //    bool isCollision = degree <= angleRange / 2f;
 
-            if (isCollision)
+            //    if (isCollision)
+            //    {
+            //        // 부채꼴 모양 꼭지점 계산
+            //        int vertexCount = 30; // 부드럽게 계산
+            //        Vector3[] vertices = new Vector3[vertexCount + 1];
+            //        vertices[0] = transform.position;
+            //        float angleStep = angleRange / vertexCount;
+
+            //        for (int i = 0; i < vertexCount; i++)
+            //        {
+            //            float angle = -angleRange / 2 + i * angleStep;
+            //            Vector3 direction = Quaternion.Euler(0, angle, 0) * transform.forward;
+            //            vertices[i + 1] = transform.position + direction * radius;
+            //        }
+
+            //        // 라인렌더러의 위치
+            //        attackLR.positionCount = vertices.Length;
+            //        attackLR.SetPositions(vertices);
+            //    }
+            //    else
+            //    {
+            //        // 라인렌더러 위치 초기화
+            //        attackLR.positionCount = 0;
+            //    }
+            //}
+            //else
+            //{
+            //    // 라인렌더러 위치 초기화
+            //    attackLR.positionCount = 0;
+            #endregion
+            attackLR = GetComponent<LineRenderer>();
+            int numPoints = 99;
+            float angle = 60;
+            attackLR.positionCount = numPoints + 1;
+
+            Vector3 center = transform.position;
+
+            float angleInradians = angle * Mathf.Deg2Rad;
+
+            float angleStep = angleInradians / numPoints;
+
+            for (int i = 0; i <= numPoints; i++)
             {
-                // 부채꼴 모양 꼭지점 계산
-                int vertexCount = 30; // 부드럽게 계산
-                Vector3[] vertices = new Vector3[vertexCount + 1];
-                vertices[0] = transform.position;
-                float angleStep = angleRange / vertexCount;
+                float x = Mathf.Sin(i * angleStep) * radius;
+                float y = Mathf.Cos(i * angleStep) * radius;
 
-                for (int i = 0; i < vertexCount; i++)
-                {
-                    float angle = -angleRange / 2 + i * angleStep;
-                    Vector3 direction = Quaternion.Euler(0, angle, 0) * transform.forward;
-                    vertices[i + 1] = transform.position + direction * radius;
-                }
-
-                // 라인렌더러의 위치
-                attackLR.positionCount = vertices.Length;
-                attackLR.SetPositions(vertices);
+                attackLR.SetPosition(i,center + new Vector3(x, y, 0));
             }
-            else
-            {
-                // 라인렌더러 위치 초기화
-                attackLR.positionCount = 0;
-            }
-        }
-        else
-        {
-            // 라인렌더러 위치 초기화
-            attackLR.positionCount = 0;
         }
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-
-       
     }
     #endregion
     #region EnemyDamage 
