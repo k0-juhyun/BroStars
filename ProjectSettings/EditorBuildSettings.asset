@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/01.Scenes/ArenaStarterKit/MainScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/01.Scenes/Gui/MainScene.unity
+    guid: ad745dc2592774e41ae1b3ab04918edc
+  - enabled: 1
+    path: Assets/01.Scenes/Gui/LodingScene.unity
+    guid: 63c446d17fc69f64287a52aec0e027f8
   m_configObjects: {}
