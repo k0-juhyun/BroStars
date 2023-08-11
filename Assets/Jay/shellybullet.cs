@@ -26,7 +26,7 @@ public class shellybullet : MonoBehaviour
         var otherRB = collision.gameObject.GetComponent<Rigidbody>();
         if(otherRB != null)
         {
-            otherRB.AddForce(transform.forward * otherRB.mass * 20, ForceMode.Impulse);
+            otherRB.AddForce(transform.forward * otherRB.mass * 10, ForceMode.Impulse);
         }
 
     }
