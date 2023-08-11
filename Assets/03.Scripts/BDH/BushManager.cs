@@ -9,7 +9,8 @@ using UnityEngine;
 
 public class BushManager : MonoBehaviour
 {
-    public GameObject playerComponent; 
+    // 플레이어의 SkinedRenderer를 가지고 있는 게임 오브젝트. 
+    public GameObject playerComponent;
 
     // 부쉬 레이어 변수.
     private int layer;
@@ -17,9 +18,14 @@ public class BushManager : MonoBehaviour
     // 부쉬 Mesh 렌더러 변수. 
     MeshRenderer mRenderer;
 
-    private float outOfRadius = 3.0f; 
+    // 외부 범위 반지름
+    private float outOfRadius = 3.0f;
 
+    // 부쉬 범위 반지름.
     private float rangeRadius = 2.0f;
+
+    // 플레이어가 부쉬 범위안에 속하는 지 판단하는 변수 
+    private bool isBush;
 
     // Start is called before the first frame update
     void Start()
@@ -36,138 +42,96 @@ public class BushManager : MonoBehaviour
         // OverlapSphere의 내부에 있는 경우. Grass를 식별한다. 
         if (colArrays.Length > 0)
         {
+            // 가장 가까운 거리 변수 
             float minDist = Mathf.Infinity;
 
             for (int i = 0; i < colArrays.Length; i++)
             {
                 float dist = Vector3.Distance(this.transform.position, colArrays[i].gameObject.transform.position);
-               
-                if(dist < rangeRadius)
+
+                if (dist < rangeRadius)
                 {
-                    if(dist < minDist)
+                    if (dist < minDist)
                     {
                         minDist = dist;
-                        
-                        // 두 가지 조건으로 플레이어가 부쉬 안에 있다고 판단 ( minDist < 0.5f && 
-                        if(minDist < 0.5f)
-                        {
 
-                            // 플레이어가 부쉬안에 있다.
-                           // print("플레이어가 부쉬 안");
+                        // 두 가지 조건으로 플레이어가 부쉬 안에 있다고 판단 ( minDist < 0.5f && Capsule Collider의 조건으로 판단)
+                        // 플레이어가 부쉬안에 있다. (정상적으로 작동한다.) 
+                        if (minDist < 0.5f && isBush == true)
+                        {
+                            // 플레이어가 페이드인 효과가 적용되면서 투명화가 진행된다. 
+                            IsPlayerTransparent(0.2f);
                         }
-                        else
+                        else if (isBush == false)
                         {
                             // 플레이어가 부쉬 밖에 있다. 
-                            //print("플레이어가 부쉬 밖");
+                            // 플레이어가 정상적으로 돌아온다. 
+                            IsPlayerTransparent(1f);
                         }
-                        
-                    }
-
-                    
-
-                    if (dist < 0.2f)
-                    {
-                        // 플레이어가 페이드인 효과가 적용되면서 투명화가 진행된다. 
-
-                        //// Shelly_GEO의 컴포넌트의 갯수
-                        //int length = playerComponent.transform.childCount;
-
-                        //for (int index = 0; index < length; index++)
-                        //{
-                        //    // 플레이어의 SkinnedMeshRenderer 컴포넌트를 가져온다. 
-                        //    SkinnedMeshRenderer playerRenderer = playerComponent.transform.GetChild(index).GetComponent<SkinnedMeshRenderer>();
-                        //    // SkinnedMeshRenderer 컬러값을 가져온다. 
-                        //    Color playerMaterialColor = playerRenderer.materials[0].color;
-                        //    // SkinnedMeshRenderer 알파 값을 변경합니다.
-                        //    playerMaterialColor.a = 0f;
-                        //    //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
-                        //    playerRenderer.materials[0].color = playerMaterialColor;
-                        //}
 
                     }
-                    else
-                    {
-                        //print(dist);
-                    }
-                   
-                    // MeshRenderer 컴포넌트를 가져온다. 
-                    mRenderer = colArrays[i].gameObject.GetComponent<MeshRenderer>();       
+                    IsBushTransparent(colArrays[i].gameObject, 0.5f);
 
-                    // MeshRenderer의 컬러값을 가져온다. 
-                    Color materialColor = mRenderer.materials[0].color;
-
-                    // MeshRenderer의 알파 값을 변경합니다.
-                    materialColor.a = 0.3f;
-
-                    //  MeshRenderer 변경된 컬러 값을 재질에 적용합니다.
-                    mRenderer.materials[0].color = materialColor;
                 }
                 else
                 {
-                    // MeshRenderer 컴포넌트를 가져온다. 
-                    mRenderer = colArrays[i].gameObject.GetComponent<MeshRenderer>();
-
-                    // MeshRenderer의 컬러값을 가져온다. 
-                    Color materialColor = mRenderer.materials[0].color;
-
-                    // MeshRenderer의 알파 값을 변경합니다.
-                    materialColor.a = 1f;
-
-                    //  MeshRenderer 변경된 컬러 값을 재질에 적용합니다.
-                    mRenderer.materials[0].color = materialColor;
-
-                    
-
+                    IsBushTransparent(colArrays[i].gameObject, 1f);
                 }
 
             }
         }
-     
+
     }
 
-  /*  private void OnCollisionStay(Collision collision)
+    private void IsBushTransparent(GameObject bushObject, float parameter)
     {
-        if (collision.gameObject.CompareTag("Grass"))
-        {
-            print("잔디잔디");
-        }
-    }*/
+        // MeshRenderer 컴포넌트를 가져온다. 
+        mRenderer = bushObject.GetComponent<MeshRenderer>();
 
-
-    // 페이드 인 효과로 발생하면서 투명화가 진행된다.
-    IEnumerator FadeIn(MeshRenderer renderer)
-    {
         // MeshRenderer의 컬러값을 가져온다. 
-        Color materialColor = renderer.materials[0].color;
+        Color materialColor = mRenderer.materials[0].color;
 
-        for (float i = 0; i < 1f; i+= 0.1f)
-        {
-       
-            //float f = i / 0.1f;
-            print(i);
+        // MeshRenderer의 알파 값을 변경합니다.
+        materialColor.a = parameter;
 
-            //color.a = f;
-            materialColor.a = i;
-            yield return new WaitForSeconds(0.1f);
-        }
-      
         //  MeshRenderer 변경된 컬러 값을 재질에 적용합니다.
-        renderer.materials[0].color = materialColor;
+        mRenderer.materials[0].color = materialColor;
     }
 
-    // OverlapSphere을 벗어나면 페이드 아웃 효과 및 정상적으로 돌아온다. 
-    IEnumerator FadeOut()
+    private void IsPlayerTransparent(float parameter)
     {
-        for (int i = 10; i >= 0; i--)
+        //// Shelly_GEO의 컴포넌트의 갯수
+        int length = playerComponent.transform.childCount;
+
+        for (int index = 0; index < length; index++)
         {
-            float f = i / 10.0f;
-            Color color = mRenderer.materials[0].color;
-            color.a = f;
-            yield return new WaitForSeconds(0.1f);
+            // 플레이어의 SkinnedMeshRenderer 컴포넌트를 가져온다. 
+            SkinnedMeshRenderer playerRenderer = playerComponent.transform.GetChild(index).GetComponent<SkinnedMeshRenderer>();
+            // SkinnedMeshRenderer 컬러값을 가져온다. 
+            Color playerMaterialColor = playerRenderer.materials[0].color;
+            // SkinnedMeshRenderer 알파 값을 변경합니다.
+            playerMaterialColor.a = parameter;
+            //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
+            playerRenderer.materials[0].color = playerMaterialColor;
         }
     }
 
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Grass"))
+        {
+            isBush = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Grass"))
+        {
+            isBush = false;
+        }
+    }
 
     // 기즈모를 그린다. 
     private void OnDrawGizmos()
@@ -180,7 +144,7 @@ public class BushManager : MonoBehaviour
 
     }
 
-  
+
 
 
 

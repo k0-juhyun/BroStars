@@ -21,6 +21,7 @@ public class Zem : MonoBehaviour
     {
         //audioSource = GetComponent<AudioSource>();
         GetComponent<BoxCollider>().enabled = false;
+     
     }
 
     // Start is called before the first frame update
