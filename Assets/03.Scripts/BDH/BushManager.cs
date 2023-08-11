@@ -113,6 +113,8 @@ public class BushManager : MonoBehaviour
             playerMaterialColor.a = parameter;
             //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
             playerRenderer.materials[0].color = playerMaterialColor;
+
+            print(playerRenderer.name);
         }
     }
 
