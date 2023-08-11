@@ -80,8 +80,8 @@ public class J_attackHandler : MonoBehaviour
         //tr.startColor = new Color(1, 0, 0, 0.7f);
         //tr.endColor = new Color(1, 0, 0, 0.7f);
         //Destroy(gameObject, 2f);
-        
-        
+
+
         //애니메이터
     }
 
@@ -167,7 +167,7 @@ public class J_attackHandler : MonoBehaviour
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
         for (int i = 0; i < 5; i++)
         {
-            GameObject bullet = Instantiate(bulletFactory,firePos.position,firePos.rotation);
+            GameObject bullet = Instantiate(bulletFactory, firePos.position, firePos.rotation);
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
         }
@@ -350,6 +350,13 @@ public class J_attackHandler : MonoBehaviour
         targets.Remove(enemyTransform);
     }
     #endregion
+
+    //AutoAim
+    
+    void AutoAims()
+    {
+
+    }
 
     //스킬
     //void SpecialShoot()
