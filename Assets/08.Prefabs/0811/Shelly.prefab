@@ -1184,7 +1184,10 @@ MonoBehaviour:
   skillJoystick: {fileID: 0}
   attackLR: {fileID: 1153020727909481472}
   skillLR: {fileID: 2227554918179024777}
-  bulletSpawnPoint: {fileID: 1153020729012411032}
+  bulletFactory: {fileID: 7432803646438753741, guid: 5dcb69eff1a3fbf4f8b0d29551d75cc4,
+    type: 3}
+  firePos: {fileID: 1153020729012411032}
+  startAngle: -10
   DamageAmount: 0
   TargetDistance: 0
   AllowedRange: 100
