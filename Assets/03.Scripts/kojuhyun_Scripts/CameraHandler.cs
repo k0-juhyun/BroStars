@@ -7,6 +7,7 @@ public class CameraHandler : MonoBehaviour
 {
     PlayerManager playerManager;
     PlayerStats playerStats;
+    J_PlayerManager jPlayerManager;
 
     [HideInInspector]
     public GameObject mainCamera;
@@ -32,7 +33,7 @@ public class CameraHandler : MonoBehaviour
 
         playerManager = FindObjectOfType<PlayerManager>();
         playerStats = FindObjectOfType<PlayerStats>();
-        target = playerManager.gameObject.GetComponent<Transform>();
+        target = GameObject.FindWithTag("Player").GetComponent<Transform>();
     }
 
     private void LateUpdate()
@@ -67,6 +68,6 @@ public class CameraHandler : MonoBehaviour
 
         this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z);
         DamagedImage.gameObject.SetActive(false);
-        playerStats.isDamaged = false; 
+        playerStats.isDamaged = false;
     }
 }

@@ -16763,6 +16763,29 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 664071249}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &666781826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2530347082121812979, guid: 1ce65b39542450c43bbe8018ccab79d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1787174397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &666781835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666781826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eaf933ebe65a574ba1056ce0bc208bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curHp: 0
+  maxHp: 0
+  AttackDamage: 0
+  SkillDamage: 0
+  isDamaged: 0
 --- !u!1001 &675253804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47343,12 +47366,12 @@ PrefabInstance:
     - target: {fileID: 2530347082121812979, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
       propertyPath: m_Name
-      value: Shelly (1)
+      value: Shelly
       objectReference: {fileID: 0}
     - target: {fileID: 2530347082121812979, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2906591901817848137, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
@@ -58891,7 +58914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1004443148158432210
 GameObject:
   m_ObjectHideFlags: 0
@@ -61883,7 +61906,7 @@ PrefabInstance:
     - target: {fileID: 8889682521521454638, guid: 14e6b2131b8523141a959d854d6980b8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14e6b2131b8523141a959d854d6980b8, type: 3}
