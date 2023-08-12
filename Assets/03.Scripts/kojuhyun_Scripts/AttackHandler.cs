@@ -28,11 +28,7 @@ public class AttackHandler : MonoBehaviour
  
     private float TrailDistance = 2;
     private float launchForce = 10;
-
-    private float maxHeightY;
-    private bool hasReachedMaxHeight;
-    private bool isDescending;
-
+    private float initialYPosition;
 
     RaycastHit hit;
 
@@ -46,19 +42,6 @@ public class AttackHandler : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
-    {
-        if (!hasReachedMaxHeight && transform.position.y > maxHeightY)
-        {
-            hasReachedMaxHeight = true;
-        }
-
-        if (hasReachedMaxHeight && transform.position.y < maxHeightY && !isDescending)
-        {
-            isDescending = true;
-            animatorHandler.SetTriggerParameters("MaxHeight");
-        }
-    }
 
     #region 공격
 
@@ -127,6 +110,7 @@ public class AttackHandler : MonoBehaviour
 
     #endregion
 
+
     #region 포물선 그리기
     private void DrawTrajectory(Vector3 startVelocity, int numPoints, float timeStep)
     {
@@ -150,11 +134,7 @@ public class AttackHandler : MonoBehaviour
         animatorHandler.playTargetAnim("Jumping");
 
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
-        Vector3 startVelocity = joystickDirection * launchForce;
-
-        maxHeightY = transform.position.y; 
-        hasReachedMaxHeight = false;       
-        isDescending = false;        
+        Vector3 startVelocity = joystickDirection * launchForce;   
 
         GetComponent<Rigidbody>().velocity = startVelocity;
     }
