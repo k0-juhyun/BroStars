@@ -61,24 +61,8 @@ public class AttackHandler : MonoBehaviour
     }
 
     #region 공격
+
     public void HandleNormalAttack()
-    {
-        if (attackJoystick.Horizontal > 0 || attackJoystick.Horizontal < 0 || attackJoystick.Vertical > 0 || attackJoystick.Vertical < 0)
-        {
-            if (Mathf.Abs(attackJoystick.Horizontal) < 0.5f && Mathf.Abs(attackJoystick.Vertical) < 0.5f)
-            {
-                attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 6.1f, attackJoystick.Vertical + transform.position.z);
-
-                animatorHandler.playTargetAnim("Punching");
-
-                transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
-
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            }
-        }
-    }
-
-    public void HandleSpecialAttack()
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
@@ -87,15 +71,19 @@ public class AttackHandler : MonoBehaviour
                 attackLR.gameObject.SetActive(true);
             }
 
+            animatorHandler.playTargetAnim("Punching");
+
             attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
 
-            transform.LookAt(new Vector3(attackLookPoint.position.x, 4.11f, attackLookPoint.position.z));
+            transform.LookAt(new Vector3(attackLookPoint.position.x, 5.11f, attackLookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            attackLR.SetPosition(0, new Vector3(transform.position.x, 4.11f, transform.position.z));
+            attackLR.SetPosition(0, new Vector3(transform.position.x, 4.2f, transform.position.z));
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, TrailDistance))
+            Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+
+            if (Physics.Raycast(rayStartPos, transform.forward, out hit, TrailDistance))
             {
                 attackLR.SetPosition(1, hit.point);
             }
@@ -173,15 +161,14 @@ public class AttackHandler : MonoBehaviour
     #endregion
 
     #region 일반 공격 애니메이션 이벤트
-    public void NormalAttackEventHandler()
+    public void LeftHandEventHandler()
     {
         GameObject _fistEffect = Instantiate(fistEffect, elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
-        Rigidbody _fist = _fistEffect.GetComponent<Rigidbody>();
+    }
 
-        if(_fistEffect != null)
-        {
-            _fist.velocity = elprimoFists[0].transform.forward * 2;
-        }
+    public void RightHandEventHandler()
+    {
+        GameObject _fistEffect = Instantiate(fistEffect, elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
     }
     #endregion
 

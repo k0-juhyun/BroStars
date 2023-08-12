@@ -58,21 +58,28 @@ ModelImporter:
       curves: []
       events:
       - time: 0.41005433
-        functionName: NormalAttackEventHandler
+        functionName: RightHandEventHandler
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.5204892
-        functionName: NormalAttackEventHandler
+        functionName: LeftHandEventHandler
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.6479889
-        functionName: NormalAttackEventHandler
+        functionName: RightHandEventHandler
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.29902625
+        functionName: LeftHandEventHandler
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

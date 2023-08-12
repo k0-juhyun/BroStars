@@ -23,6 +23,10 @@ public class MoveHandler : MonoBehaviour
     public float moveSpeed;
     #endregion
 
+    [SerializeField]
+    [Header("Particle System")]
+    private ParticleSystem[] dustPrefab;
+
     private void Awake()
     {
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
@@ -50,5 +54,21 @@ public class MoveHandler : MonoBehaviour
         {
             moveFlag = false;
         }
+    }
+
+    public void HandleLeftDust()
+    {
+        ParticleSystem particles = Instantiate(dustPrefab[0], transform.position, Quaternion.identity);
+        particles.Play();
+
+        Destroy(particles.gameObject, particles.main.duration);
+    }
+
+    public void HandleRightDust()
+    {
+        ParticleSystem particles = Instantiate(dustPrefab[1], transform.position, Quaternion.identity);
+        particles.Play();
+
+        Destroy(particles.gameObject, particles.main.duration);
     }
 }
