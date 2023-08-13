@@ -28,6 +28,7 @@ public class CameraHandler : MonoBehaviour
     private float startYPos;
     private float currentVelocity = 0;
     public float shakeMagnitude = 0.1f;
+    public float startCamSpeed = 0.1f;
 
     private bool gameStart;
 
@@ -47,21 +48,25 @@ public class CameraHandler : MonoBehaviour
     {
         if (target == null)
             return;
+
         float targetZPos = target.transform.position.z + distanceZFromTarget;
         float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
         if(gameStart == false)
         {
+            print("1");
             Vector3 startCamPos = new Vector3(startXPos, startYPos, currentZpos);
-            transform.position = Vector3.Lerp(transform.position, startCamPos, 0.1f);
+            transform.position = Vector3.Lerp(transform.position, startCamPos, startCamSpeed);
             if(Vector3.Distance(transform.position,startCamPos) < 0.05f)
             {
+                print("2");
                 Messages.SetActive(false);
                 JemManager.SetActive(true);
                 Canvas.SetActive(true);
 
                 print("GameStart");
                 gameStart = true;
+                print("3");
             }
         }
 
