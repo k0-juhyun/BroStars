@@ -1,15 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class J_animatorHandler : MonoBehaviour
+public class J_AnimatorHandler : MonoBehaviour
 {
     Animator anim;
 
     private void Awake()
     {
-        anim = GetComponentInChildren<Animator>(); 
+        anim = GetComponent<Animator>();
     }
 
     public void playTargetAnim(string target)
@@ -17,15 +16,8 @@ public class J_animatorHandler : MonoBehaviour
         anim.Play(target);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetTriggerParameters(string target)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        anim.SetTrigger(target);
     }
 }

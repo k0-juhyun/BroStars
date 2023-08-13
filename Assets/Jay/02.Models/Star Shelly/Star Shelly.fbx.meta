@@ -3,7 +3,22 @@ guid: f2ddb356756603446b586b41a758cfba
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: character_emit_mat
+    second: {fileID: 2100000, guid: a15f9347107f2124d9e869a0dadaa358, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: character_mat
+    second: {fileID: 2100000, guid: c55ce5af5dbe6b14096871c43927967f, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: star_shelly
+    second: {fileID: 2800000, guid: 0985db030bfa47747903c57ea59ee422, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

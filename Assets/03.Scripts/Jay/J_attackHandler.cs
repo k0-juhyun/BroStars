@@ -11,7 +11,7 @@ public class J_attackHandler : MonoBehaviour
 {
 
     Joystick joystick;
-    private J_animatorHandler animatorHandler;
+    private J_AnimatorHandler animatorHandler;
     private Rigidbody rb;
     //기본공격 조이스틱
     public Joystick attackJoystick;
@@ -73,7 +73,7 @@ public class J_attackHandler : MonoBehaviour
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         //skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         player = GetComponent<Transform>();
-        animatorHandler = GetComponent<J_animatorHandler>();
+        animatorHandler = GetComponent<J_AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
         //tr.startColor = new Color(1, 0, 0, 0.7f);
@@ -94,8 +94,8 @@ public class J_attackHandler : MonoBehaviour
             {
                 attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 6.1f, attackJoystick.Vertical + transform.position.z);
 
-                animatorHandler.playTargetAnim("attack");
-
+                //animatorHandler.playTargetAnim("attack");
+                
                 transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
 
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
@@ -171,7 +171,7 @@ public class J_attackHandler : MonoBehaviour
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
             Destroy(bullet, 2f);
         }
-
+        animatorHandler.playTargetAnim("attack");
     }
     //void ShootRay()
     //{

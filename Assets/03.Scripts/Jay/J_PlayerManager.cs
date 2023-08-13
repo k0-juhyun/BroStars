@@ -6,12 +6,19 @@ public class J_PlayerManager : MonoBehaviour
 {
     J_MoveHandler moveHandler;
     J_attackHandler attackHandler;
+    HpHandler hpHandler;
+    BushManager bushManager;
     //J_GunController gunController;
     // Start is called before the first frame update
+
+    public int gem;
+
     void Awake()
     {
         moveHandler = GetComponent <J_MoveHandler>();
         attackHandler = GetComponent<J_attackHandler>();
+        hpHandler = GetComponent<HpHandler>();
+        bushManager = GetComponent <BushManager>();
         //gunController = GetComponentInChildren<J_GunController>();  
     }
 
@@ -40,6 +47,8 @@ public class J_PlayerManager : MonoBehaviour
     {
         moveHandler.HandleMovement();
         attackHandler.HandleNormalAttack();
+       // hpHandler.UpdateHp();
+        //hpHandler.RegenerateHpInBush();
         //gunController.ShootBullet();
     }
 }
