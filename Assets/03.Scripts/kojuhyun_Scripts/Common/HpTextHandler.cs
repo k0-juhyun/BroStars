@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class HpTextHandler : MonoBehaviour
 {
-    HpHandler playerStats;
+    HpHandler hpHandler;
     Text text;
 
     private void Awake()
     {
-        playerStats = FindObjectOfType<HpHandler>();
+        hpHandler = FindObjectOfType<HpHandler>();
         text = GetComponent<Text>();
     }
 
     void Update()
     {
-        text.text = playerStats.curHp.ToString();
+        text.text = hpHandler.curHp.ToString();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public class ElprimoJoyStick : Joystick
+public class JHJoyStick : Joystick
 {
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
@@ -27,19 +27,37 @@ public class ElprimoJoyStick : Joystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        AttackHandler attackHandler = FindObjectOfType<AttackHandler>();
+        NitaAttackHandler nitaAttackHandler = FindAnyObjectByType<NitaAttackHandler>();
+        ElprimoAttackHandler elprimoAttackHandler = FindObjectOfType<ElprimoAttackHandler>();
         AnimatorHandler animHandler = FindObjectOfType<AnimatorHandler>();
 
-        if (attackHandler != null && this.gameObject.name == "SkillJoyStick")
+        #region 엘프리모
+        if (elprimoAttackHandler != null)
         {
-            attackHandler.LaunchPlayer(Horizontal, Vertical);
+            if (this.gameObject.name == "SkillJoyStick")
+            {
+                elprimoAttackHandler.LaunchPlayer(Horizontal, Vertical);
+            }
+            else if (this.gameObject.name == "AttackJoyStick")
+            {
+                animHandler.playTargetAnim("Normal");
+            }
         }
+        #endregion
 
-        else if (attackHandler != null && this.gameObject.name == "AttackJoyStick")
+        #region 니타
+        if (nitaAttackHandler != null)
         {
-            animHandler.playTargetAnim("Punching");
+            if (this.gameObject.name == "SkillJoyStick")
+            {
+                
+            }
+            else if (this.gameObject.name == "AttackJoyStick")
+            {
+                nitaAttackHandler.NitaNormalAttack();
+            }
         }
-
+        #endregion
         base.OnPointerUp(eventData);
     }
 

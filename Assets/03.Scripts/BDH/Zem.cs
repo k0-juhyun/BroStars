@@ -60,11 +60,11 @@ public class Zem : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(AbsorptedToCollider(collision));
-            collision.gameObject.GetComponent<PlayerManager>().gem += 1;
-            print("현재 플레이어의 잽 갯수는  : " + collision.gameObject.GetComponent<PlayerManager>().gem);
+            collision.gameObject.GetComponent<GemHandler>().gem += 1;
+            print("현재 플레이어의 잽 갯수는  : " + collision.gameObject.GetComponent<GemHandler>().gem);
 
             // 잼 갯수 UI 업데이트 
-            zemScore.text = collision.gameObject.GetComponent<PlayerManager>().gem.ToString();
+            zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
 
         }
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackEffectHandler : MonoBehaviour
+public class ElrpimoAttackEffectHandler : MonoBehaviour
 {
     [Header("Speed")]
     [SerializeField]
@@ -21,7 +21,6 @@ public class AttackEffectHandler : MonoBehaviour
     IEnumerator destroy()
     {
         yield return new WaitForSeconds(0.5f);
-        print("t");
         Destroy(this.gameObject);
     }
 }

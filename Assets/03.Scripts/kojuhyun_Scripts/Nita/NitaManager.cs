@@ -3,29 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerManager : MonoBehaviour
+public class NitaManager : MonoBehaviour
 {
     MoveHandler moveHandler;
-    AttackHandler attackHandler;
     HpHandler hpHandler;
-    BushManager bushManager;
-
-    public int gem;
+    NitaAttackHandler nitaAttackHandler;
 
     private void Awake()
     {
         moveHandler = GetComponent<MoveHandler>();
-        attackHandler = GetComponent<AttackHandler>();
         hpHandler = GetComponent<HpHandler>();
-        bushManager = GetComponent<BushManager>();
+        nitaAttackHandler = GetComponent<NitaAttackHandler>();
     }
 
     private void FixedUpdate()
     {
-        moveHandler.HandleMovement();
+        moveHandler.HandleMovement();   
 
-        attackHandler.HandleNormalAttack();
-        attackHandler.HandleUltimateAttack();
+        nitaAttackHandler.HandleNormalAttack();
 
         hpHandler.UpdateHp();
         hpHandler.RegenerateHpInBush();

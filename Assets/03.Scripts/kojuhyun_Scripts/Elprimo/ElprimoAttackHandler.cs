@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackHandler : MonoBehaviour
+public class ElprimoAttackHandler : MonoBehaviour
 {
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
-    Joystick joystick;
 
     [Header("JoyStick")]
     public Joystick attackJoystick;
@@ -26,14 +25,13 @@ public class AttackHandler : MonoBehaviour
     public GameObject fistEffect;
     public GameObject[] elprimoFists;
  
-    private float TrailDistance = 2;
+    private float TrailDistance = 1.3f;
     private float launchForce = 10;
 
     RaycastHit hit;
 
     private void Awake()
     {
-        joystick = FindObjectOfType<Joystick>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
@@ -128,7 +126,7 @@ public class AttackHandler : MonoBehaviour
     #region 플레이어 던지기
     public void LaunchPlayer(float h, float v)
     {
-        animatorHandler.playTargetAnim("Jumping");
+        animatorHandler.playTargetAnim("Special");
 
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
         Vector3 startVelocity = joystickDirection * launchForce;   

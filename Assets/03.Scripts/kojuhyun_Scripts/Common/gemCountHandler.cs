@@ -7,15 +7,15 @@ using UnityEngine.UI;
 public class gemCountHandler : MonoBehaviour
 {
     private TMP_Text tmp;
-    PlayerManager playerManager;
+    GemHandler gemHandler;
     void Start()
     {
-        playerManager = FindObjectOfType<PlayerManager>();  
+        gemHandler = FindObjectOfType<GemHandler>();
         tmp = this.gameObject.GetComponent<TMP_Text>();
     }
 
     void Update()
     {
-        tmp.text = playerManager.gem.ToString();
+        tmp.text = gemHandler.gem.ToString();
     }
 }

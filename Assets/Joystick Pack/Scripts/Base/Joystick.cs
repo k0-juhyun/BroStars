@@ -71,6 +71,13 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
         Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
         Vector2 radius = background.sizeDelta / 2;
+
+        Vector2 limitedInput = Vector2.ClampMagnitude((eventData.position - position) / (radius * canvas.scaleFactor), 0.2f);
+
+        if(this.gameObject.name == "skillJoyStick")
+        {
+            input = limitedInput;
+        }
         input = (eventData.position - position) / (radius * canvas.scaleFactor);
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
