@@ -16781,10 +16781,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaf933ebe65a574ba1056ce0bc208bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HpBar: {fileID: 0}
+  HealPrefab: {fileID: 0}
   curHp: 0
   maxHp: 0
   AttackDamage: 0
   SkillDamage: 0
+  hpRegenValue: 0
   isDamaged: 0
 --- !u!114 &666781844
 MonoBehaviour:
@@ -41318,7 +41321,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1600838088}
-  DamagedImage: {fileID: 1704444172}
   smoothTime: 0.3
   distanceZFromTarget: -110
   distanceXFromTarget: 0
@@ -47463,7 +47465,7 @@ PrefabInstance:
     - target: {fileID: 8380046118908204716, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8380046118908204716, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
@@ -51148,6 +51150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68d9a80154e8314d8c1a00bd19777fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gem: 0
 --- !u!114 &1902817161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51205,6 +51208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 65043141}
+  isBush: 0
 --- !u!1 &1909098749
 GameObject:
   m_ObjectHideFlags: 0
@@ -57890,6 +57894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68d9a80154e8314d8c1a00bd19777fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gem: 0
 --- !u!114 &2137620485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57904,6 +57909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 806039265351225869}
   moveSpeed: 2
+  dustPrefab: []
 --- !u!114 &2137620486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60649,6 +60655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 343920768}
+  isBush: 0
 --- !u!114 &5866666021590044358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60661,10 +60668,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaf933ebe65a574ba1056ce0bc208bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HpBar: {fileID: 0}
+  HealPrefab: {fileID: 0}
   curHp: 0
   maxHp: 5800
   AttackDamage: 360
   SkillDamage: 800
+  hpRegenValue: 0
   isDamaged: 0
 --- !u!4 &5934187917925713978
 Transform:
