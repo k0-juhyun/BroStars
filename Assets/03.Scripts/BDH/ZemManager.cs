@@ -36,10 +36,14 @@ public class ZemManager : MonoBehaviour
         while (true)
         {
             // 실제 플레이에서 잼 생성 시간은 7초 간격으로 생성된다. 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(7f);
             // Zem을 생성할 위치는 BoxCollider의 중심 위치
             Vector3 zemsRandomPosition = new Vector3(centerX, rangeObject.transform.position.y, centerZ);
 
+            // Zem 생성 이펙트 및 사운드 실행.
+            SoundManager.instance.PlayZemBGM();
+
+            // Zem을 생성한다.
             GameObject zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
 
             // CreateRandomPosition()의 위치를 목표 지점으로 설정한다. 
