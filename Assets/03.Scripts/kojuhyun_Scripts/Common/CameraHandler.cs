@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TextCore.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,11 @@ public class CameraHandler : MonoBehaviour
     [HideInInspector]
     public GameObject mainCamera;
 
+    [Header("게임 시작시 켜지는 것들")]
+    public GameObject Messages;
+    public GameObject JemManager;
+    public GameObject Canvas;
+
     private Transform target;
 
     [Header("Camera Settings")]
@@ -22,6 +28,8 @@ public class CameraHandler : MonoBehaviour
     private float startYPos;
     private float currentVelocity = 0;
     public float shakeMagnitude = 0.1f;
+
+    private bool gameStart;
 
     private void Awake()
     {
@@ -39,16 +47,35 @@ public class CameraHandler : MonoBehaviour
     {
         if (target == null)
             return;
-
         float targetZPos = target.transform.position.z + distanceZFromTarget;
         float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
-        this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
+        if(gameStart == false)
+        {
+            Vector3 startCamPos = new Vector3(startXPos, startYPos, currentZpos);
+            transform.position = Vector3.Lerp(transform.position, startCamPos, 0.1f);
+            if(Vector3.Distance(transform.position,startCamPos) < 0.05f)
+            {
+                Messages.SetActive(false);
+                JemManager.SetActive(true);
+                Canvas.SetActive(true);
 
+                print("GameStart");
+                gameStart = true;
+            }
+        }
+
+        else
+        {
+            this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
+        }
+
+        #region 피격시 카메라 쉐이크
         if (playerStats.isDamaged)
         {
             StartCoroutine(HandleCamerShake(0.5f));
         }
+        #endregion
     }
 
     IEnumerator HandleCamerShake(float duration)
