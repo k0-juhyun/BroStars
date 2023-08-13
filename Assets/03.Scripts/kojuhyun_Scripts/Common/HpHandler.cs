@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HpHandler : MonoBehaviour
 {
     BushManager bushManager;
+    SoundHandler soundHandler;
 
     [Header("HP Bar")]
     public Slider HpBar;
@@ -19,7 +20,6 @@ public class HpHandler : MonoBehaviour
     public float AttackDamage;
     public float SkillDamage;
     public float hpRegenValue;
-    private float gridHp = 200;
 
     [HideInInspector]
     public bool isDamaged;
@@ -29,6 +29,7 @@ public class HpHandler : MonoBehaviour
         curHp = maxHp;
 
         bushManager = GetComponent<BushManager>();
+        soundHandler = GetComponentInChildren<SoundHandler>();
     }
 
     public float HandleHP(float damage)
@@ -53,9 +54,11 @@ public class HpHandler : MonoBehaviour
         {
             HandleHP(1);
             HealPrefab.SetActive(true);
+            soundHandler.enabled = true;
         }
         else
         {
+            soundHandler.enabled = false;
             HealPrefab.SetActive(false);
         }
     }

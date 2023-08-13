@@ -37,7 +37,7 @@ public class MoveHandler : MonoBehaviour
     {
         if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
         {
-            lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 6.1f, joystick.Vertical + transform.position.z);
+            lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 4.11f, joystick.Vertical + transform.position.z);
 
             transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
 

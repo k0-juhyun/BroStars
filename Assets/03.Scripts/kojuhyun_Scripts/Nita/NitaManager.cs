@@ -21,6 +21,7 @@ public class NitaManager : MonoBehaviour
         moveHandler.HandleMovement();   
 
         nitaAttackHandler.HandleNormalAttack();
+        nitaAttackHandler.HandleUltimateAttack();
 
         hpHandler.UpdateHp();
         hpHandler.RegenerateHpInBush();

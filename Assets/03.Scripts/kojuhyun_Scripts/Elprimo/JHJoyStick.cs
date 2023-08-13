@@ -50,7 +50,7 @@ public class JHJoyStick : Joystick
         {
             if (this.gameObject.name == "SkillJoyStick")
             {
-                
+                nitaAttackHandler.LaunchBear(Horizontal, Vertical);
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
