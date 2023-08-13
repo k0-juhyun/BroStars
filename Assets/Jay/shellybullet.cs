@@ -7,6 +7,9 @@ public class shellybullet : MonoBehaviour
     Rigidbody rb;
     public float bulletSpeed = 10.33f;
     Vector3 startPos;
+
+    public float AutoDestroyTime = 5f;
+    //public poolableobject 
     // Start is called before the first frame update
     void Start()
     {
