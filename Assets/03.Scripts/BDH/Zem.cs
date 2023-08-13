@@ -59,12 +59,12 @@ public class Zem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(AbsorptedToCollider(collision));
-            collision.gameObject.GetComponent<GemHandler>().gem += 1;
-            print("ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ Àì °¹¼ö´Â  : " + collision.gameObject.GetComponent<GemHandler>().gem);
 
+            StartCoroutine(AbsorptedToCollider(collision));
+            collision.gameObject.GetComponent<PlayerManager>().gem += 1;
+          
             // Àë °¹¼ö UI ¾÷µ¥ÀÌÆ® 
-            zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
+            zemScore.text = collision.gameObject.GetComponent<PlayerManager>().gem.ToString();
 
         }
     }
@@ -78,8 +78,7 @@ public class Zem : MonoBehaviour
         Vector3 originalScale = transform.localScale;
 
         // Àë È¹µæ »ç¿îµå Ãß°¡ 
-        // _audioSource.clip = _absortionSound;
-        // _audioSource.Play();
+        SoundManager.instance.PlayZemBGM();
 
         // Àë È¹µæ ÀÌÆåÆ® Ãß°¡.
 
