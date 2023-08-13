@@ -10,6 +10,7 @@ public class J_MoveHandler : MonoBehaviour
     [SerializeField]
     Transform lookPoint;
     //애니메이터
+    J_animatorHandler animatorHandler;
     #endregion
 
     #region Boolean Values
@@ -25,7 +26,7 @@ public class J_MoveHandler : MonoBehaviour
     void Start()
     {
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
-
+        animatorHandler = GetComponent<J_animatorHandler>();    
     }
 
     //움직임
@@ -39,7 +40,7 @@ public class J_MoveHandler : MonoBehaviour
             transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);   
             transform.Translate(Vector3.forward * moveSpeed *Time.fixedDeltaTime);
             //애니메이터
-
+            animatorHandler.playTargetAnim("run");
             //bool 움직임
             moveFlag = true;
         }

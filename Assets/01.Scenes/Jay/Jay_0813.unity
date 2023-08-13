@@ -16786,6 +16786,18 @@ MonoBehaviour:
   AttackDamage: 0
   SkillDamage: 0
   isDamaged: 0
+--- !u!114 &666781844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666781826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2916d9695e514864c9da86f7ab81aed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &675253804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47371,7 +47383,7 @@ PrefabInstance:
     - target: {fileID: 2530347082121812979, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2906591901817848137, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
@@ -47433,6 +47445,11 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 806039265351225869}
+    - target: {fileID: 3448895925605615131, guid: 1ce65b39542450c43bbe8018ccab79d9,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5520188341851683254, guid: 1ce65b39542450c43bbe8018ccab79d9,
         type: 3}
       propertyPath: skillJoystick
@@ -47443,6 +47460,21 @@ PrefabInstance:
       propertyPath: attackJoystick
       value: 
       objectReference: {fileID: 607165761}
+    - target: {fileID: 8380046118908204716, guid: 1ce65b39542450c43bbe8018ccab79d9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8380046118908204716, guid: 1ce65b39542450c43bbe8018ccab79d9,
+        type: 3}
+      propertyPath: meshResolution
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8380046118908204716, guid: 1ce65b39542450c43bbe8018ccab79d9,
+        type: 3}
+      propertyPath: viewMeshFilter
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ce65b39542450c43bbe8018ccab79d9, type: 3}
 --- !u!1 &1792626170
@@ -58914,7 +58946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1004443148158432210
 GameObject:
   m_ObjectHideFlags: 0

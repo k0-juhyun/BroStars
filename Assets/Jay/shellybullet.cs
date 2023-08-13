@@ -31,12 +31,13 @@ public class shellybullet : MonoBehaviour
         }
 
 
+
         //상대방과 거리의 따른 데미지 및 콜리젼
 
-        // 충돌했을때
         // 충돌체의 태그가 player일때
         if (collision.gameObject.CompareTag("Player"))
         {
+
             //1차 사거리
             float firstDistance = 1.5f;
             //2차 사거리

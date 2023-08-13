@@ -11,14 +11,13 @@ public class J_attackHandler : MonoBehaviour
 {
 
     Joystick joystick;
-    private AnimatorHandler animatorHandler;
+    private J_animatorHandler animatorHandler;
     private Rigidbody rb;
     //기본공격 조이스틱
     public Joystick attackJoystick;
     //특수공격 조이스틱
     public Joystick skillJoystick;
     //애니메이션 
-
     //라인렌더러
     public LineRenderer attackLR;
     public LineRenderer skillLR;
@@ -74,7 +73,7 @@ public class J_attackHandler : MonoBehaviour
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         //skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         player = GetComponent<Transform>();
-        animatorHandler = GetComponent<AnimatorHandler>();
+        animatorHandler = GetComponent<J_animatorHandler>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
         //tr.startColor = new Color(1, 0, 0, 0.7f);
@@ -95,7 +94,7 @@ public class J_attackHandler : MonoBehaviour
             {
                 attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 6.1f, attackJoystick.Vertical + transform.position.z);
 
-                //animatorHandler.playTargetAnim("Punching");
+                animatorHandler.playTargetAnim("attack");
 
                 transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
 
@@ -170,6 +169,7 @@ public class J_attackHandler : MonoBehaviour
             GameObject bullet = Instantiate(bulletFactory, firePos.position, firePos.rotation);
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
+            Destroy(bullet, 2f);
         }
 
     }
