@@ -7374,12 +7374,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4409225934437449323}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &258156619 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4409225934561236512, guid: fb4fc1cf639cb2d4995e5e5c3fb248d2,
-    type: 3}
-  m_PrefabInstance: {fileID: 4409225934437449323}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &270686852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46580,12 +46574,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1709616401}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1709616403 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 117216, guid: 38a0d21635e1b7e44b27550ba6a3358d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1709616401}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1709702615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55915,12 +55903,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1988570284}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1988570286 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4409225934561236512, guid: fb4fc1cf639cb2d4995e5e5c3fb248d2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1988570284}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1992245568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59800,10 +59782,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 806039265351225869}
-  moveSpeed: 3
-  dustPrefab:
-  - {fileID: 258156619}
-  - {fileID: 1988570286}
+  moveSpeed: 0
+  dustPrefab: []
 --- !u!114 &2137620486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62650,11 +62630,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HpBar: {fileID: 1248015523}
-  HealPrefab: {fileID: 1709616403}
+  HealPrefab: {fileID: 0}
   curHp: 0
-  maxHp: 5800
-  AttackDamage: 360
-  SkillDamage: 800
+  maxHp: 0
+  AttackDamage: 0
+  SkillDamage: 0
   hpRegenValue: 0
   isDamaged: 0
 --- !u!4 &5934187917925713978

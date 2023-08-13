@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     HpHandler hpHandler;
     BushManager bushManager;
 
+    public int gem;
+
     private void Awake()
     {
         moveHandler = GetComponent<MoveHandler>();
