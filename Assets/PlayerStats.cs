@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
     public int maxHp;
     public int AttackDamage;
     public int SkillDamage;
-    public int gem;
+    
 
     public bool isDamaged;
     private void Start()
