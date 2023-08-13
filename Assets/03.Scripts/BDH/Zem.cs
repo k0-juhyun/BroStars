@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro; 
 
 public class Zem : MonoBehaviour
 {
@@ -17,11 +19,15 @@ public class Zem : MonoBehaviour
     // ÀëÀÌ Ä³¸¯ÅÍ¿¡ Èí¼öµÉ ¶§ Àç»ýÇÒ ¿Àµð¿À Å¬¸³.
     public AudioClip _absortionSound;
 
+    // Àë Ä«¿îÆ® UI TextMeshProUGUI ¿ÀºêÁ§Æ®
+    private TMP_Text zemScore;
+
     private void Awake()
     {
         //audioSource = GetComponent<AudioSource>();
         GetComponent<BoxCollider>().enabled = false;
-     
+        // Àë Ä«¿îµå UI ÄÄÆ÷³ÍÆ® 
+        zemScore = GameObject.Find("ZemCount").GetComponent<TMP_Text>();
     }
 
     // Start is called before the first frame update
@@ -49,47 +55,52 @@ public class Zem : MonoBehaviour
 
     }
 
-   
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player") ||
-    //        other.CompareTag("Company") ||
-    //        other.CompareTag("Competition"))
-    //    {
-    //        StartCoroutine(AbsorptedToCollider(other));
-    //        other.GetComponent<PlayerStats>().IncreaseScore();
-    //    }
-    //}
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(AbsorptedToCollider(collision));
+            collision.gameObject.GetComponent<PlayerStats>().gem += 1;
+            print("ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ Àì °¹¼ö´Â  : " + collision.gameObject.GetComponent<PlayerStats>().gem);
 
-    //IEnumerator AbsorptedToCollider(Collider other)
-    //{
+            // Àë °¹¼ö UI ¾÷µ¥ÀÌÆ® 
+            zemScore.text = collision.gameObject.GetComponent<PlayerStats>().gem.ToString();
 
-    //    float time = 0;
-    //    float absortionTime = 0.7f;
-    //    Vector3 startPos = transform.position;
-    //    Vector3 originalScale = transform.localScale;
+        }
+    }
 
-    //    _audioSource.clip = _absortionSound;
-    //    _audioSource.Play();
+    IEnumerator AbsorptedToCollider(Collision collision)
+    {
 
-    //    while (time < absortionTime)
-    //    {
-    //        time += Time.deltaTime;
+        float time = 0;
+        float absortionTime = 0.7f;
+        Vector3 startPos = transform.position;
+        Vector3 originalScale = transform.localScale;
 
-    //        transform.position =
-    //            Vector3.Lerp(
-    //                startPos,
-    //                other.transform.position + new Vector3(0, 1, 0),
-    //                time / absortionTime);
-    //        transform.localScale =
-    //            Vector3.Lerp(
-    //                originalScale,
-    //                new Vector3(0, 0, 0),
-    //                time / absortionTime);
+        // Àë È¹µæ »ç¿îµå Ãß°¡ 
+        // _audioSource.clip = _absortionSound;
+        // _audioSource.Play();
 
-    //        yield return null;
-    //    }
+        // Àë È¹µæ ÀÌÆåÆ® Ãß°¡.
 
-    //    Destroy(gameObject);
-    //}
+        while (time < absortionTime)
+        {
+            time += Time.deltaTime;
+
+            transform.position =
+                Vector3.Lerp(
+                    startPos,
+                    collision.transform.position + new Vector3(0, 1, 0),
+                    time / absortionTime);
+            transform.localScale =
+                Vector3.Lerp(
+                    originalScale,
+                    new Vector3(0, 0, 0),
+                    time / absortionTime);
+
+            yield return null;
+        }
+
+        Destroy(gameObject);
+    }
 }

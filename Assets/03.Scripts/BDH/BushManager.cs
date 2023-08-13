@@ -59,7 +59,7 @@ public class BushManager : MonoBehaviour
                         // 플레이어가 부쉬안에 있다. (정상적으로 작동한다.) 
                         if (minDist < 0.5f && isBush == true)
                         {
-                            print("투명해져라.");
+                           
                             // 플레이어가 페이드인 효과가 적용되면서 투명화가 진행된다. 
                             IsPlayerTransparent(0.2f);
                         }
