@@ -1,9 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
-public class DynamicJoystick : Joystick
+public class ElprimoJoyStick : Joystick
 {
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
@@ -26,6 +27,19 @@ public class DynamicJoystick : Joystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
+        AttackHandler attackHandler = FindObjectOfType<AttackHandler>();
+        AnimatorHandler animHandler = FindObjectOfType<AnimatorHandler>();
+
+        if (attackHandler != null && this.gameObject.name == "SkillJoyStick")
+        {
+            attackHandler.LaunchPlayer(Horizontal, Vertical);
+        }
+
+        else if (attackHandler != null && this.gameObject.name == "AttackJoyStick")
+        {
+            animHandler.playTargetAnim("Punching");
+        }
+
         base.OnPointerUp(eventData);
     }
 

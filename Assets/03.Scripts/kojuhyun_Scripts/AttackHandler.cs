@@ -28,7 +28,6 @@ public class AttackHandler : MonoBehaviour
  
     private float TrailDistance = 2;
     private float launchForce = 10;
-    private float initialYPosition;
 
     RaycastHit hit;
 
@@ -53,8 +52,6 @@ public class AttackHandler : MonoBehaviour
             {
                 attackLR.gameObject.SetActive(true);
             }
-
-            animatorHandler.playTargetAnim("Punching");
 
             attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
 
