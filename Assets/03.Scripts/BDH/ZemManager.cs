@@ -11,6 +11,8 @@ public class ZemManager : MonoBehaviour
     // zem을 생성할 오브젝트의 BoxCollider  
     BoxCollider rangeCollider;
 
+    // Zem 이펙트 오브젝트. 
+
     // zem을 생성할 오브젝트의 BoxCollider의 중심 위치
     private float centerX;
     private float centerZ;
@@ -43,6 +45,8 @@ public class ZemManager : MonoBehaviour
             // Zem 생성 이펙트 및 사운드 실행.
             SoundManager.instance.PlayZemBGM();
 
+            // Zem 이펙트 활성화.
+            
             // Zem을 생성한다.
             GameObject zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
 

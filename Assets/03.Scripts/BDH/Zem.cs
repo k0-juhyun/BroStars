@@ -82,6 +82,7 @@ public class Zem : MonoBehaviour
 
         // ¿Î »πµÊ ¿Ã∆Â∆Æ √ﬂ∞°.
 
+
         while (time < absortionTime)
         {
             time += Time.deltaTime;
