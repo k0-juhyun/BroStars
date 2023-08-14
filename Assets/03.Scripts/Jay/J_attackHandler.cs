@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class J_attackHandler : MonoBehaviour
 {
-
+    Animator animator;
     Joystick joystick;
     private J_AnimatorHandler animatorHandler;
     private Rigidbody rb;
@@ -69,7 +69,7 @@ public class J_attackHandler : MonoBehaviour
     void Awake()
     {
         joystick = FindObjectOfType<Joystick>();
-
+        animator = GetComponent<Animator>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         //skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         player = GetComponent<Transform>();
@@ -171,7 +171,7 @@ public class J_attackHandler : MonoBehaviour
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
             Destroy(bullet, 2f);
         }
-        animatorHandler.playTargetAnim("attack");
+        animator.Play("attack");
     }
     //void ShootRay()
     //{

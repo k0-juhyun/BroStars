@@ -22,11 +22,14 @@ public class J_MoveHandler : MonoBehaviour
     public float moveSpeed = 5f;
     #endregion
 
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
         animatorHandler = GetComponent<J_AnimatorHandler>();    
+        animator = GetComponent<Animator>();
     }
 
     //움직임
@@ -40,7 +43,7 @@ public class J_MoveHandler : MonoBehaviour
             transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);   
             transform.Translate(Vector3.forward * moveSpeed *Time.fixedDeltaTime);
             //애니메이터
-            animatorHandler.playTargetAnim("Walking");
+            animator.Play("Walking");
             //bool 움직임
             moveFlag = true;
         }
