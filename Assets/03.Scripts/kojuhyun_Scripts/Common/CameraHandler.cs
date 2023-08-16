@@ -8,7 +8,7 @@ public class CameraHandler : MonoBehaviour
 {
     ElprimoManager playerManager;
     HpHandler playerStats;
-    J_PlayerManager jPlayerManager;
+    ShellyManager jPlayerManager;
 
     [HideInInspector]
     public GameObject mainCamera;
