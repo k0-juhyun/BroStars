@@ -10,7 +10,7 @@ public class HpTextHandler : MonoBehaviour
 
     private void Awake()
     {
-        hpHandler = FindObjectOfType<HpHandler>();
+        hpHandler = GetComponentInParent<HpHandler>();
         text = GetComponent<Text>();
     }
 
