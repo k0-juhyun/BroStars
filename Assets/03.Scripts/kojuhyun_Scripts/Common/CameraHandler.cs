@@ -63,6 +63,7 @@ public class CameraHandler : MonoBehaviour
                 Messages.SetActive(false);
                 JemManager.SetActive(true);
                 Canvas.SetActive(true);
+
          
                   
 

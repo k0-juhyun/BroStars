@@ -11,7 +11,8 @@ public class ZemManager : MonoBehaviour
     // zem을 생성할 오브젝트의 BoxCollider  
     BoxCollider rangeCollider;
 
-    // Zem 이펙트 오브젝트. 
+    // Zem 이펙트 ParticleSystem. 
+    private ParticleSystem zemEffect;
 
     // zem을 생성할 오브젝트의 BoxCollider의 중심 위치
     private float centerX;
@@ -19,6 +20,7 @@ public class ZemManager : MonoBehaviour
 
     private void Awake()
     {
+        zemEffect = this.gameObject.GetComponentInChildren<ParticleSystem>();
         StartCoroutine(RandomCreateCoroutine());
         rangeCollider = rangeObject.GetComponent<BoxCollider>();
 
@@ -37,30 +39,44 @@ public class ZemManager : MonoBehaviour
     {
         while (true)
         {
+            
             // 실제 플레이에서 잼 생성 시간은 7초 간격으로 생성된다. 
             yield return new WaitForSeconds(7f);
-            // Zem을 생성할 위치는 BoxCollider의 중심 위치
-            Vector3 zemsRandomPosition = new Vector3(centerX, rangeObject.transform.position.y, centerZ);
-
-            // Zem 생성 이펙트 및 사운드 실행.
-            SoundManager.instance.PlayZemBGM();
 
             // Zem 이펙트 활성화.
+            if (!zemEffect.isPlaying)
+            {
+                zemEffect.Play();
+            }
+
+            yield return new WaitForSeconds(0.2f);
+                
+                // Zem을 생성할 위치는 BoxCollider의 중심 위치
+                Vector3 zemsRandomPosition = new Vector3(centerX, rangeObject.transform.position.y, centerZ);
+
+                // Zem 생성 사운드 실행.
+                SoundManager.instance.PlayZemBGM();
+
+                // Zem을 생성한다.
+                GameObject zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
+
+                // CreateRandomPosition()의 위치를 목표 지점으로 설정한다. 
+                Vector3 targetPosition = CreateRandomPosition();
+
+                // Zem이 향하는 방향을 만들고 싶다.
+                Vector3 dir = (targetPosition - zemsRandomPosition).normalized;
+
+                // 목표 지점으로 향하는 방향을 생성.
+                Vector3 targetDir = (dir + zems.transform.up).normalized;
+
+                // Rigidbody를 이용하여 위로 상승 후 떨어짐.
+                zems.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
             
-            // Zem을 생성한다.
-            GameObject zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
+                
 
-            // CreateRandomPosition()의 위치를 목표 지점으로 설정한다. 
-            Vector3 targetPosition = CreateRandomPosition();
+           
 
-            // Zem이 향하는 방향을 만들고 싶다.
-            Vector3 dir = (targetPosition - zemsRandomPosition).normalized;
-
-            // 목표 지점으로 향하는 방향을 생성.
-            Vector3 targetDir = (dir + zems.transform.up).normalized;
-
-            // Rigidbody를 이용하여 위로 상승 후 떨어짐.
-            zems.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
+           
         }
     }
 
