@@ -15889,6 +15889,12 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!198 &560321333 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4409225934561236512, guid: fb4fc1cf639cb2d4995e5e5c3fb248d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 371297820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &574922739 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1352152825796216, guid: 60fd93cfbe5244942957332e3c60cf47,
@@ -61639,6 +61645,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2040915194}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &2040915196 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4409225934561236512, guid: fb4fc1cf639cb2d4995e5e5c3fb248d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040915194}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2044271797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67202,6 +67214,9 @@ MonoBehaviour:
   joystick: {fileID: 806039265351225872}
   lookPoint: {fileID: 908111300344362519}
   moveSpeed: 2
+  dustPrefab:
+  - {fileID: 560321333}
+  - {fileID: 2040915196}
 --- !u!54 &908111301308570230
 Rigidbody:
   m_ObjectHideFlags: 0
