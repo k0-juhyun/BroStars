@@ -115,6 +115,7 @@ public class NitaAttackHandler : MonoBehaviour
         Vector3 startVelocity = joystickDirection * launchForce;
 
         Bruce.SetActive(true);
+        Bruce.transform.SetParent(null);
         Bruce.GetComponent<Rigidbody>().velocity = startVelocity;
     }
     #endregion

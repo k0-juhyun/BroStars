@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class BruceAIHandler : MonoBehaviour
 {
-    private string playerTag = "Player";
+    AnimatorHandler animatorHandler;
+    HpHandler hpHandler;
+
     public float moveSpeed = 5f;
 
     private Transform target;
-    private Rigidbody rb;
 
-    private void Start()
+    private bool isDie;
+
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        animatorHandler = GetComponent<AnimatorHandler>();
+        hpHandler = GetComponent<HpHandler>();
+
+        StartCoroutine(HandleAttack(2));
     }
 
     private void FixedUpdate()
@@ -21,9 +27,18 @@ public class BruceAIHandler : MonoBehaviour
         ChaseTarget();
     }
 
+    private void Update()
+    {
+        hpHandler.UpdateHp();
+        if (hpHandler.curHp <= 0)
+        {
+            Destroy(this);
+        }
+    }
+
     private void FindClosestPlayer()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float shortestDistance = Mathf.Infinity;
         GameObject closestPlayer = null;
 
@@ -50,10 +65,19 @@ public class BruceAIHandler : MonoBehaviour
     {
         if (target != null)
         {
-            print(target.name);
             transform.LookAt(target.position);
             Vector3 directionToTarget = (target.position - transform.position).normalized;
             transform.position += directionToTarget * moveSpeed * Time.deltaTime;
+        }
+    }
+
+    IEnumerator HandleAttack(float period)
+    {
+        while (!isDie)
+        {
+            yield return new WaitForSeconds(period);
+
+            animatorHandler.playTargetAnim("Normal");
         }
     }
 }
