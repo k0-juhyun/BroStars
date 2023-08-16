@@ -10,6 +10,7 @@ public class shellybullet : MonoBehaviour
 
     public float AutoDestroyTime = 5f;
     //public poolableobject 
+
     // Start is called before the first frame update
     void Start()
     {

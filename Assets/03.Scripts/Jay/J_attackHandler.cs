@@ -26,7 +26,6 @@ public class J_attackHandler : MonoBehaviour
     TrailRenderer tr;
     public Vector3 endPosition;
     //총알공장
-
     public GameObject bulletFactory;
     public Transform firePos;
 
@@ -40,26 +39,16 @@ public class J_attackHandler : MonoBehaviour
     Transform rayTransform;
     //플레이어
     Transform player;
-    //#region ShotGun Raycast
-    ////명중한 대상 데미지 양
-    //public int DamageAmount;
-    ////명중한 대상과의 거리
-    //public float TargetDistance;
-    ////레이캐스트 유효사거리
-    //public float AllowedRange = 100;
-    ////이펙트
-    //public Transform Effect;
-    ////사거리
-    //public float attackFireRange;
-    ////반지름의 한계
-    //public float scaleLimit = 2.0f;
-    ////z축 방향값
-    //public float z = 10f;
-    ////랜덤 레이캐스트 개수
-    //public int count = 8;
-    //#endregion
     //레이캐스트 맞는곳
     RaycastHit hitInfo;
+    //카트리지 
+    public float shootingSlowness;
+    public GameObject Cardridge;
+    private bool beingHandled = false;
+
+    [SerializeField]
+    [Header("ParticleSystem")]
+    private ParticleSystem[] firePrefab;
     #region AutoAim
     //적군 리스트
     private List<Transform> targets = new List<Transform>();
@@ -76,14 +65,23 @@ public class J_attackHandler : MonoBehaviour
         animatorHandler = GetComponent<J_AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
-        //tr.startColor = new Color(1, 0, 0, 0.7f);
-        //tr.endColor = new Color(1, 0, 0, 0.7f);
-        //Destroy(gameObject, 2f);
-
-
         //애니메이터
     }
+    private IEnumerator Shooting()
+    {
+        beingHandled = true;
+        GameObject cardridge;
+        for(int i = 0; i<= 5; i++)
+        {
+            if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, firePos.transform.rotation);
+            else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, firePos.transform.rotation);
 
+        }
+        yield return new WaitForSeconds(shootingSlowness);
+
+        beingHandled = false;
+        
+    }
     //공격
     public void HandleNormalAttack()
     {
@@ -172,42 +170,24 @@ public class J_attackHandler : MonoBehaviour
             Destroy(bullet, 2f);
         }
         animator.Play("attack");
+        StartCoroutine(Shooting());
     }
-    //void ShootRay()
-    //{
-    //    float radius = Random.Range(0, scaleLimit);
-    //    float angle = Random.Range(0, 10 * Mathf.PI);
-    //    Vector3 dir = new Vector3(radius * Mathf.Cos(angle), radius * Mathf.Sin(angle), z);
-    //    dir = transform.TransformDirection(dir);
-    //    Ray r = new Ray(transform.position, dir);   
+   
+    public void HandleExplosionSmoke()
+    {
+        ParticleSystem particles = Instantiate(firePrefab[0], transform.position, Quaternion.identity);
+        particles.Play();
 
+        Destroy(particles.gameObject, particles.main.duration);
+    }
+    public void HandleGrenadeSmoke()
+    {
+        ParticleSystem particles = Instantiate(firePrefab[1], transform.position, Quaternion.identity);
+        particles.Play();
 
-    //    if (Physics.Raycast(transform.position, transform.forward, out hitInfo, attackFireRange))
-    //    {
-    //        Debug.Log(hitInfo.collider.gameObject);
-    //        TargetDistance = hitInfo.distance;
-    //        if(TargetDistance < AllowedRange)
-    //        {
-    //            var particleClone = Instantiate(Effect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
-    //            Destroy(particleClone.gameObject, 2);
-    //            hitInfo.transform.SendMessage("DeductPoints", DamageAmount, SendMessageOptions.DontRequireReceiver);
-    //            //DrawFanShape();
-    //            if (attackLR.positionCount > 0)
-    //            {
-    //                //Instantiate(bulletFactory, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-    //            }
-    //            Debug.DrawLine(transform.position, hitInfo.point);
+        Destroy(particles.gameObject, particles.main.duration);
+    }
 
-    //        }
-
-    //    }
-    //    else
-    //    {
-    //        attackLR.positionCount = 0;
-    //       // attackLR.SetPosition(1, transform.position + transform.forward * attackFireRange);
-    //    }
-
-    //}
     #region FanShapeRenderer
     //void DrawFanShape()
     //{
