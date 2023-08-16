@@ -29,6 +29,7 @@ public class JHJoyStick : Joystick
     {
         NitaAttackHandler nitaAttackHandler = FindAnyObjectByType<NitaAttackHandler>();
         ElprimoAttackHandler elprimoAttackHandler = FindObjectOfType<ElprimoAttackHandler>();
+        LeonAttackHandler leonAttackHandler = FindObjectOfType<LeonAttackHandler>();
         AnimatorHandler animHandler = FindObjectOfType<AnimatorHandler>();
 
         #region 엘프리모
@@ -55,6 +56,20 @@ public class JHJoyStick : Joystick
             else if (this.gameObject.name == "AttackJoyStick")
             {
                 nitaAttackHandler.NitaNormalAttack();
+            }
+        }
+        #endregion
+
+        #region 레온
+        if (leonAttackHandler != null)
+        {
+            if (this.gameObject.name == "SkillJoyStick")
+            {
+
+            }
+            else if (this.gameObject.name == "AttackJoyStick")
+            {
+
             }
         }
         #endregion
