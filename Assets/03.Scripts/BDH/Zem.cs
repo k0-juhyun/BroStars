@@ -63,7 +63,6 @@ public class Zem : MonoBehaviour
             StartCoroutine(AbsorptedToCollider(collision));
             collision.gameObject.GetComponent<GemHandler>().gem += 1;
             Destroy(gameObject);
-
             // Àë °¹¼ö UI ¾÷µ¥ÀÌÆ® 
             zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
 
@@ -102,5 +101,6 @@ public class Zem : MonoBehaviour
             yield return null;
         }
 
+        
     }
 }
