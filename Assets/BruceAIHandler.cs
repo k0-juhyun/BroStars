@@ -18,7 +18,7 @@ public class BruceAIHandler : MonoBehaviour
         animatorHandler = GetComponent<AnimatorHandler>();
         hpHandler = GetComponent<HpHandler>();
 
-        StartCoroutine(HandleAttack(2));
+        StartCoroutine(HandleAttack(3));
     }
 
     private void FixedUpdate()
