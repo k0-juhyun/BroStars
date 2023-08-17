@@ -20,10 +20,11 @@ public class LeonAttackHandler : MonoBehaviour
     private Transform Player;
     public Transform lineRendererStartTransform;
 
+    [Header("Normal Attack Event")]
+    public Transform[] RightHand;
+    public GameObject Shuriken;
+
     private float TrailDistance = 4f;
-    public int fanSegments = 200;
-    public float fanAngle = 30.0f; 
-    public float fanRadius = 5.0f;
     RaycastHit hit;
 
     private void Awake()
@@ -43,14 +44,32 @@ public class LeonAttackHandler : MonoBehaviour
 
             attackLR.gameObject.SetActive(true);
 
-            transform.LookAt(new Vector3(attackLookPoint.position.x, 5.11f, attackLookPoint.position.z));
+            Vector3 directionToLookPoint = (attackLookPoint.position - transform.position).normalized;
 
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            float rotationAngle = Mathf.Atan2(directionToLookPoint.x, directionToLookPoint.z) * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
         }
         else
         {
             attackLR.gameObject.SetActive(false);
         }
+    }
+
+    public void HandleShurikenEvent()
+    {
+        StartCoroutine(HandleShuriken());
+    }
+
+    IEnumerator HandleShuriken()
+    {
+        GameObject shuriken = Instantiate(Shuriken, RightHand[0].transform.position, RightHand[0].transform.rotation);
+        yield return new WaitForSeconds(0.03f);
+        Instantiate(Shuriken, RightHand[1].transform.position, RightHand[1].transform.rotation);
+        yield return new WaitForSeconds(0.03f);
+        Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
+        yield return new WaitForSeconds(0.03f);
+        Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
     }
 }
 

@@ -22,7 +22,7 @@ public class ElprimoAttackHandler : MonoBehaviour
     public Transform lineRendererStartTransform;
 
     [Header("Normal Attack Event")]
-    public GameObject fistEffect;
+    public GameObject[] fistEffect;
     public GameObject[] elprimoFists;
  
     private float TrailDistance = 1.3f;
@@ -138,12 +138,12 @@ public class ElprimoAttackHandler : MonoBehaviour
     #region 일반 공격 애니메이션 이벤트
     public void LeftHandEventHandler()
     {
-        GameObject _fistEffect = Instantiate(fistEffect, elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
+        GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
     }
 
     public void RightHandEventHandler()
     {
-        GameObject _fistEffect = Instantiate(fistEffect, elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
+        GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
     }
     #endregion
 

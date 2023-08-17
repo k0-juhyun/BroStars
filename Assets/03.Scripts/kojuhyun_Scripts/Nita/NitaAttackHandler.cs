@@ -11,25 +11,27 @@ public class NitaAttackHandler : MonoBehaviour
     public Joystick attackJoystick;
     public Joystick skillJoystick;
 
-    [Header("LineRenderer Object")]
+    [Header("LineRenderer")]
     public LineRenderer attackLR;
     public LineRenderer specialLR;
 
-    [Header("LineRenderer Transform")]
+    [Header("Transform")]
     private Transform attackLookPoint;
     private Transform skillLookPoint;
     private Transform Player;
     public Transform lineRendererStartTransform;
-
-    [Header("Normal Attack Event")]
-    public GameObject normalAttackEffect;
     public Transform normalAttackTransform;
+    public Transform SpawnPos;
 
-    [Header("Skill Attack Event")]
+    [Header("GameObject")]
+    public GameObject normalAttackEffect;
     public GameObject Bruce;
+    public GameObject circlePrefab;
 
     private float TrailDistance = 4f;
     private float launchForce = 10;
+
+    public LayerMask groundLayer;
 
     RaycastHit hit;
 
@@ -114,9 +116,8 @@ public class NitaAttackHandler : MonoBehaviour
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
         Vector3 startVelocity = joystickDirection * launchForce;
 
-        Bruce.SetActive(true);
-        Bruce.transform.SetParent(null);
-        Bruce.GetComponent<Rigidbody>().velocity = startVelocity;
+        GameObject bruceSpawn = Instantiate(Bruce, SpawnPos.transform.position, Quaternion.identity);
+        bruceSpawn.GetComponent<Rigidbody>().velocity = startVelocity;
     }
     #endregion
 
@@ -139,6 +140,14 @@ public class NitaAttackHandler : MonoBehaviour
             float time = i * timeStep;
             Vector3 position = startVelocity * time + Physics.gravity * time * time * 0.5f;
             position += transform.position;
+
+            RaycastHit hit;
+            if (Physics.Raycast(position, Vector3.down, out hit, Mathf.Infinity, groundLayer))
+            {
+                position = hit.point;
+                GameObject circle = Instantiate(circlePrefab, position, Quaternion.identity);
+            }
+
             specialLR.SetPosition(i, position);
         }
     }
