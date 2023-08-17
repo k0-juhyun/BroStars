@@ -69,10 +69,11 @@ public class JHJoyStick : Joystick
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
-
+                animHandler.playTargetAnim("Normal");
             }
         }
         #endregion
+
         base.OnPointerUp(eventData);
     }
 

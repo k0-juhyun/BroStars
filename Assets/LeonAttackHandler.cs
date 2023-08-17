@@ -39,24 +39,13 @@ public class LeonAttackHandler : MonoBehaviour
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
+            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
+
             attackLR.gameObject.SetActive(true);
 
-            float startAngle = -fanAngle;
-            float endAngle = fanAngle;
+            transform.LookAt(new Vector3(attackLookPoint.position.x, 5.11f, attackLookPoint.position.z));
 
-            Vector3[] fanPoints = new Vector3[fanSegments + 2];
-            fanPoints[0] = lineRendererStartTransform.position;
-
-            for (int i = 1; i <= fanSegments + 1; i++)
-            {
-                float t = (float)(i - 1) / fanSegments;
-                float currentAngle = Mathf.Lerp(startAngle, endAngle, t);
-                Vector3 fanPoint = new Vector3(Mathf.Sin(currentAngle * Mathf.Deg2Rad), 0, Mathf.Cos(currentAngle * Mathf.Deg2Rad)) * fanRadius;
-                fanPoints[i] = lineRendererStartTransform.position + new Vector3(fanPoint.x, 0, fanPoint.z);
-            }
-
-            attackLR.positionCount = fanPoints.Length;
-            attackLR.SetPositions(fanPoints);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
         else
         {
