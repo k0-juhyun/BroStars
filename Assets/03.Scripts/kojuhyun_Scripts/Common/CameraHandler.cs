@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CameraHandler : MonoBehaviour
 {
-    HpHandler playerStats;
+    HpHandler hpHandler;
     TargetHandler targetHandler;
 
     [HideInInspector]
@@ -16,6 +16,9 @@ public class CameraHandler : MonoBehaviour
     public GameObject Messages;
     public GameObject JemManager;
     public GameObject Canvas;
+
+    [Header("피격 이미지")]
+    public Image UrgentImage;
 
     private Transform target;
 
@@ -39,7 +42,7 @@ public class CameraHandler : MonoBehaviour
         this.startXPos = this.transform.position.x;
         this.startYPos = this.transform.position.y;
 
-        playerStats = FindObjectOfType<HpHandler>();
+        hpHandler = FindObjectOfType<HpHandler>();
         target = targetHandler.Target.transform;
     }
 
@@ -71,9 +74,13 @@ public class CameraHandler : MonoBehaviour
         }
 
         #region 피격시 카메라 쉐이크
-        if (playerStats.isDamaged)
+        if (hpHandler.isDamaged)
         {
             StartCoroutine(HandleCamerShake(0.5f));
+            if(hpHandler.isUrgent) 
+            {
+                StartCoroutine(HandleActivateUrgentImage(0.3f));
+            }
         }
         #endregion
     }
@@ -92,6 +99,13 @@ public class CameraHandler : MonoBehaviour
         }
 
         this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z);
-        playerStats.isDamaged = false;
+        hpHandler.isDamaged = false;
+    }
+
+    IEnumerator HandleActivateUrgentImage(float duration)
+    {
+        UrgentImage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        UrgentImage.gameObject.SetActive(false);
     }
 }

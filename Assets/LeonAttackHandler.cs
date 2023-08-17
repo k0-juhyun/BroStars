@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class LeonAttackHandler : MonoBehaviour
@@ -25,6 +26,9 @@ public class LeonAttackHandler : MonoBehaviour
     public GameObject Shuriken;
 
     private float TrailDistance = 4f;
+    public float meshResolution;
+    public LayerMask groundLayer;
+
     RaycastHit hit;
 
     private void Awake()
@@ -70,6 +74,11 @@ public class LeonAttackHandler : MonoBehaviour
         Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
         yield return new WaitForSeconds(0.03f);
         Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
+    }
+
+    private void DrawFanShape()
+    {
+
     }
 }
 

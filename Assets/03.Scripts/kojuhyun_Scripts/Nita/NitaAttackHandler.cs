@@ -27,7 +27,7 @@ public class NitaAttackHandler : MonoBehaviour
     public GameObject normalAttackEffect;
     public GameObject Bruce;
     public GameObject circlePrefab;
-
+    private GameObject activeCircle;
     private float TrailDistance = 4f;
     private float launchForce = 10;
 
@@ -44,14 +44,13 @@ public class NitaAttackHandler : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-
     #region АјАн
 
     public void HandleNormalAttack()
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
-            if (attackLR.gameObject.activeInHierarchy == false)
+            if (!attackLR.gameObject.activeInHierarchy)
             {
                 attackLR.gameObject.SetActive(true);
             }
@@ -87,18 +86,17 @@ public class NitaAttackHandler : MonoBehaviour
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
         Vector3 startVelocity = joystickDirection * launchForce;
 
-        DrawTrajectory(startVelocity, 100, 0.1f);
-
         if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
         {
-            if (specialLR.gameObject.activeInHierarchy == false)
+            if (!specialLR.gameObject.activeInHierarchy)
             {
                 specialLR.gameObject.SetActive(true);
             }
+            DrawTrajectory(startVelocity, 10, 0.1f);
 
             skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
 
-            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.11f, skillLookPoint.position.z)); ;
+            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.11f, skillLookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
@@ -133,23 +131,15 @@ public class NitaAttackHandler : MonoBehaviour
     {
         specialLR.positionCount = numPoints;
 
-        Vector3[] positions = new Vector3[numPoints];
-
         for (int i = 0; i < numPoints; i++)
         {
             float time = i * timeStep;
             Vector3 position = startVelocity * time + Physics.gravity * time * time * 0.5f;
+
             position += transform.position;
-
-            RaycastHit hit;
-            if (Physics.Raycast(position, Vector3.down, out hit, Mathf.Infinity, groundLayer))
-            {
-                position = hit.point;
-                GameObject circle = Instantiate(circlePrefab, position, Quaternion.identity);
-            }
-
             specialLR.SetPosition(i, position);
         }
     }
+
     #endregion
 }

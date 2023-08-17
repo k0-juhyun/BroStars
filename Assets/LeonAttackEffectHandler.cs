@@ -25,12 +25,11 @@ public class LeonAttackEffectHandler : MonoBehaviour
 
     private void Update()
     {
+        rotationSpeed+=2;
         transform.forward = initialForward;
         transform.position += initialForward * Time.deltaTime * moveSpeed;
 
-        rotationSpeed += rotationSpeed;
-
-        transform.eulerAngles = new Vector3(0, rotationSpeed, 0);
+        transform.eulerAngles += new Vector3(0, rotationSpeed, 0);
     }
 
     IEnumerator DestroyAfterDelay(float duration)
