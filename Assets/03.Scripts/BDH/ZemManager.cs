@@ -41,7 +41,7 @@ public class ZemManager : MonoBehaviour
         {
             
             // 실제 플레이에서 잼 생성 시간은 7초 간격으로 생성된다. 
-            yield return new WaitForSeconds(7f);
+            yield return new WaitForSeconds(1f);
 
             // Zem 이펙트 활성화.
             if (!zemEffect.isPlaying)
@@ -71,12 +71,7 @@ public class ZemManager : MonoBehaviour
 
                 // Rigidbody를 이용하여 위로 상승 후 떨어짐.
                 zems.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
-            
-                
 
-           
-
-           
         }
     }
 
