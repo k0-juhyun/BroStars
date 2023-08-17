@@ -10,45 +10,52 @@ using Random = UnityEngine.Random;
 public class J_attackHandler : MonoBehaviour
 {
     Animator animator;
-    Joystick joystick;
-    private J_AnimatorHandler animatorHandler;
     private Rigidbody rb;
+    //애니메이션 
+    //private J_AnimatorHandler animatorHandler;
+    [Header("JoyStick")]
     //기본공격 조이스틱
     public Joystick attackJoystick;
     //특수공격 조이스틱
     public Joystick skillJoystick;
-    //애니메이션 
-    //라인렌더러
+
+    [Header("LineRenderer Object")]
     public LineRenderer attackLR;
     public LineRenderer skillLR;
-
+    [Header("Fire Info")]
+    //총알공장
+    public GameObject attackBulletFactory;
+    public GameObject specialBulletFactory;
+    public Transform firePos;
+    [Header("Cartridge")]
+    //카트리지 
+    public float shootingSlowness;
+    public GameObject Cardridge;
+    private bool beingHandled = false;
+    [Header("TrailRenderer")]
     //트레일렌더러
     TrailRenderer tr;
     public Vector3 endPosition;
-    //총알공장
-    public GameObject bulletFactory;
-    public Transform firePos;
-
     float curShotDelay = 0;
     float maxShotDelay = 0.5f;
     //시작각도
     public float startAngle = -10;
+
+    [SerializeField]
+    [Header("ParticleSystem")]
+    private ParticleSystem[] firePrefab;
+
     //공격포인트
     Transform attackLookPoint;
+    Transform skillLookPoint;
     //레이 위치
     Transform rayTransform;
     //플레이어
     Transform player;
     //레이캐스트 맞는곳
     RaycastHit hitInfo;
-    //카트리지 
-    public float shootingSlowness;
-    public GameObject Cardridge;
-    private bool beingHandled = false;
 
-    [SerializeField]
-    [Header("ParticleSystem")]
-    private ParticleSystem[] firePrefab;
+
     #region AutoAim
     //적군 리스트
     private List<Transform> targets = new List<Transform>();
@@ -57,12 +64,12 @@ public class J_attackHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        joystick = FindObjectOfType<Joystick>();
+        //joystick = FindObjectOfType<Joystick>();
         animator = GetComponent<Animator>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
-        //skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
+        skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         player = GetComponent<Transform>();
-        animatorHandler = GetComponent<J_AnimatorHandler>();
+        //animatorHandler = GetComponent<J_AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
         //애니메이터
@@ -71,7 +78,7 @@ public class J_attackHandler : MonoBehaviour
     {
         beingHandled = true;
         GameObject cardridge;
-        for(int i = 0; i<= 5; i++)
+        for (int i = 0; i <= 5; i++)
         {
             if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, firePos.transform.rotation);
             else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, firePos.transform.rotation);
@@ -80,7 +87,7 @@ public class J_attackHandler : MonoBehaviour
         yield return new WaitForSeconds(shootingSlowness);
 
         beingHandled = false;
-        
+
     }
     //공격
     public void HandleNormalAttack()
@@ -93,7 +100,7 @@ public class J_attackHandler : MonoBehaviour
                 attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 6.1f, attackJoystick.Vertical + transform.position.z);
 
                 //animatorHandler.playTargetAnim("attack");
-                
+
                 transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
 
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
@@ -105,6 +112,21 @@ public class J_attackHandler : MonoBehaviour
         }
     }
     #region 특수공격 슈퍼쉘
+    public void HandleSpecialAttack()
+    {
+        curShotDelay += Time.deltaTime;
+        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
+        if(Mathf.Abs(skillJoystick.Horizontal) >  0  || Mathf.Abs(skillJoystick.Vertical) > 0)
+        {
+            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
+            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            SuperShell();
+            curShotDelay = 0;
+        }
+    }
+
+
     //public void HandleSpecialAttack()
     //{
     //    if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
@@ -164,7 +186,7 @@ public class J_attackHandler : MonoBehaviour
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
         for (int i = 0; i < 5; i++)
         {
-            GameObject bullet = Instantiate(bulletFactory, firePos.position, firePos.rotation);
+            GameObject bullet = Instantiate(attackBulletFactory, firePos.position, firePos.rotation);
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
             Destroy(bullet, 2f);
@@ -172,7 +194,39 @@ public class J_attackHandler : MonoBehaviour
         animator.Play("attack");
         StartCoroutine(Shooting());
     }
-   
+    void SuperShell()
+    {
+        //총알 나오는 위치의 각도를 조정
+        firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
+        List<GameObject> spawnedSpecialBullets = new List<GameObject>();
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.position, firePos.rotation);
+            spawnedSpecialBullets.Add(specialBullet);
+            //각도 설정
+            firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
+            //Destroy(specialBullet, 2f);
+        }
+        animator.Play("attack");
+        StartCoroutine(Shooting());
+
+        foreach(GameObject bullet in spawnedSpecialBullets)
+        {
+            Destroy(bullet, 2f);
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("SpecialBullet"))
+        {
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Destroy(collision.gameObject);
+        }
+    }
+
     public void HandleExplosionSmoke()
     {
         ParticleSystem particles = Instantiate(firePrefab[0], transform.position, Quaternion.identity);

@@ -25,6 +25,7 @@ public class ShellyManager : MonoBehaviour
     {
         moveHandler.HandleMovement();
         attackHandler.HandleNormalAttack();
+        attackHandler.HandleSpecialAttack();
         hpHandler.UpdateHp();
         hpHandler.RegenerateHpInBush();
     }
