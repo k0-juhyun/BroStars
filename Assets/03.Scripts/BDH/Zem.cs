@@ -11,8 +11,6 @@ public class Zem : MonoBehaviour
     // 잼이 회전할 목표 회전 값을 저장하는 변수.
     Quaternion zemRotation;
 
-    private bool isGround = false; 
-
     AudioSource audioSource;
     // 잼 생성 시 재생할 오디오 클립. 
     public AudioClip createSound;
@@ -35,7 +33,7 @@ public class Zem : MonoBehaviour
     {
         // 초기 회전값을 저장.
         zemRotation = this.transform.rotation;
-
+     
     }
 
     // Update is called once per frame
@@ -65,7 +63,7 @@ public class Zem : MonoBehaviour
             Destroy(gameObject);
 
             // 잼 갯수 UI 업데이트 
-            zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
+            //zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
 
         }
     }
@@ -102,5 +100,6 @@ public class Zem : MonoBehaviour
             yield return null;
         }
 
+        
     }
 }

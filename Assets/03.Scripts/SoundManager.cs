@@ -7,7 +7,6 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
 
     private AudioSource audioSource;
-    private bool isBattleBGM = false;
     public GameObject startEffect; 
     public AudioClip[] clips;
 
