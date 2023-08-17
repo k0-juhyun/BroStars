@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.Asteroids;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,9 +81,10 @@ public class J_attackHandler : MonoBehaviour
         GameObject cardridge;
         for (int i = 0; i <= 5; i++)
         {
-            if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, firePos.transform.rotation);
-            else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, firePos.transform.rotation);
-
+            if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, Quaternion.identity);
+            else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, Quaternion.identity);
+            //자식 하위오브젝트에서 생성
+            cardridge.transform.parent = this.transform;
         }
         yield return new WaitForSeconds(shootingSlowness);
 
@@ -186,7 +188,9 @@ public class J_attackHandler : MonoBehaviour
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
         for (int i = 0; i < 5; i++)
         {
-            GameObject bullet = Instantiate(attackBulletFactory, firePos.position, firePos.rotation);
+            GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position,Quaternion.identity);
+            //자식 하위오브젝트에서 생성
+            bullet.transform.parent = this.transform;
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
             Destroy(bullet, 2f);
@@ -198,22 +202,16 @@ public class J_attackHandler : MonoBehaviour
     {
         //총알 나오는 위치의 각도를 조정
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
-        List<GameObject> spawnedSpecialBullets = new List<GameObject>();
         for (int i = 0; i < 10; i++)
         {
-            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.position, firePos.rotation);
-            spawnedSpecialBullets.Add(specialBullet);
+            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.transform.position,Quaternion.identity);
+            specialBullet.transform.parent = this.transform;
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
-            //Destroy(specialBullet, 2f);
+            Destroy(specialBullet, 2f);
         }
         animator.Play("attack");
         StartCoroutine(Shooting());
-
-        foreach(GameObject bullet in spawnedSpecialBullets)
-        {
-            Destroy(bullet, 2f);
-        }
     }
     private void OnCollisionEnter(Collision collision)
     {
