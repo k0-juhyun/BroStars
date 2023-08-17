@@ -32,7 +32,7 @@ public class CameraHandler : MonoBehaviour
     public float shakeMagnitude = 0.1f;
     public float startCamSpeed = 0.1f;
 
-    private bool gameStart;
+    public bool gameStart;
 
     private void Awake()
     {
