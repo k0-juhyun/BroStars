@@ -18,6 +18,7 @@ public class BushManager : MonoBehaviour
     // 부쉬 Mesh 렌더러 변수. 
     MeshRenderer mRenderer;
 
+    
     // 외부 범위 반지름
     private float outOfRadius = 3.0f;
 
