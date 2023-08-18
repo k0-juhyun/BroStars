@@ -56,11 +56,6 @@ public class J_attackHandler : MonoBehaviour
     //레이캐스트 맞는곳
     RaycastHit hitInfo;
 
-    enum bImpact
-    {
-        Damage,
-    }
-
     #region AutoAim
     //적군 리스트
     private List<Transform> targets = new List<Transform>();
@@ -104,58 +99,37 @@ public class J_attackHandler : MonoBehaviour
             if (Mathf.Abs(attackJoystick.Horizontal) < 0.5f && Mathf.Abs(attackJoystick.Vertical) < 0.5f && curShotDelay >= maxShotDelay)
             {
                 attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 6.1f, attackJoystick.Vertical + transform.position.z);
-
-                //animatorHandler.playTargetAnim("attack");
-
                 transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
 
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-
-                //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y +1, transform.position.z);
-                ////레이캐스트에 맞는다면 
-                //if(Physics.Raycast(rayStartPos, transform.forward, out hitInfo, 5))
-                //{
-                //    bool isEnemy = false;
-                //    Shoot();
-                   
-                //   //에너미가 맞다면
-                //   if(hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-                //    {
-                //        isEnemy = true;
-
-                //    }
-                //   if(isEnemy)
-                //    {
-                //        //적에게 데미지를 주고싶다
-
-                //        //넉백효과를 주고 싶다
-                //    }
-                //}
-                //else
-                //{
-
-                //}
-                
-
                 Shoot();
-                AutoAim();
-                //tr.transform.position = Vector3.Lerp(transform.position, endPosition, Time.deltaTime * 2f);
+                StartCoroutine(Shooting());
+                //AutoAim();
                 curShotDelay = 0;
             }
         }
     }
+
+
+
     #region 특수공격 슈퍼쉘
     public void HandleSpecialAttack()
     {
         curShotDelay += Time.deltaTime;
-        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
-        if(Mathf.Abs(skillJoystick.Horizontal) >  0  || Mathf.Abs(skillJoystick.Vertical) > 0)
+        //Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
+        if(Mathf.Abs(skillJoystick.Horizontal) >  0  || Mathf.Abs(skillJoystick.Vertical) > 0 || Mathf.Abs(skillJoystick.Vertical) < 0 || Mathf.Abs(skillJoystick.Horizontal) < 0)
         {
-            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
-            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            SuperShell();
-            curShotDelay = 0;
+            if (Mathf.Abs(skillJoystick.Horizontal) < 0.5f && Mathf.Abs(skillJoystick.Vertical) < 0.5f && curShotDelay >= maxShotDelay)
+            {
+                skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
+                transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                SuperShell();
+                StartCoroutine(Shooting());
+                curShotDelay = 0;
+
+            }
+
         }
     }
 
@@ -227,7 +201,7 @@ public class J_attackHandler : MonoBehaviour
             Destroy(bullet, 2f);
         }
         animator.Play("attack");
-        StartCoroutine(Shooting());
+
     }
     //특수공격
     void SuperShell()
@@ -236,26 +210,26 @@ public class J_attackHandler : MonoBehaviour
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
         for (int i = 0; i < 10; i++)
         {
-            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.transform.position,Quaternion.identity);
-            specialBullet.transform.parent = this.transform;
+            GameObject bullet = Instantiate(specialBulletFactory, firePos.transform.position,Quaternion.identity);
+            bullet.transform.parent = this.transform;
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
-            Destroy(specialBullet, 2f);
+            Destroy(bullet, 2f);
         }
         animator.Play("attack");
-        StartCoroutine(Shooting());
+        //StartCoroutine(Shooting());
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("SpecialBullet"))
-        {
-            Destroy(collision.gameObject);
-        }
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            Destroy(collision.gameObject);
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject.CompareTag("SpecialBullet"))
+    //    {
+    //        Destroy(collision.gameObject);
+    //    }
+    //    if (collision.gameObject.CompareTag("Obstacle"))
+    //    {
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
 
     public void HandleExplosionSmoke()
     {
