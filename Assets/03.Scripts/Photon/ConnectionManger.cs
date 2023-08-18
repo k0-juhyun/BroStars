@@ -63,7 +63,7 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
         print(nameof(OnJoinedRoom));
 
         // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
-        PhotonNetwork.LoadLevel("03_LodingScene");
+        PhotonNetwork.LoadLevel("04_LodingScene");
 
     }
 }
