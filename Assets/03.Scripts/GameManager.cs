@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public Transform[] Spawnpos; 
     private void Awake()
     {
         if(instance == null)
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.SerializationRate = 60;
 
         // 나의 Player를 생성한다.
-        PhotonNetwork.Instantiate("LeonController", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate("ShellyController", Spawnpos[0].transform.position, Quaternion.identity);
     }
 
 
