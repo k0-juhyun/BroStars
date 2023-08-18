@@ -92093,7 +92093,6 @@ MonoBehaviour:
   attackLR: {fileID: 1644266854}
   specialLR: {fileID: 1915375318}
   lineRendererStartTransform: {fileID: 1027519498}
-  SpawnPos: {fileID: 1733546783}
   RightHand:
   - {fileID: 1619381326}
   - {fileID: 591517095}
@@ -92101,7 +92100,7 @@ MonoBehaviour:
   - {fileID: 1528240406}
   Shuriken: {fileID: 4113802812056359974, guid: e4f55c6f451c59b4d981d95af5f40ad2,
     type: 3}
-  Ulti: {fileID: 2554337892134124218, guid: ac4f7e60ce6ee0845bfef1b71b7842e5, type: 3}
+  Mesh: {fileID: 2133687877}
   meshResolution: 0
   groundLayer:
     serializedVersion: 2

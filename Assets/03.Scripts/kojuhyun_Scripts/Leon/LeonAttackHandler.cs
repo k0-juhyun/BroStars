@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class LeonAttackHandler : MonoBehaviour
 {
+    private MoveHandler moveHandler;
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
 
@@ -21,16 +22,17 @@ public class LeonAttackHandler : MonoBehaviour
     private Transform skillLookPoint;
     private Transform Player;
     public Transform lineRendererStartTransform;
-    public Transform SpawnPos;
 
     [Header("Normal Attack Event")]
     public Transform[] RightHand;
     public GameObject Shuriken;
-    public GameObject Ulti;
+    public GameObject Mesh;
 
     private float TrailDistance = 4f;
     public float meshResolution;
     private float launchForce = 10;
+
+    private bool isTransparented;
 
     public LayerMask groundLayer;
 
@@ -43,6 +45,7 @@ public class LeonAttackHandler : MonoBehaviour
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
+        moveHandler = GetComponent<MoveHandler>();
     }
 
     public void HandleNormalAttack()
@@ -88,48 +91,32 @@ public class LeonAttackHandler : MonoBehaviour
 
         if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
         {
-            if (!specialLR.gameObject.activeInHierarchy)
-            {
-                specialLR.gameObject.SetActive(true);
-            }
-            DrawTrajectory(startVelocity, 10, 0.1f);
-
-            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
-
-            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.11f, skillLookPoint.position.z));
-
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-        }
-        else
-        {
-            specialLR.gameObject.SetActive(false);
+            StartCoroutine(ResetTransparencyAfterDelay(6));
         }
     }
 
-    public void LaunchBear(float h, float v)
+    private void HandleDamageTransparent(float parameter)
     {
-        Vector3 joystickDirection = new Vector3(h, 0.5f, v);
-        Vector3 startVelocity = joystickDirection * launchForce;
+        int meshCount = Mesh.transform.childCount;
 
-        GameObject Ultimate = Instantiate(Ulti, SpawnPos.transform.position, Quaternion.identity);
-        Ultimate.GetComponent<Rigidbody>().velocity = startVelocity;
-    }
-
-    #region 포물선 그리기
-    private void DrawTrajectory(Vector3 startVelocity, int numPoints, float timeStep)
-    {
-        specialLR.positionCount = numPoints;
-
-        for (int i = 0; i < numPoints; i++)
+        for (int i = 0; i < meshCount; i++)
         {
-            float time = i * timeStep;
-            Vector3 position = startVelocity * time + Physics.gravity * time * time * 0.5f;
-
-            position += transform.position;
-            specialLR.SetPosition(i, position);
+            SkinnedMeshRenderer playerMesh = Mesh.transform.GetChild(i).GetComponent<SkinnedMeshRenderer>();
+            Color materialColor = playerMesh.materials[0].color;
+            materialColor.a = parameter;
+            playerMesh.materials[0].color = materialColor;
         }
     }
 
-    #endregion
+    private IEnumerator ResetTransparencyAfterDelay(float delay)
+    {
+        HandleDamageTransparent(0.2f);
+        moveHandler.moveSpeed = 4;
+
+        yield return new WaitForSeconds(delay);
+
+        HandleDamageTransparent(1.0f);
+        moveHandler.moveSpeed = 2;
+    }
 }
 
