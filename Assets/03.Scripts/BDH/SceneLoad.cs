@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows.WebCam;
+using Photon.Pun;
 
 public class SceneLoad : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class SceneLoad : MonoBehaviour
     public void Start()
     {
         StartCoroutine(LoadScene()); 
+        //PhotonNetwork.LoadLevel
     }
 
     // 비동기 로드를 사용하기 위해 코루틴을 이용한다. 

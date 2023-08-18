@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class TargetHandler : MonoBehaviour
+public class TargetHandler : MonoBehaviourPun
 {
-    public Camera mainCamera;
+    private Camera mainCamera;
 
     public GameObject Target;
     public GameObject DyingEffect;
@@ -12,11 +13,21 @@ public class TargetHandler : MonoBehaviour
     public bool isDestroy;
 
     HpHandler hpHandler;
-
     private void Awake()
     {
+        mainCamera = transform.GetChild(0).GetComponent<Camera>();
+    }
+
+    private void Start()
+    {
+        if(photonView.IsMine)
+        {
+            mainCamera.gameObject.SetActive(true);
+        }
+
         hpHandler = GetComponentInChildren<HpHandler>();
     }
+
     private void Update()
     {
         if (hpHandler != null)

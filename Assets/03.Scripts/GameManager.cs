@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // OnPhotonSerializeView 호출 빈도. 
-        PhotonNetwork.SerializationRate = 60;
+        PhotonNetwork.SerializationRate = 30;
 
         // 나의 Player를 생성한다.
-        PhotonNetwork.Instantiate("ShellyController", Spawnpos[0].transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate("NitaController", Spawnpos[0].transform.position, Quaternion.identity);
     }
 
 

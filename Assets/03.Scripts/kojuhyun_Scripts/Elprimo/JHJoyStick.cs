@@ -19,6 +19,8 @@ public class JHJoyStick : Joystick
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if (photonView.IsMine == false)
+            return;
         background.anchoredPosition = ScreenPointToAnchoredPosition(eventData.position);
         background.gameObject.SetActive(true);
         base.OnPointerDown(eventData);
@@ -27,6 +29,8 @@ public class JHJoyStick : Joystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
+        if (photonView.IsMine == false)
+            return;
         NitaAttackHandler nitaAttackHandler = FindAnyObjectByType<NitaAttackHandler>();
         ElprimoAttackHandler elprimoAttackHandler = FindObjectOfType<ElprimoAttackHandler>();
         LeonAttackHandler leonAttackHandler = FindObjectOfType<LeonAttackHandler>();

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class NitaAttackHandler : MonoBehaviour
+public class NitaAttackHandler : MonoBehaviourPun
 {
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
@@ -37,6 +38,10 @@ public class NitaAttackHandler : MonoBehaviour
 
     private void Awake()
     {
+        if(photonView.IsMine ==false)
+        {
+            this.enabled = false;
+        }
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
@@ -45,7 +50,6 @@ public class NitaAttackHandler : MonoBehaviour
     }
 
     #region АјАн
-
     public void HandleNormalAttack()
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
@@ -80,7 +84,6 @@ public class NitaAttackHandler : MonoBehaviour
             attackLR.gameObject.SetActive(false);
         }
     }
-
     public void HandleUltimateAttack()
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);

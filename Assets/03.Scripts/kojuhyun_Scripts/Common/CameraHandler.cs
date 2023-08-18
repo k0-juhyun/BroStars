@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.TextCore.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class CameraHandler : MonoBehaviour
+public class CameraHandler : MonoBehaviourPun
 {
     HpHandler hpHandler;
     TargetHandler targetHandler;
@@ -47,6 +47,9 @@ public class CameraHandler : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (photonView.IsMine == false)
+            return;
+
         if (target == null)
             return;
 
@@ -57,7 +60,7 @@ public class CameraHandler : MonoBehaviour
         {
             Vector3 startCamPos = new Vector3(startXPos, startYPos, currentZpos);
             transform.position = Vector3.Lerp(transform.position, startCamPos, startCamSpeed);
-            if(Vector3.Distance(transform.position,startCamPos) < 0.05f)
+            if(Vector3.Distance(transform.position,startCamPos) < 0.05f && photonView.IsMine)
             {
                 Messages.SetActive(false);
                 Canvas.SetActive(true);

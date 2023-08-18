@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class NitaManager : MonoBehaviour
+public class NitaManager : MonoBehaviourPun
 {
     MoveHandler moveHandler;
     HpHandler hpHandler;
@@ -11,6 +12,10 @@ public class NitaManager : MonoBehaviour
 
     private void Awake()
     {
+        if (photonView.IsMine == false)
+        {
+            this.enabled = false;
+        }
         moveHandler = GetComponent<MoveHandler>();
         hpHandler = GetComponent<HpHandler>();
         nitaAttackHandler = GetComponent<NitaAttackHandler>();
@@ -18,13 +23,16 @@ public class NitaManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveHandler.HandleMovement();   
+        if (photonView.IsMine == false)
+            return;
+        moveHandler.HandleMovement();
 
         nitaAttackHandler.HandleNormalAttack();
         nitaAttackHandler.HandleUltimateAttack();
 
         hpHandler.UpdateHp();
         hpHandler.RegenerateHpInBush();
+
     }
 
     private void Update()

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class ElprimoManager : MonoBehaviour
+public class ElprimoManager : MonoBehaviourPun
 {
     MoveHandler moveHandler;
     ElprimoAttackHandler attackHandler;
@@ -20,13 +21,20 @@ public class ElprimoManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveHandler.HandleMovement();
+        if (photonView.IsMine == false)
+        {
+            return;
+        }
+        else
+        {
+            moveHandler.HandleMovement();
 
-        attackHandler.HandleNormalAttack();
-        attackHandler.HandleUltimateAttack();
+            attackHandler.HandleNormalAttack();
+            attackHandler.HandleUltimateAttack();
 
-        hpHandler.UpdateHp();
-        hpHandler.RegenerateHpInBush();
+            hpHandler.UpdateHp();
+            hpHandler.RegenerateHpInBush();
+        }
     }
 
     private void Update()

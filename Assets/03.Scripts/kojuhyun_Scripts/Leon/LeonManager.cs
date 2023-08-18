@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class LeonManager : MonoBehaviour
+public class LeonManager : MonoBehaviourPun
 {
     MoveHandler moveHandler;
     HpHandler hpHandler;
@@ -17,12 +18,19 @@ public class LeonManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveHandler.HandleMovement();
+        if (photonView.IsMine == false)
+        {
+            return;
+        }
+        else
+        {
+            moveHandler.HandleMovement();
 
-        leonAttackHandler.HandleNormalAttack();
-        leonAttackHandler.HandleUltimateAttack();
+            leonAttackHandler.HandleNormalAttack();
+            leonAttackHandler.HandleUltimateAttack();
 
-        hpHandler.UpdateHp();
-        hpHandler.RegenerateHpInBush();
+            hpHandler.UpdateHp();
+            hpHandler.RegenerateHpInBush();
+        }
     }
 }

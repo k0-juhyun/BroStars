@@ -2787,7 +2787,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2724276264450136237
 Transform:
   m_ObjectHideFlags: 0
@@ -2801,7 +2801,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2724276264681800971}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
 --- !u!20 &2724276264450136208
 Camera:
@@ -3587,7 +3587,7 @@ Transform:
   - {fileID: 2724276264266734043}
   - {fileID: 2724276265523670331}
   m_Father: {fileID: 2724276264681800971}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2724276264627568423
 GameObject:
@@ -3622,7 +3622,7 @@ RectTransform:
   m_Children:
   - {fileID: 2724276265441786363}
   m_Father: {fileID: 2724276264681800971}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3776,6 +3776,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2724276264681800971}
   - component: {fileID: 2724276264681800970}
+  - component: {fileID: 7006022151728514173}
+  - component: {fileID: 5329026088616885530}
   m_Layer: 11
   m_Name: LeonController
   m_TagString: Player
@@ -3795,10 +3797,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2724276264450136237}
   - {fileID: 2724276265843539205}
   - {fileID: 2724276264627568419}
   - {fileID: 2724276264615532961}
-  - {fileID: 2724276264450136237}
   - {fileID: 2469146501433351852}
   - {fileID: 2724276265360810674}
   m_Father: {fileID: 0}
@@ -3816,10 +3818,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948ff9e017e2ff4ba43b0b699747eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 2724276264450136208}
   Target: {fileID: 2958859482033357846}
   DyingEffect: {fileID: 2724276264615532960}
   isDestroy: 0
+--- !u!114 &7006022151728514173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724276264681800973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5329026088616885530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724276264681800973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2724276264693445372
 GameObject:
   m_ObjectHideFlags: 0
@@ -6559,7 +6598,7 @@ RectTransform:
   - {fileID: 2724276263875260536}
   - {fileID: 2724276264062476670}
   m_Father: {fileID: 2724276264681800971}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6909,7 +6948,6 @@ GameObject:
   - component: {fileID: 8404851041004717294}
   - component: {fileID: 8404851041004717265}
   - component: {fileID: 8404851041004717295}
-  - component: {fileID: 336362237073797244}
   m_Layer: 11
   m_Name: Leon
   m_TagString: Player
@@ -7123,28 +7161,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 2147483648
---- !u!114 &336362237073797244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2958859482033357846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &3130608345527382613
 GameObject:
   m_ObjectHideFlags: 0
