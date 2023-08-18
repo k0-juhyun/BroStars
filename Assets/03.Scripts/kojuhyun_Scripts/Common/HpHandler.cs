@@ -80,7 +80,7 @@ public class HpHandler : MonoBehaviour
     {
         hpPercentage = curHp / maxHp;
         HpBar.value = curHp / maxHp;
-        if (hpPercentage < 0.2f ? isUrgent = true : isUrgent = false);
+        if (hpPercentage < 0.2f ? isUrgent = true : isUrgent = false)
 
         if(curHp <= 0)
         {
