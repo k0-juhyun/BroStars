@@ -20,7 +20,7 @@ public class SceneLoad : MonoBehaviour
     {
         yield return null;
         // AsyncOperation를 통하여 로딩이 끝나고 멈추도록 설정합니다. 
-        AsyncOperation operation = SceneManager.LoadSceneAsync("0813JH");
+        AsyncOperation operation = SceneManager.LoadSceneAsync("BDH");
         operation.allowSceneActivation = false;
 
         // operation.isDone; -> 작업의 완료 유무를 Boolean형으로 반환한다. 

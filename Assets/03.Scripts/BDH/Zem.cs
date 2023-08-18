@@ -31,6 +31,7 @@ public class Zem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         // 초기 회전값을 저장.
         zemRotation = this.transform.rotation;
      

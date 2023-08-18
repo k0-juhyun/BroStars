@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
+// GameManager 스크립트
+// 1. 게임 플레이 씬의 리스폰 지역에서 브롤러 생성
+// 2. 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -20,6 +24,17 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); 
        
     }
+
+    private void Start()
+    {
+        // OnPhotonSerializeView 호출 빈도. 
+        PhotonNetwork.SerializationRate = 60;
+
+        // 나의 Player를 생성한다.
+        PhotonNetwork.Instantiate("ShellyController", Vector3.zero, Quaternion.identity);
+    }
+
+
     // 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
     // 1. 팀원들이 모은 총 보석이 10개 이상. (상대 팀보다 더 많은 수의 보석을 보유해야 함)
     // 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 

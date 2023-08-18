@@ -2,26 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
-
-public class GiftImage : MonoBehaviour
+public class TabImage : MonoBehaviour
 {
-    public GameObject gift;
+    public GameObject tabImage;
     Vector3 originScale;
 
     // Start is called before the first frame update
     void Start()
     {
-        originScale = gift.transform.localScale;
+        originScale = tabImage.transform.localScale;
 
-        iTween.ScaleTo(gift, iTween.Hash(
-          //"delay", 2,
+        iTween.ScaleTo(tabImage, iTween.Hash(      
           "scale", originScale * 1.15f,
           "easetype", iTween.EaseType.easeInOutBack,
-          "time", 1f,
+          "time", 0.5f,
           "looptype", iTween.LoopType.pingPong
           ));
     }
-
-
-
 }
