@@ -32,7 +32,7 @@ public class MoveHandler : MonoBehaviour
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
     }
-
+    
     public void HandleMovement()
     {
         if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)

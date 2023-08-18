@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.Asteroids;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,6 +56,10 @@ public class J_attackHandler : MonoBehaviour
     //레이캐스트 맞는곳
     RaycastHit hitInfo;
 
+    enum bImpact
+    {
+        Damage,
+    }
 
     #region AutoAim
     //적군 리스트
@@ -80,9 +85,10 @@ public class J_attackHandler : MonoBehaviour
         GameObject cardridge;
         for (int i = 0; i <= 5; i++)
         {
-            if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, firePos.transform.rotation);
-            else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, firePos.transform.rotation);
-
+            if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, Quaternion.identity);
+            else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, Quaternion.identity);
+            //자식 하위오브젝트에서 생성
+            cardridge.transform.parent = this.transform;
         }
         yield return new WaitForSeconds(shootingSlowness);
 
@@ -104,6 +110,33 @@ public class J_attackHandler : MonoBehaviour
                 transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
 
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+                //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y +1, transform.position.z);
+                ////레이캐스트에 맞는다면 
+                //if(Physics.Raycast(rayStartPos, transform.forward, out hitInfo, 5))
+                //{
+                //    bool isEnemy = false;
+                //    Shoot();
+                   
+                //   //에너미가 맞다면
+                //   if(hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                //    {
+                //        isEnemy = true;
+
+                //    }
+                //   if(isEnemy)
+                //    {
+                //        //적에게 데미지를 주고싶다
+
+                //        //넉백효과를 주고 싶다
+                //    }
+                //}
+                //else
+                //{
+
+                //}
+                
+
                 Shoot();
                 AutoAim();
                 //tr.transform.position = Vector3.Lerp(transform.position, endPosition, Time.deltaTime * 2f);
@@ -186,7 +219,9 @@ public class J_attackHandler : MonoBehaviour
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
         for (int i = 0; i < 5; i++)
         {
-            GameObject bullet = Instantiate(attackBulletFactory, firePos.position, firePos.rotation);
+            GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position,Quaternion.identity);
+            //자식 하위오브젝트에서 생성
+            bullet.transform.parent = this.transform;
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
             Destroy(bullet, 2f);
@@ -194,26 +229,21 @@ public class J_attackHandler : MonoBehaviour
         animator.Play("attack");
         StartCoroutine(Shooting());
     }
+    //특수공격
     void SuperShell()
     {
         //총알 나오는 위치의 각도를 조정
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
-        List<GameObject> spawnedSpecialBullets = new List<GameObject>();
         for (int i = 0; i < 10; i++)
         {
-            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.position, firePos.rotation);
-            spawnedSpecialBullets.Add(specialBullet);
+            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.transform.position,Quaternion.identity);
+            specialBullet.transform.parent = this.transform;
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
-            //Destroy(specialBullet, 2f);
+            Destroy(specialBullet, 2f);
         }
         animator.Play("attack");
         StartCoroutine(Shooting());
-
-        foreach(GameObject bullet in spawnedSpecialBullets)
-        {
-            Destroy(bullet, 2f);
-        }
     }
     private void OnCollisionEnter(Collision collision)
     {
