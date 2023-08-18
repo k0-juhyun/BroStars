@@ -7634,6 +7634,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 5965694774927153149}
   moveSpeed: 3
+  receivePos: {x: 0, y: 0, z: 0}
+  receiveRot: {x: 0, y: 0, z: 0, w: 0}
+  lerpSpeed: 50
   dustPrefab:
   - {fileID: 8068990837233954000}
   - {fileID: 8068990838146559669}
