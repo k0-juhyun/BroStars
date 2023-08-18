@@ -8,6 +8,12 @@ public class shellybullet : MonoBehaviour
     public float bulletSpeed = 10.33f;
     Vector3 startPos;
 
+    //넉백힘
+    [SerializeField]
+    [Header("KnockBackForce")]
+    public float knockBackForce = 0.5f;
+
+
     public float AutoDestroyTime = 5f;
     //public poolableobject 
 
@@ -26,22 +32,26 @@ public class shellybullet : MonoBehaviour
         transform.forward = rb.velocity.normalized;
 
     }
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        var otherRB = collision.gameObject.GetComponent<Rigidbody>();
-        if (otherRB != null)
-        {
-            otherRB.AddForce(transform.forward * otherRB.mass * 10, ForceMode.Impulse);
-        }
+        //print("OnTriggerEnter : " + other.name);
+
+        //var otherRB = other.gameObject.GetComponent<Rigidbody>();
+        //if (otherRB != null)
+        //{
+        //    otherRB.AddForce(transform.forward * otherRB.mass * 10, ForceMode.Impulse);
+        //}
 
 
 
         //상대방과 거리의 따른 데미지 및 콜리젼
 
-        // 충돌체의 태그가 player일때
-        if (collision.gameObject.CompareTag("Player"))
+        // 충돌체의 태그가 Enemy일때
+        BushManager handler = other.gameObject.GetComponent<BushManager>();
+        if (handler != null)
+        // if (other.gameObject.CompareTag("Player"))
         {
-
             //1차 사거리
             float firstDistance = 1.5f;
             //2차 사거리
@@ -49,8 +59,8 @@ public class shellybullet : MonoBehaviour
             //3차 사거리
             float thirdDistance = 5f;
 
-            // 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
-            float range = Vector3.Distance(transform.position, collision.transform.position);
+            // 총알과 플레이어가 충돌했을때 나와 충돌플레이어 사이의거리
+            float range = Vector3.Distance(transform.position, other.transform.position);
 
             //사거리 안에 있으면 
             if (range < firstDistance)
@@ -59,14 +69,37 @@ public class shellybullet : MonoBehaviour
             }
 
             else if (firstDistance < range && range < secondDistance)
-            { 
+            {
                 //takedamage(3);
             }
-            else if(secondDistance < range && range < thirdDistance)    
+            else if (secondDistance < range && range < thirdDistance)
             {
                 //takedamage(1);
             }
+
+            //넉백효과를 주고싶다
+            KnockBack(other.gameObject);
+
         }
 
+        //총알 파괴
+        Destroy(this.gameObject);
+
+    }
+    //넉백효과
+    private void KnockBack(GameObject enemy)
+    {
+        //print("111");
+        ///넉백 방향
+        Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+
+        // 넉백 힘
+        Rigidbody enemyRigidbody = enemy.GetComponentInChildren<Rigidbody>();
+        if (enemyRigidbody != null)
+        {
+            //print("2222");
+            //enemyRigidbody.AddForce(knockbackDirection * knockBackForce, ForceMode.Impulse);
+            enemyRigidbody.AddForce(knockbackDirection * knockBackForce, ForceMode.Impulse);
+        }
     }
 }

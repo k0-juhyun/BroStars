@@ -56,6 +56,10 @@ public class J_attackHandler : MonoBehaviour
     //레이캐스트 맞는곳
     RaycastHit hitInfo;
 
+    enum bImpact
+    {
+        Damage,
+    }
 
     #region AutoAim
     //적군 리스트
@@ -106,6 +110,33 @@ public class J_attackHandler : MonoBehaviour
                 transform.LookAt(new Vector3(attackLookPoint.position.x, 6.1f, attackLookPoint.position.z));
 
                 transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+                //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y +1, transform.position.z);
+                ////레이캐스트에 맞는다면 
+                //if(Physics.Raycast(rayStartPos, transform.forward, out hitInfo, 5))
+                //{
+                //    bool isEnemy = false;
+                //    Shoot();
+                   
+                //   //에너미가 맞다면
+                //   if(hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                //    {
+                //        isEnemy = true;
+
+                //    }
+                //   if(isEnemy)
+                //    {
+                //        //적에게 데미지를 주고싶다
+
+                //        //넉백효과를 주고 싶다
+                //    }
+                //}
+                //else
+                //{
+
+                //}
+                
+
                 Shoot();
                 AutoAim();
                 //tr.transform.position = Vector3.Lerp(transform.position, endPosition, Time.deltaTime * 2f);
@@ -198,6 +229,7 @@ public class J_attackHandler : MonoBehaviour
         animator.Play("attack");
         StartCoroutine(Shooting());
     }
+    //특수공격
     void SuperShell()
     {
         //총알 나오는 위치의 각도를 조정

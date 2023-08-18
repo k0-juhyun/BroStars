@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - FxTemporaire
   - SpecialBullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
