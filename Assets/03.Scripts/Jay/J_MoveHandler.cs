@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.EventSystems;
 
-public class J_MoveHandler : MonoBehaviour
+
+public class J_MoveHandler : MonoBehaviourPun,IPunObservable
 {
     #region Component Values
     [SerializeField]
@@ -10,7 +13,7 @@ public class J_MoveHandler : MonoBehaviour
     [SerializeField]
     Transform lookPoint;
     //애니메이터
-    J_AnimatorHandler animatorHandler;
+    //J_AnimatorHandler animatorHandler;
     #endregion
 
     #region Boolean Values
@@ -26,6 +29,17 @@ public class J_MoveHandler : MonoBehaviour
     [Header("Particle System")]
     private ParticleSystem[] dustPrefab;
 
+    #region Photon Values
+    [HideInInspector]
+    public Vector3 receivePos;
+    [HideInInspector]
+    public Quaternion receiveRot;
+    [HideInInspector]
+    public float lerpSpeed = 50;
+    #endregion
+
+
+
     Animator animator;
 
     // Start is called before the first frame update
@@ -35,6 +49,16 @@ public class J_MoveHandler : MonoBehaviour
         //animatorHandler = GetComponent<J_AnimatorHandler>();    
         animator = GetComponent<Animator>();
     }
+    private void FixedUpdate()
+    {
+        if (photonView.IsMine == false)
+        {
+            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+
+        }
+    }
+
 
     //움직임
     public void HandleMovement()
@@ -42,7 +66,7 @@ public class J_MoveHandler : MonoBehaviour
         //움직임 컨트롤러 값
         if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
         {
-            lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 6.1f, joystick.Vertical + transform.position.z);
+            lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 4.11f, joystick.Vertical + transform.position.z);
             transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
             transform.Translate(Vector3.forward * moveSpeed * Time.fixedDeltaTime);
@@ -71,4 +95,20 @@ public class J_MoveHandler : MonoBehaviour
 
         Destroy(particles.gameObject, particles.main.duration);
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            receivePos = (Vector3)stream.ReceiveNext();
+            receiveRot = (Quaternion)stream.ReceiveNext();
+        }
+    }
+
+
 }
