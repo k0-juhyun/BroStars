@@ -55,7 +55,6 @@ public class J_MoveHandler : MonoBehaviourPun,IPunObservable
         {
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
-
         }
     }
 
