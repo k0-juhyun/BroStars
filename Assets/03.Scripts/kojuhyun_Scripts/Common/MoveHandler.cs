@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.EventSystems;
 
 public class MoveHandler : MonoBehaviourPun, IPunObservable
 {
@@ -24,6 +25,15 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
     public float moveSpeed;
     #endregion
 
+    #region Photon Values
+    [HideInInspector]
+    public Vector3 receivePos;
+    [HideInInspector]
+    public Quaternion receiveRot;
+    [HideInInspector]
+    public float lerpSpeed = 50;
+    #endregion
+
     [SerializeField]
     [Header("Particle System")]
     private ParticleSystem[] dustPrefab;
@@ -33,7 +43,15 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
     }
-    
+    private void FixedUpdate()
+    {
+        if (photonView.IsMine == false)
+        {
+            transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
+
+        }
+    }
     public void HandleMovement()
     {
         if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
@@ -75,15 +93,15 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if(stream.IsWriting)
+        if (stream.IsWriting)
         {
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
         }
         else
         {
-            transform.position = (Vector3)stream.ReceiveNext();        
-            transform.rotation = (Quaternion)stream.ReceiveNext();
+            receivePos = (Vector3)stream.ReceiveNext();
+            receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
 }

@@ -25,6 +25,7 @@ public class NitaManager : MonoBehaviourPun
     {
         if (photonView.IsMine == false)
             return;
+
         moveHandler.HandleMovement();
 
         nitaAttackHandler.HandleNormalAttack();
