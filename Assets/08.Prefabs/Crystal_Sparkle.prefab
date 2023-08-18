@@ -14554,7 +14554,6 @@ GameObject:
   - component: {fileID: 1085404612022679965}
   - component: {fileID: 4406959332522586815}
   - component: {fileID: 2352709640431603453}
-  - component: {fileID: 2022784818730876215}
   - component: {fileID: 599618074833910417}
   m_Layer: 30
   m_Name: Crystal_Sparkle
@@ -14637,7 +14636,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5712771624162389512}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.007619322, y: 0.020953137, z: 0.004939286}
@@ -14658,19 +14657,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2022784818730876215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5712771624162389512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 011a3719a68638247a2e42845af1f512, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.1
 --- !u!114 &599618074833910417
 MonoBehaviour:
   m_ObjectHideFlags: 0
