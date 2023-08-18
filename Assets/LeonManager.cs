@@ -20,6 +20,7 @@ public class LeonManager : MonoBehaviour
         moveHandler.HandleMovement();
 
         leonAttackHandler.HandleNormalAttack();
+        leonAttackHandler.HandleUltimateAttack();
 
         hpHandler.UpdateHp();
         hpHandler.RegenerateHpInBush();

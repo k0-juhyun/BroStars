@@ -29,5 +29,10 @@ public class TargetHandler : MonoBehaviour
                 hpHandler.isDie = false;
             }
         }
+
+        else if (hpHandler == null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

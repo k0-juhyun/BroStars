@@ -14,7 +14,6 @@ public class CameraHandler : MonoBehaviour
 
     [Header("게임 시작시 켜지는 것들")]
     public GameObject Messages;
-    public GameObject JemManager;
     public GameObject Canvas;
 
     [Header("피격 이미지")]
@@ -61,7 +60,6 @@ public class CameraHandler : MonoBehaviour
             if(Vector3.Distance(transform.position,startCamPos) < 0.05f)
             {
                 Messages.SetActive(false);
-                JemManager.SetActive(true);
                 Canvas.SetActive(true);
 
                 gameStart = true;
