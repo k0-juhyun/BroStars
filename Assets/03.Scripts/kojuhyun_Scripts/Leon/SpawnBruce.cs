@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class SpawnBruce : MonoBehaviour
+public class SpawnBruce : MonoBehaviourPun
 {
     public GameObject Bruce;
     public LayerMask groundLayer;

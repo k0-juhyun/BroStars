@@ -29,7 +29,7 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
     [HideInInspector]
     public Vector3 receivePos;
     [HideInInspector]
-    public Quaternion receiveRot;
+    public Quaternion receiveRot = Quaternion.identity;
     [HideInInspector]
     public float lerpSpeed = 50;
     #endregion

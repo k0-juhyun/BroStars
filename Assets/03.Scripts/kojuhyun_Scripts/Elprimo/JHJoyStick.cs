@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using Photon.Pun;
 
 public class JHJoyStick : Joystick
 {
@@ -29,7 +30,7 @@ public class JHJoyStick : Joystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        if (photonView.IsMine == false)
+        if(photonView.IsMine == false)
             return;
         NitaAttackHandler nitaAttackHandler = FindAnyObjectByType<NitaAttackHandler>();
         ElprimoAttackHandler elprimoAttackHandler = FindObjectOfType<ElprimoAttackHandler>();
