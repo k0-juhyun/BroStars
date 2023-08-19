@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 using Photon.Pun;
 
@@ -13,7 +12,7 @@ using Photon.Pun;
 // 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
 // 3. 균형이 무너지는 순간 카운트 다운 실행. 
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
 
@@ -26,6 +25,9 @@ public class GameManager : MonoBehaviour
 
     // 스폰 지역 Manager 
     private GameObject spawnManager;
+
+    // 스폰 Pos
+    private List<Vector3> spawnPos;
 
     // 플레이어의 인원
     int PlayerLength;
@@ -108,6 +110,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // RPC 호출 빈도 
+        PhotonNetwork.SendRate = 30;
+
         // OnPhotonSerializeView 호출 빈도. 
         PhotonNetwork.SerializationRate = 30;
 
@@ -116,11 +121,17 @@ public class GameManager : MonoBehaviour
 
         // 참여한 플레이어의 인원 초기화. 
         // PlayerLength = spawnManager.transform.childCount;
-        PlayerLength = 4; 
+        PlayerLength = 4;
+
+        // 내가 위치해야 하는 index.
+        int index = PhotonNetwork.CurrentRoom.PlayerCount - 1; 
 
         // CreateSpawn() 메소드를 통해 팀과 멤버를 구성하고
         // 각 Player의 spawnManager의 SpawnTransform에 플레이어를 생성한다.  
         CreateSpawn();
+
+        // 나의 Player 생성
+        PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
 
         // 마우스 포인터를 비 활성화.
         Cursor.visible = false; 
@@ -130,6 +141,8 @@ public class GameManager : MonoBehaviour
 
     private void CreateSpawn()
     {
+        // spawnPos 리스트
+        spawnPos = new List<Vector3>();
         // 팀을 생성한다.
         myTeam = new MyTeam();
         enemyTeam = new EnemyTeam(); 
@@ -140,27 +153,44 @@ public class GameManager : MonoBehaviour
             // Player를 생성할 리스폰 위치. 
             Vector3 pos = spawnManager.transform.GetChild(i).transform.position;
 
-            if(i >= 0 && i <= 1)
-            {
-                // 우리팀을 구성한다. : myTeam
-                // SetMyMebers메소드는 Player 클래스를 생성하여 우리 팀원을 3명을 구성한다. 
-                myTeam.SetMyMebers(i, pos);
+            spawnPos.Add(pos);
 
-                // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
-                PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
-            }
-            else
-            {
-                // 상대팀을 구성한다. :enemyTeam;
-                // SetMyMebers메소드는 Player 클래스를 생성하여 상대 팀원을 3명을 구성한다. 
-                enemyTeam.SetMyMebers(i, pos); 
+            //if(i >= 0 && i <= 1)
+            //{
+            //    // 우리팀을 구성한다. : myTeam
+            //    // SetMyMebers메소드는 Player 클래스를 생성하여 우리 팀원을 3명을 구성한다. 
+            //    myTeam.SetMyMebers(i, pos);
 
-                // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
-                PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
-            }
+            //    // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
+            //    //PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
+            //}
+            //else
+            //{
+            //    // 상대팀을 구성한다. : enemyTeam;
+            //    // SetMyMebers메소드는 Player 클래스를 생성하여 상대 팀원을 3명을 구성한다. 
+            //    enemyTeam.SetMyMebers(i, pos); 
+
+            //    // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
+            //    //PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
+            //}
 
         }
+
+
     }
+
+    // 새로운 인원이 방에 들어왔을 때 호출되는 함수
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+
+    }
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+    }
+
+
 
     //public int myTeam
     //{
@@ -171,7 +201,7 @@ public class GameManager : MonoBehaviour
     //    set
     //    {
     //        myTeamScore = value;
-            
+
     //        if(myTeamScore >= 10 && myTeamScore != EnemyTeamScore)
     //        {
     //            // 우리팀 보석을 10개 이상 획득. 
@@ -205,7 +235,7 @@ public class GameManager : MonoBehaviour
     //    }
     //}
 
-   
+
     IEnumerator WinerTeamTimer()
     {
         winnerCurrentTimer = winerTimer;
