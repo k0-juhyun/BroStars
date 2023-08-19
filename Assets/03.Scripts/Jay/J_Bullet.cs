@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class J_Bullet : MonoBehaviour
+public class Bullets : MonoBehaviour
 {
     //public float speed = 10f;
 
