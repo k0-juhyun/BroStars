@@ -29,11 +29,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 스폰 Pos
     private List<Vector3> spawnPos;
 
+    GameObject player;
+
     // 플레이어의 인원
     int PlayerLength;
 
+    // 나의 플레이어의 인덱스
+    int index;
+
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "ShellyController", "LeonController", "NitaController", "ElprimoController" };
+    public static List<string> PlayerName = new List<string>() { "ElprimoController", "LeonController", "NitaController", "ShellyController"};
 
     // 팀 클래스 변수
     MyTeam myTeam;
@@ -41,14 +46,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public class Player
     {
-        private string PlayerName;
-        private Vector3 PlayerPos;
-        private Quaternion PlayerRot;
-        public Player(string name, Vector3 pos, Quaternion rot)
+        public GameObject player;
+        public string PlayerName;
+        public Vector3 ResawnPos;
+       
+        public Player(GameObject gameobject ,string name, Vector3 pos)
         {
+            this.player = gameobject;
             this.PlayerName = name;
-            this.PlayerPos = pos;
-            this.PlayerRot = rot;
+            this.ResawnPos = pos;
         }
     }
 
@@ -64,11 +70,23 @@ public class GameManager : MonoBehaviourPunCallbacks
             myMembers = new List<Player>();
         }
        
-        public void SetMyMebers(int number, Vector3 pos) 
+        public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos) 
         {
-            myMembers.Add(new Player(PlayerName[number], pos, Quaternion.identity));
+            myMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
-    
+
+        public void show()
+        {
+            print("우리팀 리스트를 보여준다.");
+            for (int i = 0; i < myMembers.Count; i++)
+            {
+                print(myMembers[i].player.name);
+                print(myMembers[i].PlayerName);
+                print(myMembers[i].ResawnPos);
+
+            }
+        }
+
     }
 
     public class EnemyTeam
@@ -83,14 +101,28 @@ public class GameManager : MonoBehaviourPunCallbacks
             enemyMembers = new List<Player>();
         }
 
-        public void SetMyMebers(int number, Vector3 pos)
+        public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos)
         {
-            enemyMembers.Add(new Player(PlayerName[number], pos, Quaternion.identity));
+            enemyMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
+        }
+
+        public void show()
+        {
+            print("상대팀 리스트를 보여준다.");
+            for(int i = 0; i < enemyMembers.Count; i++)
+            {
+                print(enemyMembers[i].player.name);
+                print(enemyMembers[i].PlayerName);
+                print(enemyMembers[i].ResawnPos);
+
+            }
         }
     }
 
     private void Awake()
     {
+       
+
         if (instance == null)
         {
             instance = this;
@@ -110,6 +142,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        myTeam = new MyTeam();
+        enemyTeam = new EnemyTeam();
+
         // RPC 호출 빈도 
         PhotonNetwork.SendRate = 30;
 
@@ -120,18 +155,23 @@ public class GameManager : MonoBehaviourPunCallbacks
         Instantiate(spawnManager);
 
         // 참여한 플레이어의 인원 초기화. 
-        // PlayerLength = spawnManager.transform.childCount;
-        PlayerLength = 4;
+        PlayerLength = PhotonNetwork.CurrentRoom.PlayerCount;
 
         // 내가 위치해야 하는 index.
-        int index = PhotonNetwork.CurrentRoom.PlayerCount - 1; 
+        index = PhotonNetwork.CurrentRoom.PlayerCount - 1; 
 
-        // CreateSpawn() 메소드를 통해 팀과 멤버를 구성하고
-        // 각 Player의 spawnManager의 SpawnTransform에 플레이어를 생성한다.  
+        // 각 Player의 spawnManager의 리스폰 위치를 생성한다. 
         CreateSpawn();
 
         // 나의 Player 생성
-        PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
+        player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
+
+        // MasterClient만 팀 클래스를 생성한다. 
+
+        // RPC를 통해서 RpcTarget.other를 통해 팀 클래스에 나의 Player를 추가. 
+
+        // RPC를 통해서 RpcTarget.MasterClient 호출. 
+        BuildTeam(player, index, spawnPos[index]);
 
         // 마우스 포인터를 비 활성화.
         Cursor.visible = false; 
@@ -139,55 +179,57 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
+    private void BuildTeam(GameObject gameobject, int index, Vector3 pos)
+    {
+
+        // 플레이어의 참여한 순서 index가 2명 이하 이면 같은 팀.
+        if (index <= 1) 
+        {
+            myTeam.SetMyMebers(gameobject, index, pos);
+        }
+        else // 플레이어의 참여한 순서 index가 2명 이상 이면 다른 팀.
+        {
+            enemyTeam.SetMyMebers(gameobject, index, pos);
+        }
+
+    }
+
     private void CreateSpawn()
     {
         // spawnPos 리스트
         spawnPos = new List<Vector3>();
-        // 팀을 생성한다.
-        myTeam = new MyTeam();
-        enemyTeam = new EnemyTeam(); 
-
-        // 리스폰 Length와 플레이어의 Length 동일하다는 가정.
-        for (int i = 0; i < PlayerLength; i++)
+        
+        // 리스폰 갯수. : 4
+        for (int i = 0; i < 4; i++)
         {
             // Player를 생성할 리스폰 위치. 
             Vector3 pos = spawnManager.transform.GetChild(i).transform.position;
-
             spawnPos.Add(pos);
-
-            //if(i >= 0 && i <= 1)
-            //{
-            //    // 우리팀을 구성한다. : myTeam
-            //    // SetMyMebers메소드는 Player 클래스를 생성하여 우리 팀원을 3명을 구성한다. 
-            //    myTeam.SetMyMebers(i, pos);
-
-            //    // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
-            //    //PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
-            //}
-            //else
-            //{
-            //    // 상대팀을 구성한다. : enemyTeam;
-            //    // SetMyMebers메소드는 Player 클래스를 생성하여 상대 팀원을 3명을 구성한다. 
-            //    enemyTeam.SetMyMebers(i, pos); 
-
-            //    // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
-            //    //PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
-            //}
-
         }
 
-
     }
+
+    private void Update()
+    {
+        myTeam.show();
+        //enemyTeam.show();
+    }
+
+
 
     // 새로운 인원이 방에 들어왔을 때 호출되는 함수
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+      
 
     }
+
+    // 기존 인원이 방에 나갔을 때 호출되는 함수
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
+       
     }
 
 
