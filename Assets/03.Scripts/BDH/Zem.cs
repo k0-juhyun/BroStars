@@ -38,8 +38,8 @@ public class Zem : MonoBehaviourPun
 
     }
 
-
-    void PhotonGembyRPC()
+    // Update is called once per frame
+    void Update()
     {
         if (this.transform.position.y <= 0.3f + 4f)
         {
@@ -52,17 +52,12 @@ public class Zem : MonoBehaviourPun
         zemRotation *= Quaternion.AngleAxis(2.5f, Vector3.up);
         this.transform.rotation = Quaternion.Lerp(transform.rotation, zemRotation, 1f * rotateSpeed * Time.deltaTime);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        photonView.RPC(nameof(PhotonGembyRPC), RpcTarget.All);
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            photonView.RPC(nameof(AbsorptedToColliderbyRPC), RpcTarget.All, collision);
+            StartCoroutine(AbsorptedToCollider(collision));
             collision.gameObject.GetComponent<GemHandler>().gem += 1;
             Destroy(gameObject);
 
@@ -70,11 +65,7 @@ public class Zem : MonoBehaviourPun
             //zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
         }
     }
-
-    void AbsorptedToColliderbyRPC(Collision collision)
-    {
-        StartCoroutine(AbsorptedToCollider(collision));
-    }
+  
     IEnumerator AbsorptedToCollider(Collision collision)
     {
         float time = 0;

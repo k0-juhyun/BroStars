@@ -59,10 +59,22 @@ public class ZemManager : MonoBehaviourPun
             SoundManager.instance.PlayZemBGM();
 
             // Zem을 생성한다.
-            GameObject newZem = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
+            GameObject Zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
+
+            // CreateRandomPosition()의 위치를 목표 지점으로 설정한다. 
+            Vector3 targetPosition = CreateRandomPosition();
+
+            // Zem이 향하는 방향을 만들고 싶다.
+            Vector3 dir = (targetPosition - zemsRandomPosition).normalized;
+
+            // 목표 지점으로 향하는 방향을 생성.
+            Vector3 targetDir = (dir + Zems.transform.up).normalized;
 
             // 생성된 젬의 정보를 다른 클라이언트들에게 전달
-            photonView.RPC(nameof(ReceiveGemInfo), RpcTarget.Others, zemsRandomPosition, newZem.transform.rotation);
+            photonView.RPC(nameof(ReceiveGemInfo), RpcTarget.Others, zemsRandomPosition, Zems.transform.rotation);
+
+            // Rigidbody를 이용하여 위로 상승 후 떨어짐.
+            Zems.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
         }
     }
 

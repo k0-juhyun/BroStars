@@ -17,6 +17,7 @@ public class HitHandler : MonoBehaviourPun
     {
         if(collision.gameObject.GetComponent<DamageHandler>() != null) 
         {
+            print(collision.gameObject.name);
             float HitDamage = collision.gameObject.GetComponent<DamageHandler>().damage;
             photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -HitDamage);
             print(this.gameObject.name + "Take Damage" + HitDamage);

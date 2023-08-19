@@ -11,14 +11,19 @@ public class LeonAttackEffectHandler : MonoBehaviour
 
     private Vector3 initialForward;
 
-    MeshCollider meshCollider;
+    BoxCollider boxColiider;
+
+    private void Start()
+    {
+        initialForward = transform.forward;
+    }
 
     private void OnEnable()
     {
-        transform.forward = initialForward;
-        meshCollider = GetComponentInChildren<MeshCollider>();
-        StartCoroutine(DestroyAfterDelay(duration));
         StartCoroutine(HandleCollider(0.5f));
+        transform.forward = initialForward;
+        boxColiider = GetComponent<BoxCollider>();
+        StartCoroutine(DestroyAfterDelay(duration));
     }
 
     private void Update()
@@ -39,6 +44,11 @@ public class LeonAttackEffectHandler : MonoBehaviour
     IEnumerator HandleCollider(float delay)
     {
         yield return new WaitForSeconds(delay);
-        meshCollider.enabled = true;
+        boxColiider.enabled = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(this.gameObject);
     }
 }
