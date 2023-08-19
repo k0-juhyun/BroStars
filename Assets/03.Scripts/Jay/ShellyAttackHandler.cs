@@ -82,36 +82,71 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            //attackLR.SetPosition(0, new Vector3(transform.position.x, 4.2f, transform.position.z));
- 
-            //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            
-
-            //if (Physics.Raycast(rayStartPos, transform.forward, out hit, TrailDistance))
-            //{
-
-            //}
-            //else
-            //{
-            //    //허공
-            //}
-
-            //Vector3 directionToLookPoint = (attackLookPoint.position - transform.position).normalized;
-
-            ////float rotationAngle = Mathf.Atan2(directionToLookPoint.x, directionToLookPoint.z) * Mathf.Rad2Deg;
-
-            //transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
+            Shot();
         }
         else
         {
             attackLR.gameObject.SetActive(false);
         }
     }
+
+    void Shot()
+    {
+        int numBullets = 5;
+
+        float spreadAngle = 20f;
+
+        for (int i = 0; i < numBullets; i++)
+        {
+            Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
+
+            Vector3 bulletDirection = bulletRotation * firePos.transform.forward;
+
+            GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position, Quaternion.identity);
+
+            bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
+            //bullet.transform.forward = firePos.transform.forward;
+
+            Destroy(bullet, 1f);
+        }
+
+        //firePos.transform.rotation = originalRotation;
+    }
+
+
+    public void HandleUltimateAttack()
+    {
+        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
+        Vector3 startVelocity = joystickDirection * launchForce;
+
+
+        if (Mathf.Abs(skillJoystick.Horizontal) > 0f || Mathf.Abs(skillJoystick.Vertical) > 0f)
+        {
+
+            if (!specialLR.gameObject.activeInHierarchy)
+            {
+                specialLR.gameObject.SetActive(true);
+            }
+            skillLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
+
+            transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
+
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
+        else
+        {
+            specialLR.gameObject.SetActive(false );
+        }
+
+    }
+
+
+
     public void CallShoot()
     {
-        StartCoroutine(Shoot());
+        StartCoroutine(SuperShell());
     }
-    IEnumerator Shoot()
+    IEnumerator SuperShell()
     {
         //총알 나오는 위치의 각도를 조정
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
@@ -128,27 +163,26 @@ public class ShellyAttackHandler : MonoBehaviourPun
         }
         //animator.Play("attack");
     }
-    void SuperShell()
-    {
-        //총알 나오는 위치의 각도를 조정
-        firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
-        List<GameObject> spawnedSpecialBullets = new List<GameObject>();
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.position, firePos.rotation);
-            spawnedSpecialBullets.Add(specialBullet);
-            //각도 설정
-            firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
-            //Destroy(specialBullet, 2f);
-        }
-        //animator.Play("attack");
-        //StartCoroutine(Shooting());
 
-        foreach (GameObject bullet in spawnedSpecialBullets)
-        {
-            Destroy(bullet, 2f);
-        }
-    }
+
+    //    //총알 나오는 위치의 각도를 조정
+    //    firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
+    //    List<GameObject> spawnedSpecialBullets = new List<GameObject>();
+    //        for (int i = 0; i< 10; i++)
+    //        {
+    //            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.position, firePos.rotation);
+    //    spawnedSpecialBullets.Add(specialBullet);
+    //            //각도 설정
+    //            firePos.transform.Rotate(0, -(startAngle* 2) / 4, 0);
+    //            //Destroy(specialBullet, 2f);
+    //        }
+    ////animator.Play("attack");
+    ////StartCoroutine(Shooting());
+
+    //foreach (GameObject bullet in spawnedSpecialBullets)
+    //{
+    //    Destroy(bullet, 2f);
+    //}
     //private IEnumerator Shooting()
     //{
     //    beingHandled = true;
@@ -199,5 +233,11 @@ public class ShellyAttackHandler : MonoBehaviourPun
     //    HandleDamageTransparent(1.0f);
     //    moveHandler.moveSpeed = 2;
     //}
-
+    //float backSpeed = 0.5f;
+    //#region 일반 공격 애니메이션 이벤트
+    //public void HandleBackEvent()
+    //{
+    //    //뒤로 0.5f만큼 흔들리고싶다
+    //    transform.position = transform.position.z * backSpeed * Time.deltaTime;
+    //}
 }
