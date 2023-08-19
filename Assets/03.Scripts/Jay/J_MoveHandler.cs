@@ -4,16 +4,17 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.EventSystems;
 
-
-public class J_MoveHandler : MonoBehaviourPun,IPunObservable
+public class J_MoveHandler : MonoBehaviourPun, IPunObservable
 {
     #region Component Values
     [SerializeField]
     Joystick joystick;
-    [SerializeField]
+    AnimatorHandler animatorHandler;
+    //Animator animator;
+    #endregion
+
+    #region Transform Values
     Transform lookPoint;
-    //애니메이터
-    //J_AnimatorHandler animatorHandler;
     #endregion
 
     #region Boolean Values
@@ -21,13 +22,9 @@ public class J_MoveHandler : MonoBehaviourPun,IPunObservable
     #endregion
 
     #region Float Values
-    [Header("Move Speed")]
-    public float moveSpeed = 5f;
+    [Header("Info")]
+    public float moveSpeed;
     #endregion
-
-    [SerializeField]
-    [Header("Particle System")]
-    private ParticleSystem[] dustPrefab;
 
     #region Photon Values
     [HideInInspector]
@@ -38,16 +35,15 @@ public class J_MoveHandler : MonoBehaviourPun,IPunObservable
     public float lerpSpeed = 50;
     #endregion
 
+    [SerializeField]
+    [Header("Particle System")]
+    private ParticleSystem[] dustPrefab;
 
-
-    Animator animator;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
-        //animatorHandler = GetComponent<J_AnimatorHandler>();    
-        animator = GetComponent<Animator>();
+        animatorHandler = GetComponent<AnimatorHandler>();
+        //animator = GetComponent<Animator>();
     }
     private void FixedUpdate()
     {
@@ -57,29 +53,29 @@ public class J_MoveHandler : MonoBehaviourPun,IPunObservable
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
         }
     }
-
-
-    //움직임
     public void HandleMovement()
     {
-        //움직임 컨트롤러 값
         if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
         {
             lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 4.11f, joystick.Vertical + transform.position.z);
+
             transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
+
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            transform.Translate(Vector3.forward * moveSpeed * Time.fixedDeltaTime);
-            //애니메이터
-            animator.Play("Walking");
-            //bool 움직임
+
+            transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed);
+
+            animatorHandler.playTargetAnim("Walking");
+
             moveFlag = true;
         }
+
         else if (moveFlag == true)
         {
             moveFlag = false;
         }
-
     }
+
     public void HandleLeftDust()
     {
         ParticleSystem particles = Instantiate(dustPrefab[0], transform.position, Quaternion.identity);
@@ -87,6 +83,7 @@ public class J_MoveHandler : MonoBehaviourPun,IPunObservable
 
         Destroy(particles.gameObject, particles.main.duration);
     }
+
     public void HandleRightDust()
     {
         ParticleSystem particles = Instantiate(dustPrefab[1], transform.position, Quaternion.identity);
@@ -108,6 +105,4 @@ public class J_MoveHandler : MonoBehaviourPun,IPunObservable
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
-
-
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ShellyManager : MonoBehaviour
 {
-    J_MoveHandler moveHandler;
+    MoveHandler moveHandler;
     //J_attackHandler attackHandler;
-    J_attackHandler attackHandler;
+    ShellyAttackHandler attackHandler;
     HpHandler hpHandler;
     BushManager bushManager;
 
@@ -16,8 +16,8 @@ public class ShellyManager : MonoBehaviour
 
     void Awake()
     {
-        moveHandler = GetComponent <J_MoveHandler>();
-       attackHandler = GetComponent<J_attackHandler>();
+        moveHandler = GetComponent <MoveHandler>();
+       attackHandler = GetComponent<ShellyAttackHandler>();
 
         hpHandler = GetComponent<HpHandler>();
         bushManager = GetComponent <BushManager>();
@@ -28,7 +28,7 @@ public class ShellyManager : MonoBehaviour
     {
         moveHandler.HandleMovement();
         attackHandler.HandleNormalAttack();
-        attackHandler.HandleSpecialAttack();
+        //attackHandler.HandleUltimateAttack();
         //attackHandler.UpdateFire();
         hpHandler.UpdateHp();
         hpHandler.RegenerateHpInBush();

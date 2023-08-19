@@ -5,7 +5,7 @@ using UnityEngine;
 public class FieldOfView : MonoBehaviour
 {
     public float viewRadius;
-    [Range(0,360)]
+    [Range(0, 360)]
     public float viewAngle;
 
     public LayerMask targetMask;
@@ -26,13 +26,13 @@ public class FieldOfView : MonoBehaviour
     }
     IEnumerator FindTargetsWithDelay(float delay)
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
         }
     }
-    void Update()
+    void LateUpdate()
     {
         DrawFieldOfView();
     }
@@ -40,71 +40,81 @@ public class FieldOfView : MonoBehaviour
     {
         visibleTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        for(int i = 0; i < targetsInViewRadius.Length; i++)
+        for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if(Vector3.Angle(transform.forward, dirToTarget) < viewAngle /2) { 
-              float dstToTarget = Vector3.Distance(transform.position, target.position);
+            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            {
+                float dstToTarget = Vector3.Distance(transform.position, target.position);
 
-                if(!Physics.Raycast(transform.position, dirToTarget,dstToTarget,obstacleMask))
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
                 }
             }
         }
     }
+    //void DrawFieldOfView()
+    //{
+    //    int stepCount = Mathf.RoundToInt(viewAngle);
+    //    float stepAngleSize = viewAngle / stepCount;
+
+    //    LineRenderer lineRenderer = GetComponent<LineRenderer>();
+    //    lineRenderer.positionCount = stepCount + 2; // +2 to include both ends of the fan
+
+    //    Vector3[] viewPoints = new Vector3[stepCount + 2];
+    //    viewPoints[0] = Vector3.zero; // Start from the center of the fan
+
+    //    for (int i = 0; i <= stepCount; i++)
+    //    {
+    //        float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+    //        ViewCastInfo newViewCast = ViewCast(angle);
+    //        viewPoints[i + 1] = newViewCast.point;
+
+    //        Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
+    //    }
+
+    //    viewPoints[stepCount + 1] = viewPoints[1]; // Connect the last point back to the start
+
+    //    lineRenderer.SetPositions(viewPoints);
+    //}
+
 
     void DrawFieldOfView()
     {
-        int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
+        int stepCount = Mathf.RoundToInt(viewAngle);
         float stepAngleSize = viewAngle / stepCount;
-        List<Vector3> viewPoints = new List<Vector3>();
-        for(int i =0; i<=stepCount; i++)
-        {
-            float angle = transform.eulerAngles.y - viewAngle/2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = ViewCast(angle);
-            viewPoints.Add(newViewCast.point);
-            //Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
-        }
 
-        int vertexCount = viewPoints.Count + 1;
-        Vector3[] vertices = new Vector3[vertexCount];
-        int[] triangles = new int[(vertexCount - 2) * 3 ];
-
-        vertices[0] = Vector3.zero;
-        for (int i = 0; i < vertexCount - 1; i++) {
-            vertices[i + 1] = transform.InverseTransformDirection(viewPoints[i]);
-
-            if(i < vertexCount - 2)
-            {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i;
-            }
-
-        }
         viewMesh.Clear();
-        viewMesh.vertices = vertices;
-        viewMesh.triangles = triangles;
-        viewMesh.RecalculateNormals();
 
+        Vector3[] viewPoints = new Vector3[stepCount + 1];
+        for (int i = 0; i <= stepCount; i++)
+        {
+            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            ViewCastInfo newViewCast = ViewCast(angle);
+            viewPoints[i] = newViewCast.point;
+            //print(transform.position);
+            Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
+        }
 
-
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = viewPoints.Length;
+        lineRenderer.SetPositions(viewPoints);
     }
 
     ViewCastInfo ViewCast(float globalAngle)
     {
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask))
+        if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask))
         {
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+            return new ViewCastInfo(hit.point, globalAngle);
 
         }
         else
         {
-            return new ViewCastInfo(false,transform.position + dir *viewRadius, viewRadius, globalAngle);
+            return new ViewCastInfo(transform.position + dir * viewRadius, globalAngle);
         }
     }
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
@@ -118,16 +128,16 @@ public class FieldOfView : MonoBehaviour
 
     public struct ViewCastInfo
     {
-        public bool hit;
+        //public bool hit;
         public Vector3 point;
-        public float dst;
+        //public float dst;
         public float angle;
 
-        public ViewCastInfo(bool _hit, Vector3 _point, float _dst, float _angle)
+        public ViewCastInfo(Vector3 _point, float _angle)
         {
-            hit = _hit;
+            //hit = _hit;
             point = _point;
-            dst = _dst;
+            //dst = _dst;
             angle = _angle;
         }
     }
