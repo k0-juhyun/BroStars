@@ -6,6 +6,9 @@ using Photon.Realtime;
 
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
+    int currentPlayer;
+    int maxPlayer; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +41,13 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
         //방 생성 or 참여
 
         RoomOptions roomOption = new RoomOptions();
+
+        // 최대 룸에 참여할 수 있는 플레이어 제한. 
         roomOption.MaxPlayers = 6;
+
+        // ConnectionUI의 Text에 최대 플레이어 제한 수 표시.
+        maxPlayer = (int)roomOption.MaxPlayers; 
+
         PhotonNetwork.JoinOrCreateRoom("broStars", roomOption, TypedLobby.Default);
     }
 
@@ -62,8 +71,18 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
 
-        // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
-        PhotonNetwork.LoadLevel("BDH");
+        // 현재 참여한 플레이어의 수
+        int currentPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        // ConnectionUI의 Text에 현재 참여한 플레이어의 수 표시.
+
+        // currentPlay < MaxPlayer 
+        if(currentPlayer <= maxPlayer)
+        {
+            // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
+            PhotonNetwork.LoadLevel("BDH");
+        }
+       
 
     }
 }
