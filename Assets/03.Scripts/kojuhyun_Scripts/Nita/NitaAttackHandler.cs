@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class NitaAttackHandler : MonoBehaviourPun
 {
+    TargetHandler targetHandler;
+    NitaManager nitaManager;
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
 
@@ -26,6 +28,7 @@ public class NitaAttackHandler : MonoBehaviourPun
 
     [Header("GameObject")]
     public GameObject Bruce;
+    public GameObject nitaNormal;
     private float TrailDistance = 4f;
     private float launchForce = 10;
 
@@ -33,7 +36,7 @@ public class NitaAttackHandler : MonoBehaviourPun
 
     private void Start()
     {
-        
+
     }
     private void Awake()
     {
@@ -41,11 +44,13 @@ public class NitaAttackHandler : MonoBehaviourPun
         {
             this.enabled = false;
         }
-        attackLookPoint = attackLR.gameObject.GetComponent<Transform>();
-        skillLookPoint = specialLR.gameObject.GetComponent<Transform>();
-        Player = transform.GetChild(4).GetComponent<Transform>();
-        animatorHandler = GetComponentInChildren<AnimatorHandler>();
-        rb = GetComponentInChildren<Rigidbody>();
+        targetHandler = GetComponentInParent<TargetHandler>();
+        nitaManager = GetComponent<NitaManager>();
+        attackLookPoint = transform.GetChild(1).GetComponent<Transform>();
+        skillLookPoint = transform.GetChild(2).GetComponent<Transform>();
+        Player = targetHandler.Target.GetComponent<Transform>();
+        animatorHandler = GetComponent<AnimatorHandler>();
+        rb = GetComponent<Rigidbody>();
     }
 
     #region 공격
@@ -111,6 +116,7 @@ public class NitaAttackHandler : MonoBehaviourPun
     #endregion
 
     #region 곰 던지기
+    [PunRPC]
     public void LaunchBear(float h, float v)
     {
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
@@ -119,18 +125,22 @@ public class NitaAttackHandler : MonoBehaviourPun
         GameObject bruceSpawn = Instantiate(Bruce, SpawnPos.transform.position, Quaternion.identity);
         bruceSpawn.GetComponent<Rigidbody>().velocity = startVelocity;
     }
+
+    [PunRPC]
+    public void LaunchBearRPC(float h, float v)
+    {
+        LaunchBear(h, v);
+    }
     #endregion
 
     #region 일반 공격
+    [PunRPC]
     public void NitaNormalAttack()
     {
-        if (photonView.IsMine)
-        {
-            Vector3 pos = normalAttackTransform.position;
-            Quaternion rot = normalAttackTransform.rotation;
+        Vector3 pos = normalAttackTransform.position;
+        Quaternion rot = normalAttackTransform.rotation;
 
-            GameObject nitaNormalAttack = PhotonNetwork.Instantiate("NitaNormalAttack", pos, rot);
-        }
+        GameObject nitaNormalAttack = Instantiate(nitaNormal, pos, rot);
     }
 
     #endregion

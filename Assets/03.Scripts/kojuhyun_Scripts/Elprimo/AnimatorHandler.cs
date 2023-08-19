@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class AnimatorHandler : MonoBehaviour
+public class AnimatorHandler : MonoBehaviourPun
 {
     Animator anim;
 
@@ -12,6 +13,12 @@ public class AnimatorHandler : MonoBehaviour
     }
 
     public void playTargetAnim(string target)
+    {
+        anim.Play(target);
+    }
+
+    [PunRPC]
+    public void playTargetAnimRpc(string target)
     {
         anim.Play(target);
     }

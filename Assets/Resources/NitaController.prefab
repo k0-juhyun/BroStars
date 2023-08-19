@@ -2506,7 +2506,7 @@ Transform:
   - {fileID: 5965694774808729838}
   - {fileID: 5965694773848986930}
   m_Father: {fileID: 5965694774813238414}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5965694773970062801
 GameObject:
@@ -5054,7 +5054,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5965694774458304950}
-  - {fileID: 5965694775475008047}
   - {fileID: 5965694775433415523}
   - {fileID: 5965694773950298986}
   - {fileID: 6143154770112760618}
@@ -5097,7 +5096,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4940804774144204735}
-  - {fileID: 261475288451158355}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -5124,7 +5122,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5965694774813238412}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5c1322ec69b0d64fb7e2b720f6bba7e, type: 3}
   m_Name: 
@@ -5137,6 +5135,7 @@ MonoBehaviour:
   normalAttackTransform: {fileID: 5965694775609818905}
   SpawnPos: {fileID: 5965694775379612858}
   Bruce: {fileID: 3193361373983426863, guid: ef8a4c73ce4400748bb33d2bb8a3809a, type: 3}
+  nitaNormal: {fileID: 0}
 --- !u!1 &5965694774852475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -6005,7 +6004,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5965694774813238414}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &5965694775190657154
 AudioSource:
@@ -6447,7 +6446,7 @@ RectTransform:
   m_Children:
   - {fileID: 5965694773985793240}
   m_Father: {fileID: 5965694774813238414}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6694,7 +6693,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5965694775475008044}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
@@ -6707,8 +6706,8 @@ RectTransform:
   - {fileID: 5385500287012421613}
   - {fileID: 5965694774359330229}
   - {fileID: 5965694774940239260}
-  m_Father: {fileID: 5965694774813238414}
-  m_RootOrder: 1
+  m_Father: {fileID: 6143154770112760618}
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7579,7 +7578,9 @@ GameObject:
   - component: {fileID: 261475288451158366}
   - component: {fileID: 261475288451158361}
   - component: {fileID: 261475288451158360}
-  - component: {fileID: 261475288451158363}
+  - component: {fileID: 6956608980924326381}
+  - component: {fileID: 1491451498889233031}
+  - component: {fileID: 1480917880478517368}
   m_Layer: 11
   m_Name: Nita
   m_TagString: Player
@@ -7617,8 +7618,9 @@ Transform:
   - {fileID: 5965694775213647695}
   - {fileID: 5965694774327376464}
   - {fileID: 5965694775379612858}
+  - {fileID: 5965694775475008047}
   m_Father: {fileID: 5965694774813238414}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &261475288451158352
 Animator:
@@ -7765,14 +7767,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382bccbc16aa8ee4cbf7355626da7d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &261475288451158363
+--- !u!114 &6956608980924326381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6776525576294437264}
-  m_Enabled: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 261475288451158355}
+  - {fileID: 1491451498889233031}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1491451498889233031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776525576294437264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1480917880478517368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776525576294437264}
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5c1322ec69b0d64fb7e2b720f6bba7e, type: 3}
   m_Name: 
@@ -7785,6 +7827,8 @@ MonoBehaviour:
   normalAttackTransform: {fileID: 5965694775609818905}
   SpawnPos: {fileID: 5965694775379612858}
   Bruce: {fileID: 3193361373983426863, guid: ef8a4c73ce4400748bb33d2bb8a3809a, type: 3}
+  nitaNormal: {fileID: 1677970727425304249, guid: 8aa87fc323fd0234c9f0ab5eb4fad8a7,
+    type: 3}
 --- !u!1 &6861823864152321088
 GameObject:
   m_ObjectHideFlags: 0

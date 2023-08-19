@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         PhotonNetwork.SerializationRate = 30;
 
         // 나의 Player를 생성한다.
-        PhotonNetwork.Instantiate("NitaController", Spawnpos[0].transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate("LeonController", Spawnpos[0].transform.position, Quaternion.identity);
     }
 
 

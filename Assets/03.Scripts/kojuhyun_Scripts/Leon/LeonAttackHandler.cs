@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Photon.Pun;
 
-public class LeonAttackHandler : MonoBehaviour
+public class LeonAttackHandler : MonoBehaviourPun
 {
     private MoveHandler moveHandler;
     private AnimatorHandler animatorHandler;
@@ -19,7 +20,6 @@ public class LeonAttackHandler : MonoBehaviour
 
     [Header("LineRenderer Transform")]
     private Transform attackLookPoint;
-    private Transform skillLookPoint;
     private Transform Player;
     public Transform lineRendererStartTransform;
 
@@ -41,7 +41,6 @@ public class LeonAttackHandler : MonoBehaviour
     private void Awake()
     {
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
-        skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
@@ -67,8 +66,28 @@ public class LeonAttackHandler : MonoBehaviour
             attackLR.gameObject.SetActive(false);
         }
     }
+    public void HandleUltimateAttack()
+    {
+        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
+        Vector3 startVelocity = joystickDirection * launchForce;
 
+        if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
+        {
+            if (photonView.IsMine)
+            {
+                photonView.RPC("StartResetTransparencyCoroutine", RpcTarget.All, 6f);
+            }
+        }
+    }
+
+    [PunRPC]
     public void HandleShurikenEvent()
+    {
+        HandleShurikenEventRPC();
+    }
+
+    [PunRPC]
+    public void HandleShurikenEventRPC()
     {
         StartCoroutine(HandleShuriken());
     }
@@ -84,17 +103,8 @@ public class LeonAttackHandler : MonoBehaviour
         Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
     }
 
-    public void HandleUltimateAttack()
-    {
-        Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
-        Vector3 startVelocity = joystickDirection * launchForce;
 
-        if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
-        {
-            StartCoroutine(ResetTransparencyAfterDelay(6));
-        }
-    }
-
+    [PunRPC]
     private void HandleDamageTransparent(float parameter)
     {
         int meshCount = Mesh.transform.childCount;
@@ -108,14 +118,20 @@ public class LeonAttackHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetTransparencyAfterDelay(float delay)
+    [PunRPC]
+    private void ResetTransparencyAfterDelay(float delay)
     {
-        HandleDamageTransparent(0.2f);
+        photonView.RPC("HandleDamageTransparent", RpcTarget.All, 0.2f);
         moveHandler.moveSpeed = 4;
 
+        StartCoroutine(ResetTransparencyCoroutine(1.0f, delay));
+    }
+
+    private IEnumerator ResetTransparencyCoroutine(float alpha, float delay)
+    {
         yield return new WaitForSeconds(delay);
 
-        HandleDamageTransparent(1.0f);
+        photonView.RPC("HandleDamageTransparent", RpcTarget.All, 1.0f);
         moveHandler.moveSpeed = 2;
     }
 }

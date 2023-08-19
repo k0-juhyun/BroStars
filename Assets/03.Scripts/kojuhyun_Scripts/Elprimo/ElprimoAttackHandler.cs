@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ElprimoAttackHandler : MonoBehaviour
+using Photon.Pun;
+public class ElprimoAttackHandler : MonoBehaviourPun
 {
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
@@ -37,6 +37,11 @@ public class ElprimoAttackHandler : MonoBehaviour
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        
     }
 
 
@@ -106,6 +111,15 @@ public class ElprimoAttackHandler : MonoBehaviour
     #endregion
 
 
+
+    #region 일반공격
+    [PunRPC]
+    public void ElprimoNormalAttack()
+    {
+        photonView.RPC(nameof(animatorHandler.playTargetAnimRpc), RpcTarget.All, "Normal");
+    }
+    #endregion
+
     #region 포물선 그리기
     private void DrawTrajectory(Vector3 startVelocity, int numPoints, float timeStep)
     {
@@ -124,14 +138,21 @@ public class ElprimoAttackHandler : MonoBehaviour
     #endregion
 
     #region 플레이어 던지기
+    [PunRPC]
     public void LaunchPlayer(float h, float v)
     {
-        animatorHandler.playTargetAnim("Special");
+        photonView.RPC(nameof(animatorHandler.playTargetAnimRpc), RpcTarget.All, "Special");
 
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
         Vector3 startVelocity = joystickDirection * launchForce;   
 
         GetComponent<Rigidbody>().velocity = startVelocity;
+    }
+
+    [PunRPC]
+    public void LaunchPlayerRPC(float h, float v)
+    {
+        LaunchPlayer(h, v);
     }
     #endregion
 

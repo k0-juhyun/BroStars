@@ -37,14 +37,22 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
+  - ElprimoNormalAttack
   - Fire
+  - LaunchBear
+  - LaunchBearRPC
+  - LaunchPlayer
+  - NitaNormalAttack
+  - playTargetAnimRpc
   - RespawnSpaceship
-  - FixedUpdate
-  - HandleNormalAttack
-  - HandleUltimateAttack
-  - FireBulletByRPC
-  - FireRayByRpc
-  - NitaNormalAttackbyRPC
+  - LaunchPlayerRPC
+  - HandleDamageTransparent
+  - HandleShurikenEvent
+  - HandleShurikenRPC
+  - ResetTransparencyAfterDelay
+  - HandleShurikenEventRPC
+  - DestroyAfterDelayRPC
+  - HandleColliderRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

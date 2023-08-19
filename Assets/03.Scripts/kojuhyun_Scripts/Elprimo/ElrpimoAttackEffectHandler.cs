@@ -19,14 +19,14 @@ public class ElrpimoAttackEffectHandler : MonoBehaviour
     private void OnEnable()
     {
         Player = GameObject.Find("Elprimo").GetComponent<Transform>();
+        transform.forward = Player.transform.forward;
         StartCoroutine(DestroyAfterDelay());
         StartCoroutine(ScaleOverTime());
     }
 
     void Update()
     {
-        transform.forward = Player.transform.forward;
-        transform.position += Player.forward * Time.deltaTime * speed;
+        transform.position += transform.forward * Time.deltaTime * speed;
     }
 
     IEnumerator DestroyAfterDelay()

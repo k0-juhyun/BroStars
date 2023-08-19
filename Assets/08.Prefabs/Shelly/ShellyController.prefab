@@ -1572,7 +1572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948ff9e017e2ff4ba43b0b699747eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 1066320460807295570}
   Target: {fileID: 9147350455997117496}
   DyingEffect: {fileID: 1066320459967662501}
   isDestroy: 0
@@ -8354,7 +8353,6 @@ GameObject:
   - component: {fileID: 9147350455997117477}
   - component: {fileID: 9147350455997117478}
   - component: {fileID: 9147350455997117473}
-  - component: {fileID: 9147350455997117472}
   - component: {fileID: 9147350455997117486}
   - component: {fileID: 9147350455997117485}
   - component: {fileID: 9147350455997117497}
@@ -8477,34 +8475,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gem: 0
---- !u!114 &9147350455997117472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9147350455997117496}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2709ea2ed26a8e4b82400476f38481e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackJoystick: {fileID: 1066320460766469320}
-  skillJoystick: {fileID: 1066320459931971062}
-  attackLR: {fileID: 9147350455846381900}
-  skillLR: {fileID: 9147350454453263652}
-  attackBulletFactory: {fileID: 7432803646438753741, guid: 5dcb69eff1a3fbf4f8b0d29551d75cc4,
-    type: 3}
-  specialBulletFactory: {fileID: 7432803646438753741, guid: bfdc3dd37dc2e8944a168c1aea5d84b7,
-    type: 3}
-  firePos: {fileID: 9147350454516423770}
-  shootingSlowness: 0.1
-  Cardridge: {fileID: 1170647774315830, guid: 522b470e09ed8b8488c6b8788f9d6206, type: 3}
-  endPosition: {x: 0, y: 0, z: 0}
-  startAngle: -10
-  firePrefab:
-  - {fileID: 19800006, guid: bf9240bc9bd96054b83e1ea97d7c5108, type: 3}
-  - {fileID: 19800000, guid: 49bbab6dde406014d93152f4311ed8f7, type: 3}
 --- !u!114 &9147350455997117486
 MonoBehaviour:
   m_ObjectHideFlags: 0

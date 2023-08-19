@@ -32,21 +32,22 @@ public class JHJoyStick : Joystick
     {
         if(photonView.IsMine == false)
             return;
-        NitaAttackHandler nitaAttackHandler = FindAnyObjectByType<NitaAttackHandler>();
-        ElprimoAttackHandler elprimoAttackHandler = FindObjectOfType<ElprimoAttackHandler>();
-        LeonAttackHandler leonAttackHandler = FindObjectOfType<LeonAttackHandler>();
-        AnimatorHandler animHandler = FindObjectOfType<AnimatorHandler>();
+        NitaAttackHandler nitaAttackHandler = GetComponentInParent<NitaAttackHandler>();
+        ElprimoAttackHandler elprimoAttackHandler = GetComponentInParent<ElprimoAttackHandler>();
+        LeonAttackHandler leonAttackHandler = GetComponentInParent<LeonAttackHandler>();
+        AnimatorHandler animHandler = GetComponentInParent<AnimatorHandler>();
 
         #region ¿¤ÇÁ¸®¸ð
         if (elprimoAttackHandler != null)
         {
             if (this.gameObject.name == "SkillJoyStick")
             {
-                elprimoAttackHandler.LaunchPlayer(Horizontal, Vertical);
+                //elprimoAttackHandler.LaunchPlayer(Horizontal, Vertical);
+                photonView.RPC("LaunchPlayerRPC", RpcTarget.All, Horizontal, Vertical);
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
-                animHandler.playTargetAnim("Normal");
+                photonView.RPC(nameof(elprimoAttackHandler.ElprimoNormalAttack), RpcTarget.All);
             }
         }
         #endregion
@@ -56,11 +57,11 @@ public class JHJoyStick : Joystick
         {
             if (this.gameObject.name == "SkillJoyStick")
             {
-                nitaAttackHandler.LaunchBear(Horizontal, Vertical);
+                photonView.RPC("LaunchBearRPC", RpcTarget.All, Horizontal, Vertical);
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
-                nitaAttackHandler.NitaNormalAttack();
+                photonView.RPC(nameof(nitaAttackHandler.NitaNormalAttack), RpcTarget.All);
             }
         }
         #endregion
@@ -74,7 +75,7 @@ public class JHJoyStick : Joystick
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
-                animHandler.playTargetAnim("Normal");
+                photonView.RPC(nameof(animHandler.playTargetAnimRpc), RpcTarget.All, "Normal");
             }
         }
         #endregion

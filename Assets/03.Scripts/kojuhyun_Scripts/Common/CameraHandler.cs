@@ -43,6 +43,11 @@ public class CameraHandler : MonoBehaviourPun
 
         hpHandler = FindObjectOfType<HpHandler>();
         target = targetHandler.Target.transform;
+
+        if(photonView.IsMine)
+        {
+            Messages.gameObject.SetActive(false);
+        }
     }
 
     private void LateUpdate()

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class LeonAttackEffectHandler : MonoBehaviour
+public class LeonAttackEffectHandler : MonoBehaviourPun
 {
     [Header("Speed")]
     public float moveSpeed = 2;
@@ -12,20 +13,26 @@ public class LeonAttackEffectHandler : MonoBehaviour
     private Transform Player;
     private Vector3 initialForward;
 
-    MeshCollider meshCollider;
+    private MeshCollider meshCollider;
+    private Rigidbody rb;
 
     private void OnEnable()
     {
+        rb = GetComponent<Rigidbody>();
         meshCollider = GetComponentInChildren<MeshCollider>();
         Player = GameObject.Find("Leon").GetComponent<Transform>();
         initialForward = Player.transform.forward;
         StartCoroutine(DestroyAfterDelay(duration));
         StartCoroutine(HandleCollider(0.5f));
+        LaunchProjectile();
+
     }
 
     private void Update()
     {
-        rotationSpeed+=2;
+        if (photonView.IsMine == false)
+            return;
+        rotationSpeed += 2;
         transform.forward = initialForward;
         transform.position += initialForward * Time.deltaTime * moveSpeed;
 
@@ -35,12 +42,26 @@ public class LeonAttackEffectHandler : MonoBehaviour
     IEnumerator DestroyAfterDelay(float duration)
     {
         yield return new WaitForSeconds(duration);
-        Destroy(this.gameObject);
+        PhotonNetwork.Destroy(this.gameObject);
     }
 
     IEnumerator HandleCollider(float delay)
     {
         yield return new WaitForSeconds(delay);
         meshCollider.enabled = true;
+    }
+
+    private void LaunchProjectile()
+    {
+        if (photonView.IsMine)
+        {
+            rb.velocity = initialForward * moveSpeed;
+        }
+    }
+
+    [PunRPC]
+    private void UpdateProjectilePosition(Vector3 position)
+    {
+        rb.position = position;
     }
 }

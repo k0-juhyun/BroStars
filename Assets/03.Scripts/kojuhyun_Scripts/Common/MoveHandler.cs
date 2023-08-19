@@ -64,7 +64,8 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
 
             transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed);
 
-            animatorHandler.playTargetAnim("Walking");
+            //animatorHandler.playTargetAnim("Walking");
+            photonView.RPC(nameof(animatorHandler.playTargetAnimRpc), RpcTarget.All, "Walking");
 
             moveFlag = true;
         }
