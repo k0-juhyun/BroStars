@@ -10,6 +10,10 @@ TagManager:
   - FxTemporaire
   - SpecialBullet
   - Enemy
+  - myTeam
+  - awayTeam
+  - myTeamAttack
+  - awayTeamAttack
   layers:
   - Default
   - TransparentFX

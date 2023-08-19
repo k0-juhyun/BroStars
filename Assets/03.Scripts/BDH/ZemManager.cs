@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ZemManager : MonoBehaviour
+public class ZemManager : MonoBehaviourPun
 {
     // 소환할 Zem 오브젝트
     public GameObject zem;
@@ -22,23 +23,25 @@ public class ZemManager : MonoBehaviour
     {
         zemEffect = this.gameObject.GetComponentInChildren<ParticleSystem>();
         rangeCollider = rangeObject.GetComponent<BoxCollider>();
-        StartCoroutine(RandomCreateCoroutine());
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(RandomCreateCoroutine());
+        }
     }
 
     private void Start()
     {
-
         // BoxCollider의 중심 위치를 가져온다. 
         centerX = rangeCollider.bounds.center.x;
         centerZ = rangeCollider.bounds.center.z;
-
     }
 
+    // 마스터 클라이언트에서 젬을 생성하고 정보를 다른 클라이언트들에게 전달하는 코루틴
     IEnumerator RandomCreateCoroutine()
     {
         while (true)
         {
-            // 실제 플레이에서 잼 생성 시간은 7초 간격으로 생성된다. 
             yield return new WaitForSeconds(7f);
 
             // Zem 이펙트 활성화.
@@ -56,20 +59,18 @@ public class ZemManager : MonoBehaviour
             SoundManager.instance.PlayZemBGM();
 
             // Zem을 생성한다.
-            GameObject zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
+            GameObject newZem = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
 
-            // CreateRandomPosition()의 위치를 목표 지점으로 설정한다. 
-            Vector3 targetPosition = CreateRandomPosition();
-
-            // Zem이 향하는 방향을 만들고 싶다.
-            Vector3 dir = (targetPosition - zemsRandomPosition).normalized;
-
-            // 목표 지점으로 향하는 방향을 생성.
-            Vector3 targetDir = (dir + zems.transform.up).normalized;
-
-            // Rigidbody를 이용하여 위로 상승 후 떨어짐.
-            zems.GetComponent<Rigidbody>().AddForce(targetDir, ForceMode.Impulse);
+            // 생성된 젬의 정보를 다른 클라이언트들에게 전달
+            photonView.RPC(nameof(ReceiveGemInfo), RpcTarget.Others, zemsRandomPosition, newZem.transform.rotation);
         }
+    }
+
+    [PunRPC]
+    void ReceiveGemInfo(Vector3 position, Quaternion rotation)
+    {
+        // 다른 클라이언트에서 젬 생성
+        GameObject newZem = Instantiate(zem, position, rotation);
     }
 
 

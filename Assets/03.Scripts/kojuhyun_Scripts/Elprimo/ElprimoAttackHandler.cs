@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using static GameManager;
+using UnityEditor.Experimental.GraphView;
+
 public class ElprimoAttackHandler : MonoBehaviourPun
 {
+    private HpHandler hpHandler;
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
 
@@ -32,6 +36,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
 
     private void Awake()
     {
+        hpHandler = GetComponent<HpHandler>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
@@ -160,11 +165,29 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     public void LeftHandEventHandler()
     {
         GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
+        _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        //if(내가 myTeam 이라면)
+        //{
+        //    _fistEffect.tag = myTeamAttack;
+        //}
+        //else if(내가 awayTeam 이라면)
+        //{
+        //    _fistEffect.tage = awayTeamAttack;
+        //}
     }
 
     public void RightHandEventHandler()
     {
         GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
+        _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        //if (내가 myTeam 이라면)
+        //{
+        //    _fistEffect.tag = myTeamAttack;
+        //}
+        //else if(내가 awayTeam 이라면)
+        //{
+        //    _fistEffect.tage = awayTeamAttack;
+        //}
     }
     #endregion
 

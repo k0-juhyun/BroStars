@@ -29,8 +29,10 @@ public class LeonManager : MonoBehaviourPun
             leonAttackHandler.HandleNormalAttack();
             leonAttackHandler.HandleUltimateAttack();
 
-            hpHandler.UpdateHp();
-            hpHandler.RegenerateHpInBush();
+            photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+            photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+            //hpHandler.UpdateHp();
+            //hpHandler.RegenerateHpInBush();
         }
     }
 }

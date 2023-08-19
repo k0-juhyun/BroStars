@@ -9,7 +9,6 @@ public class LeonAttackEffectHandler : MonoBehaviour
     public float duration = 2;
     public float rotationSpeed = 20;
 
-    private Transform Player;
     private Vector3 initialForward;
 
     MeshCollider meshCollider;

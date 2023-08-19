@@ -54,6 +54,14 @@ MonoBehaviour:
   - DestroyAfterDelayRPC
   - HandleColliderRPC
   - UpdateProjectilePosition
+  - HandleHP
+  - RegenerateHpInBush
+  - UpdateHp
+  - AbsorptedToColliderbyRPC
+  - PhotonGembyRPC
+  - CreateRandomPosition
+  - HandleDieEffect
+  - RandomCreateCoroutinebyRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

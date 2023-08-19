@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class HpHandler : MonoBehaviour
+public class HpHandler : MonoBehaviourPun
 {
     BushManager bushManager;
     SoundHandler soundHandler;
@@ -51,12 +52,12 @@ public class HpHandler : MonoBehaviour
     }
 
 
-
+    [PunRPC]
     public float HandleHP(float damage)
     {
         if (damage < 0)
         {
-            isDamaged = true; // 피격 상태 설정
+            isDamaged = true;
             if (isDamaged)
             {
                 StartCoroutine(HandlePlayerMat());
@@ -72,6 +73,7 @@ public class HpHandler : MonoBehaviour
         return curHp;
     }
 
+    [PunRPC]
     public void RegenerateHpInBush()
     {
         if (bushManager.isBush && curHp < maxHp)
@@ -87,6 +89,7 @@ public class HpHandler : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void UpdateHp()
     {
         hpPercentage = curHp / maxHp;
@@ -109,8 +112,10 @@ public class HpHandler : MonoBehaviour
                     {
                         Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
 
-                        // Zem을 생성한다.
-                        Instantiate(gem, gemsRandomPosition, Quaternion.identity);
+                        //// Zem을 생성한다.
+                        //Instantiate(gem, gemsRandomPosition, Quaternion.identity);
+
+                        photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
                     }
 
                     // 보유한 브롤의 잼의 숫자를 0으로 초기화. 
@@ -123,7 +128,15 @@ public class HpHandler : MonoBehaviour
             }
     }
 
+    [PunRPC]
+    private void HandleDieEffect(Vector3 ranPos)
+    {
+        // Zem을 생성한다.
+        Instantiate(gem, ranPos, Quaternion.identity);
+    }
+
     // 잼을 떨어지는 위치를 랜덤한 위치로 생성하는 메소드
+    [PunRPC]
     private Vector3 CreateRandomPosition(Transform pos)
     {
 
@@ -138,7 +151,6 @@ public class HpHandler : MonoBehaviour
         Vector3 randomPosition = new Vector3(rangeX, 4.1f, rangeZ);
         return randomPosition;
     }
-
 
 
     private void HandleDamageTransparent(float parameter)

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     int PlayerLength;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "ShellyController", "LeonController", "NitaController", "ElprimoController" };
+    public static List<string> PlayerName = new List<string>() { "LeonController", "ElprimoController", "NitaController", "ShellyController" };
 
     // 팀 클래스 변수
     MyTeam myTeam;

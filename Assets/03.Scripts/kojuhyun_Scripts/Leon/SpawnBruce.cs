@@ -7,6 +7,12 @@ public class SpawnBruce : MonoBehaviourPun
 {
     public GameObject Bruce;
     public LayerMask groundLayer;
+    HpHandler hpHandler;
+
+    private void Awake()
+    {
+        hpHandler = GetComponentInChildren<HpHandler>();
+    }
 
     private void Update()
     {
@@ -16,6 +22,7 @@ public class SpawnBruce : MonoBehaviourPun
         if (Physics.Raycast(ray, maxDistance, groundLayer))
         {
             Bruce.SetActive(true);
+            Bruce.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
             Bruce.transform.SetParent(null);
             Destroy(this.gameObject); 
         }

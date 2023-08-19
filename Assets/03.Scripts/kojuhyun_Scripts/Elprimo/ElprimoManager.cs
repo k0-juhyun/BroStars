@@ -32,8 +32,10 @@ public class ElprimoManager : MonoBehaviourPun
             attackHandler.HandleNormalAttack();
             attackHandler.HandleUltimateAttack();
 
-            hpHandler.UpdateHp();
-            hpHandler.RegenerateHpInBush();
+            photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+            photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+            //hpHandler.UpdateHp();
+            //hpHandler.RegenerateHpInBush();
         }
     }
 
@@ -43,5 +45,18 @@ public class ElprimoManager : MonoBehaviourPun
         {
             hpHandler.HandleHP(-100);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if 내가 MyTeam이고
+        //if()
+        //{
+        //    other.
+        //}
+        //if(other.gameObject.tag == awayTeamAttack)
+        //{
+        //    hpHandler.HandleHP(other.gameObject.GetComponent);
+        //}
     }
 }

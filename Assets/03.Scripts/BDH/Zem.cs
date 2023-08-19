@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
+using TMPro;
+using Photon.Pun;
 
-public class Zem : MonoBehaviour
+public class Zem : MonoBehaviourPun
 {
     // 잼의 회전 속도를 설정하는 변수.
     private float rotateSpeed = 5f;
@@ -34,44 +35,48 @@ public class Zem : MonoBehaviour
 
         // 초기 회전값을 저장.
         zemRotation = this.transform.rotation;
-     
+
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void PhotonGembyRPC()
     {
-        
-        if(this.transform.position.y <= 0.3f + 4f)
+        if (this.transform.position.y <= 0.3f + 4f)
         {
             //GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<BoxCollider>().enabled = true; 
+            GetComponent<BoxCollider>().enabled = true;
         }
 
         // 초기 회전값을 기준으로 일정 속도를 회전하고 싶다.
         zemRotation *= Quaternion.AngleAxis(2.5f, Vector3.up);
         this.transform.rotation = Quaternion.Lerp(transform.rotation, zemRotation, 1f * rotateSpeed * Time.deltaTime);
-
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        photonView.RPC(nameof(PhotonGembyRPC), RpcTarget.All);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-
-            StartCoroutine(AbsorptedToCollider(collision));
+            photonView.RPC(nameof(AbsorptedToColliderbyRPC), RpcTarget.All, collision);
             collision.gameObject.GetComponent<GemHandler>().gem += 1;
             Destroy(gameObject);
 
             // 잼 갯수 UI 업데이트 
             //zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
-
         }
     }
 
+    void AbsorptedToColliderbyRPC(Collision collision)
+    {
+        StartCoroutine(AbsorptedToCollider(collision));
+    }
     IEnumerator AbsorptedToCollider(Collision collision)
     {
-
         float time = 0;
         float absortionTime = 0.7f;
         Vector3 startPos = transform.position;
@@ -101,6 +106,7 @@ public class Zem : MonoBehaviour
             yield return null;
         }
 
-        
+
     }
+
 }

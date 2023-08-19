@@ -15,13 +15,26 @@ public class ElrpimoAttackEffectHandler : MonoBehaviour
 
     [SerializeField]
     private float scalingDuration = 1.0f;
+    private SphereCollider sphereCollider;
 
-    private void OnEnable()
+    private void Awake()
     {
+        sphereCollider = GetComponent<SphereCollider>();
         Player = GameObject.Find("Elprimo").GetComponent<Transform>();
         transform.forward = Player.transform.forward;
         StartCoroutine(DestroyAfterDelay());
         StartCoroutine(ScaleOverTime());
+        StartCoroutine(HandleCollider(0.2f));
+    }
+
+    private void OnEnable()
+    {
+    }
+
+    IEnumerator HandleCollider(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        sphereCollider.enabled = true;
     }
 
     void Update()

@@ -7,6 +7,7 @@ using Photon.Pun;
 public class LeonAttackHandler : MonoBehaviourPun
 {
     private MoveHandler moveHandler;
+    private HpHandler hpHandler;
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
 
@@ -42,6 +43,7 @@ public class LeonAttackHandler : MonoBehaviourPun
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
+        hpHandler = GetComponent<HpHandler>();
         rb = GetComponent<Rigidbody>();
         moveHandler = GetComponent<MoveHandler>();
     }
@@ -93,24 +95,36 @@ public class LeonAttackHandler : MonoBehaviourPun
 
     IEnumerator HandleShuriken()
     {
+        //if(내가 myTeam 이라면)
+        //{
+        //    shuriken.tag = myTeamAttack;
+        //}
+        //else if(내가 awayTeam 이라면)
+        //{
+        //    shuriken.tage = awayTeamAttack;
+        //}
         GameObject shuriken1 = Instantiate(Shuriken, RightHand[0].transform.position, RightHand[0].transform.rotation);
         shuriken1.SetActive(true);
         shuriken1.transform.forward = this.transform.forward;
+        shuriken1.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
         yield return new WaitForSeconds(0.03f);
 
         GameObject shuriken2 = Instantiate(Shuriken, RightHand[1].transform.position, RightHand[1].transform.rotation);
         shuriken2.SetActive(true);
         shuriken2.transform.forward = this.transform.forward;
+        shuriken2.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
         yield return new WaitForSeconds(0.03f);
 
         GameObject shuriken3 = Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
         shuriken3.SetActive(true);
         shuriken3.transform.forward = this.transform.forward;
+        shuriken3.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
         yield return new WaitForSeconds(0.03f);
 
         GameObject shuriken4 = Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
         shuriken4.SetActive(true);
         shuriken4.transform.forward = this.transform.forward;
+        shuriken4.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
     }
 
 

@@ -1913,6 +1913,7 @@ GameObject:
   - component: {fileID: 670734862999506757}
   - component: {fileID: 1227760723159078099}
   - component: {fileID: 2770471434700180784}
+  - component: {fileID: 6973606767732991539}
   m_Layer: 11
   m_Name: Elprimo
   m_TagString: Player
@@ -2159,6 +2160,18 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &6973606767732991539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6117315141165109133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cd09ca283a91d4c85cc40692db5bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6184576831979139677
 GameObject:
   m_ObjectHideFlags: 0

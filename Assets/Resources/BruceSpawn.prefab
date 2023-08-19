@@ -692,6 +692,8 @@ GameObject:
   - component: {fileID: 9023961214196017451}
   - component: {fileID: 2829138338100321886}
   - component: {fileID: 5624922864671332631}
+  - component: {fileID: 378184994399547681}
+  - component: {fileID: 7467565591032619534}
   m_Layer: 0
   m_Name: Bruce
   m_TagString: Untagged
@@ -838,7 +840,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5624922864671332631}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -858,6 +861,31 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &378184994399547681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346499177435097585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a5242038f061c4e9a1560416f7bae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+--- !u!114 &7467565591032619534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346499177435097585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cd09ca283a91d4c85cc40692db5bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2423331292335182881
 GameObject:
   m_ObjectHideFlags: 0

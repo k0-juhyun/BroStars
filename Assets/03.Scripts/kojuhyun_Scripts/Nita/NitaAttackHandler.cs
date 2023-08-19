@@ -7,6 +7,8 @@ public class NitaAttackHandler : MonoBehaviourPun
 {
     TargetHandler targetHandler;
     NitaManager nitaManager;
+    HpHandler hpHandler;
+
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
 
@@ -44,6 +46,7 @@ public class NitaAttackHandler : MonoBehaviourPun
         {
             this.enabled = false;
         }
+        hpHandler = GetComponent<HpHandler>();
         targetHandler = GetComponentInParent<TargetHandler>();
         nitaManager = GetComponent<NitaManager>();
         attackLookPoint = transform.GetChild(1).GetComponent<Transform>();
@@ -122,6 +125,14 @@ public class NitaAttackHandler : MonoBehaviourPun
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
         Vector3 startVelocity = joystickDirection * launchForce;
 
+        //if(내가 myTeam 이라면)
+        //{
+        //    bruceSpawn.tag = myTeamAttack;
+        //}
+        //else if(내가 awayTeam 이라면)
+        //{
+        //    bruceSpawn.tage = awayTeamAttack;
+        //}
         GameObject bruceSpawn = Instantiate(Bruce, SpawnPos.transform.position, Quaternion.identity);
         bruceSpawn.GetComponent<Rigidbody>().velocity = startVelocity;
     }
@@ -141,6 +152,15 @@ public class NitaAttackHandler : MonoBehaviourPun
         Quaternion rot = normalAttackTransform.rotation;
 
         GameObject nitaNormalAttack = Instantiate(nitaNormal, pos, rot);
+        nitaNormalAttack.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        //if(내가 myTeam 이라면)
+        //{
+        //    nitaNormal.tag = myTeamAttack;
+        //}
+        //else if(내가 awayTeam 이라면)
+        //{
+        //    nitaNormal.tage = awayTeamAttack;
+        //}
     }
 
     #endregion

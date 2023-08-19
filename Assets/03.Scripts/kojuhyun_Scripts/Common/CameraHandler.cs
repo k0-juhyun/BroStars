@@ -41,8 +41,8 @@ public class CameraHandler : MonoBehaviourPun
         this.startXPos = this.transform.position.x;
         this.startYPos = this.transform.position.y;
 
-        hpHandler = FindObjectOfType<HpHandler>();
         target = targetHandler.Target.transform;
+        hpHandler = target.GetComponent<HpHandler>();
 
         if(photonView.IsMine)
         {
