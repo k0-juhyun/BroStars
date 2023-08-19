@@ -2117,6 +2117,7 @@ GameObject:
   - component: {fileID: 5965694773925602584}
   - component: {fileID: 5965694773925602585}
   - component: {fileID: 5965694773925602587}
+  - component: {fileID: 3308490494434407276}
   m_Layer: 5
   m_Name: AttackJoyStick
   m_TagString: Untagged
@@ -2204,6 +2205,28 @@ MonoBehaviour:
   handle: {fileID: 5965694775134588616}
   input: {x: 0, y: 0}
   moveThreshold: 1
+--- !u!114 &3308490494434407276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5965694773925602591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5965694773925684314
 GameObject:
   m_ObjectHideFlags: 0
@@ -4155,6 +4178,7 @@ GameObject:
   - component: {fileID: 5965694774359330231}
   - component: {fileID: 5965694774359330228}
   - component: {fileID: 5965694774359330186}
+  - component: {fileID: 6782750447257993696}
   m_Layer: 5
   m_Name: SkillJoyStick
   m_TagString: Untagged
@@ -4242,6 +4266,28 @@ MonoBehaviour:
   handle: {fileID: 5965694775207881971}
   input: {x: 0, y: 0}
   moveThreshold: 1
+--- !u!114 &6782750447257993696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5965694774359330187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5965694774361623629
 GameObject:
   m_ObjectHideFlags: 0
@@ -7580,6 +7626,7 @@ GameObject:
   - component: {fileID: 261475288451158361}
   - component: {fileID: 261475288451158360}
   - component: {fileID: 261475288451158363}
+  - component: {fileID: 7208455118684716542}
   m_Layer: 11
   m_Name: Nita
   m_TagString: Player
@@ -7785,6 +7832,29 @@ MonoBehaviour:
   normalAttackTransform: {fileID: 5965694775609818905}
   SpawnPos: {fileID: 5965694775379612858}
   Bruce: {fileID: 3193361373983426863, guid: ef8a4c73ce4400748bb33d2bb8a3809a, type: 3}
+--- !u!114 &7208455118684716542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776525576294437264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 261475288451158355}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6861823864152321088
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ public class NitaAttackHandler : MonoBehaviourPun
         attackLookPoint = attackLR.gameObject.GetComponent<Transform>();
         skillLookPoint = specialLR.gameObject.GetComponent<Transform>();
         Player = transform.GetChild(4).GetComponent<Transform>();
-        animatorHandler = GetComponentInChildren<AnimatorHandler>();
+        animatorHandler = GetComponentInParent<AnimatorHandler>();
         rb = GetComponentInChildren<Rigidbody>();
     }
 

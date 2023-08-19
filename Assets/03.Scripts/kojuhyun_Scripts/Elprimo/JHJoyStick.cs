@@ -32,10 +32,10 @@ public class JHJoyStick : Joystick
     {
         if(photonView.IsMine == false)
             return;
-        NitaAttackHandler nitaAttackHandler = FindAnyObjectByType<NitaAttackHandler>();
-        ElprimoAttackHandler elprimoAttackHandler = FindObjectOfType<ElprimoAttackHandler>();
-        LeonAttackHandler leonAttackHandler = FindObjectOfType<LeonAttackHandler>();
-        AnimatorHandler animHandler = FindObjectOfType<AnimatorHandler>();
+        NitaAttackHandler nitaAttackHandler = GetComponentInParent<NitaAttackHandler>();
+        ElprimoAttackHandler elprimoAttackHandler = GetComponentInParent<ElprimoAttackHandler>();
+        LeonAttackHandler leonAttackHandler = GetComponentInParent<LeonAttackHandler>();
+        AnimatorHandler animHandler = GetComponentInParent<AnimatorHandler>();
 
         #region ¿¤ÇÁ¸®¸ð
         if (elprimoAttackHandler != null)
@@ -46,7 +46,8 @@ public class JHJoyStick : Joystick
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
-                animHandler.playTargetAnim("Normal");
+                //animHandler.playTargetAnim("Normal");
+                photonView.RPC(nameof(animHandler.playTargetAnim), RpcTarget.All, "Normal");
             }
         }
         #endregion

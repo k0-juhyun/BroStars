@@ -38,13 +38,11 @@ MonoBehaviour:
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - FixedUpdate
-  - HandleNormalAttack
-  - HandleUltimateAttack
   - FireBulletByRPC
   - FireRayByRpc
-  - NitaNormalAttackbyRPC
+  - playTargetAnim
+  - RespawnSpaceship
+  - SetTriggerParameters
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

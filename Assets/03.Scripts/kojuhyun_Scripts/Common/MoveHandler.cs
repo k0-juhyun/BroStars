@@ -41,7 +41,7 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
     private void Awake()
     {
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
-        animatorHandler = GetComponent<AnimatorHandler>();
+        animatorHandler = GetComponentInParent<AnimatorHandler>();
     }
     private void FixedUpdate()
     {
@@ -64,7 +64,8 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
 
             transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed);
 
-            animatorHandler.playTargetAnim("Walking");
+            //animatorHandler.playTargetAnim("Walking");
+            photonView.RPC(nameof(animatorHandler.playTargetAnim), RpcTarget.All, "Walking");
 
             moveFlag = true;
         }

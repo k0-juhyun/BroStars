@@ -9,14 +9,16 @@ public class ElprimoManager : MonoBehaviourPun
     MoveHandler moveHandler;
     ElprimoAttackHandler attackHandler;
     HpHandler hpHandler;
-    BushManager bushManager;
 
     private void Awake()
     {
+        if (photonView.IsMine == false)
+        {
+            this.enabled = false;
+        }
         moveHandler = GetComponent<MoveHandler>();
-        attackHandler = GetComponent<ElprimoAttackHandler>();
+        attackHandler = GetComponentInParent<ElprimoAttackHandler>();
         hpHandler = GetComponent<HpHandler>();
-        bushManager = GetComponent<BushManager>();
     }
 
     private void FixedUpdate()
@@ -25,16 +27,13 @@ public class ElprimoManager : MonoBehaviourPun
         {
             return;
         }
-        else
-        {
-            moveHandler.HandleMovement();
+        moveHandler.HandleMovement();
 
-            attackHandler.HandleNormalAttack();
-            attackHandler.HandleUltimateAttack();
+        attackHandler.HandleNormalAttack();
+        attackHandler.HandleUltimateAttack();
 
-            hpHandler.UpdateHp();
-            hpHandler.RegenerateHpInBush();
-        }
+        hpHandler.UpdateHp();
+        hpHandler.RegenerateHpInBush();
     }
 
     private void Update()

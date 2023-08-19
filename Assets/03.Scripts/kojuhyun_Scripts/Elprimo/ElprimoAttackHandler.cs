@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ElprimoAttackHandler : MonoBehaviour
+public class ElprimoAttackHandler : MonoBehaviourPun
 {
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
@@ -24,7 +25,7 @@ public class ElprimoAttackHandler : MonoBehaviour
     [Header("Normal Attack Event")]
     public GameObject[] fistEffect;
     public GameObject[] elprimoFists;
- 
+
     private float TrailDistance = 1.3f;
     private float launchForce = 10;
 
@@ -32,11 +33,20 @@ public class ElprimoAttackHandler : MonoBehaviour
 
     private void Awake()
     {
-        attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
-        skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
-        Player = GetComponent<Transform>();
-        animatorHandler = GetComponent<AnimatorHandler>();
-        rb = GetComponent<Rigidbody>();
+        if (photonView.IsMine == false)
+        {
+            this.enabled = false;
+        }
+
+        attackLookPoint = attackLR.gameObject.GetComponent<Transform>();
+        skillLookPoint = specialLR.gameObject.GetComponent<Transform>();
+        Player = transform.GetChild(4).GetComponent<Transform>();
+        animatorHandler = GetComponentInParent<AnimatorHandler>();
+        rb = GetComponentInChildren<Rigidbody>();
+    }
+    private void Start()
+    {
+
     }
 
 
@@ -129,7 +139,7 @@ public class ElprimoAttackHandler : MonoBehaviour
         animatorHandler.playTargetAnim("Special");
 
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
-        Vector3 startVelocity = joystickDirection * launchForce;   
+        Vector3 startVelocity = joystickDirection * launchForce;
 
         GetComponent<Rigidbody>().velocity = startVelocity;
     }
@@ -138,12 +148,20 @@ public class ElprimoAttackHandler : MonoBehaviour
     #region 일반 공격 애니메이션 이벤트
     public void LeftHandEventHandler()
     {
-        GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
+        if (photonView.IsMine)
+        {
+            GameObject photonFistEffect = PhotonNetwork.Instantiate("LeftHand", elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
+            photonFistEffect.transform.forward = transform.forward;
+        }
     }
 
     public void RightHandEventHandler()
     {
-        GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
+        if (photonView.IsMine)
+        {
+            GameObject photonFistEffect = PhotonNetwork.Instantiate("RightHand", elprimoFists[1].transform.position, elprimoFists[1].transform.rotation);
+            photonFistEffect.transform.forward = transform.forward;
+        }
     }
     #endregion
 

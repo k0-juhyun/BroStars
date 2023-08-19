@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ElrpimoAttackEffectHandler : MonoBehaviour
+public class ElrpimoAttackEffectHandler : MonoBehaviourPun
 {
     [Header("Speed")]
     [SerializeField]
     private float speed;
-    private Transform Player;
 
     [Header("Scaling")]
     private Vector3 initialScale = Vector3.one;
@@ -16,23 +16,23 @@ public class ElrpimoAttackEffectHandler : MonoBehaviour
     [SerializeField]
     private float scalingDuration = 1.0f;
 
+    private Transform Player;
     private void OnEnable()
     {
-        Player = GameObject.Find("Elprimo").GetComponent<Transform>();
         StartCoroutine(DestroyAfterDelay());
         StartCoroutine(ScaleOverTime());
     }
 
     void Update()
     {
-        transform.forward = Player.transform.forward;
-        transform.position += Player.forward * Time.deltaTime * speed;
+        transform.position += transform.forward * Time.deltaTime * speed;
     }
 
     IEnumerator DestroyAfterDelay()
     {
         yield return new WaitForSeconds(0.5f);
-        Destroy(this.gameObject);
+        if (photonView.IsMine)
+            PhotonNetwork.Destroy(this.gameObject);
     }
 
     IEnumerator ScaleOverTime()

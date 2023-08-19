@@ -18,7 +18,7 @@ public class NitaManager : MonoBehaviourPun
         }
         moveHandler = GetComponent<MoveHandler>();
         hpHandler = GetComponent<HpHandler>();
-        nitaAttackHandler = GetComponent<NitaAttackHandler>();
+        nitaAttackHandler = GetComponentInParent<NitaAttackHandler>();
     }
 
     private void FixedUpdate()
