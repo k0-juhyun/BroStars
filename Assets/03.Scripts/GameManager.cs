@@ -125,15 +125,15 @@ public class GameManager : MonoBehaviour
         // 마우스 포인터를 비 활성화.
         Cursor.visible = false; 
 
-
     }
 
     private void CreateSpawn()
     {
         // 팀을 생성한다.
         myTeam = new MyTeam();
-        enemyTeam = new EnemyTeam(); 
+        enemyTeam = new EnemyTeam();
 
+        #region 잠시만
         // 리스폰 Length와 플레이어의 Length 동일하다는 가정.
         for (int i = 0; i < PlayerLength; i++)
         {
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
                 myTeam.SetMyMebers(i, pos);
 
                 // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
-                PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
+                //PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
             }
             else
             {
@@ -156,10 +156,11 @@ public class GameManager : MonoBehaviour
                 enemyTeam.SetMyMebers(i, pos); 
 
                 // 팀원 2명 Player를 생성한다. ( 이름 : String, 위치 : Vector3, 회전 : Quarterion) 
-                PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
+                //PhotonNetwork.Instantiate(PlayerName[i], pos, Quaternion.identity);
             }
 
         }
+        #endregion
     }
 
     //public int myTeam
@@ -171,7 +172,7 @@ public class GameManager : MonoBehaviour
     //    set
     //    {
     //        myTeamScore = value;
-            
+
     //        if(myTeamScore >= 10 && myTeamScore != EnemyTeamScore)
     //        {
     //            // 우리팀 보석을 10개 이상 획득. 
@@ -205,7 +206,7 @@ public class GameManager : MonoBehaviour
     //    }
     //}
 
-   
+
     IEnumerator WinerTeamTimer()
     {
         winnerCurrentTimer = winerTimer;
