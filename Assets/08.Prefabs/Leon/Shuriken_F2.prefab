@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21bc328f22801804ebb02b84adcde9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 50
   duration: 2
   rotationSpeed: 0.5
 --- !u!114 &3569575968489601305
@@ -68,7 +68,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 7122238897074137363}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

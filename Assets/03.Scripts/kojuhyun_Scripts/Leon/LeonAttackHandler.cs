@@ -16,7 +16,6 @@ public class LeonAttackHandler : MonoBehaviourPun
 
     [Header("LineRenderer Object")]
     public LineRenderer attackLR;
-    public LineRenderer specialLR;
 
     [Header("LineRenderer Transform")]
     private Transform attackLookPoint;
@@ -94,13 +93,24 @@ public class LeonAttackHandler : MonoBehaviourPun
 
     IEnumerator HandleShuriken()
     {
-        GameObject shuriken = Instantiate(Shuriken, RightHand[0].transform.position, RightHand[0].transform.rotation);
+        GameObject shuriken1 = Instantiate(Shuriken, RightHand[0].transform.position, RightHand[0].transform.rotation);
+        shuriken1.SetActive(true);
+        shuriken1.transform.forward = this.transform.forward;
         yield return new WaitForSeconds(0.03f);
-        Instantiate(Shuriken, RightHand[1].transform.position, RightHand[1].transform.rotation);
+
+        GameObject shuriken2 = Instantiate(Shuriken, RightHand[1].transform.position, RightHand[1].transform.rotation);
+        shuriken2.SetActive(true);
+        shuriken2.transform.forward = this.transform.forward;
         yield return new WaitForSeconds(0.03f);
-        Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
+
+        GameObject shuriken3 = Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
+        shuriken3.SetActive(true);
+        shuriken3.transform.forward = this.transform.forward;
         yield return new WaitForSeconds(0.03f);
-        Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
+
+        GameObject shuriken4 = Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
+        shuriken4.SetActive(true);
+        shuriken4.transform.forward = this.transform.forward;
     }
 
 

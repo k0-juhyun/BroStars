@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class LeonAttackEffectHandler : MonoBehaviourPun
+public class LeonAttackEffectHandler : MonoBehaviour
 {
     [Header("Speed")]
     public float moveSpeed = 2;
@@ -13,28 +12,21 @@ public class LeonAttackEffectHandler : MonoBehaviourPun
     private Transform Player;
     private Vector3 initialForward;
 
-    private MeshCollider meshCollider;
-    private Rigidbody rb;
+    MeshCollider meshCollider;
 
     private void OnEnable()
     {
-        rb = GetComponent<Rigidbody>();
+        transform.forward = initialForward;
         meshCollider = GetComponentInChildren<MeshCollider>();
-        Player = GameObject.Find("Leon").GetComponent<Transform>();
-        initialForward = Player.transform.forward;
         StartCoroutine(DestroyAfterDelay(duration));
         StartCoroutine(HandleCollider(0.5f));
-        LaunchProjectile();
-
     }
 
     private void Update()
     {
-        if (photonView.IsMine == false)
-            return;
         rotationSpeed += 2;
-        transform.forward = initialForward;
-        transform.position += initialForward * Time.deltaTime * moveSpeed;
+        Vector3 movement = initialForward * Time.deltaTime * moveSpeed;
+        transform.position += movement;
 
         transform.eulerAngles += new Vector3(0, rotationSpeed, 0);
     }
@@ -42,26 +34,12 @@ public class LeonAttackEffectHandler : MonoBehaviourPun
     IEnumerator DestroyAfterDelay(float duration)
     {
         yield return new WaitForSeconds(duration);
-        PhotonNetwork.Destroy(this.gameObject);
+        Destroy(this.gameObject);
     }
 
     IEnumerator HandleCollider(float delay)
     {
         yield return new WaitForSeconds(delay);
         meshCollider.enabled = true;
-    }
-
-    private void LaunchProjectile()
-    {
-        if (photonView.IsMine)
-        {
-            rb.velocity = initialForward * moveSpeed;
-        }
-    }
-
-    [PunRPC]
-    private void UpdateProjectilePosition(Vector3 position)
-    {
-        rb.position = position;
     }
 }
