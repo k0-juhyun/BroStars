@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 1.0
+    AppVersion: 2023.2
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -38,13 +38,12 @@ MonoBehaviour:
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - FixedUpdate
-  - HandleNormalAttack
-  - HandleUltimateAttack
   - FireBulletByRPC
   - FireRayByRpc
-  - NitaNormalAttackbyRPC
+  - HandleNormalAttack
+  - HandleUltimateAttack
+  - NitaNormalAttackByRpc
+  - RespawnSpaceship
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

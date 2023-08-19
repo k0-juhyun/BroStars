@@ -5137,6 +5137,8 @@ MonoBehaviour:
   normalAttackTransform: {fileID: 5965694775609818905}
   SpawnPos: {fileID: 5965694775379612858}
   Bruce: {fileID: 3193361373983426863, guid: ef8a4c73ce4400748bb33d2bb8a3809a, type: 3}
+  nitanormalAttack: {fileID: 1677970727425304249, guid: 8aa87fc323fd0234c9f0ab5eb4fad8a7,
+    type: 3}
 --- !u!1 &5965694774852475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -7785,6 +7787,7 @@ MonoBehaviour:
   normalAttackTransform: {fileID: 5965694775609818905}
   SpawnPos: {fileID: 5965694775379612858}
   Bruce: {fileID: 3193361373983426863, guid: ef8a4c73ce4400748bb33d2bb8a3809a, type: 3}
+  nitanormalAttack: {fileID: 0}
 --- !u!1 &6861823864152321088
 GameObject:
   m_ObjectHideFlags: 0

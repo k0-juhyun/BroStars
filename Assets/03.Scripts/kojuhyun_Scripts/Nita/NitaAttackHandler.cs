@@ -26,6 +26,7 @@ public class NitaAttackHandler : MonoBehaviourPun
 
     [Header("GameObject")]
     public GameObject Bruce;
+    public GameObject nitanormalAttack;
     private float TrailDistance = 4f;
     private float launchForce = 10;
 
@@ -33,14 +34,10 @@ public class NitaAttackHandler : MonoBehaviourPun
 
     private void Start()
     {
-        
+
     }
     private void Awake()
     {
-        if (photonView.IsMine == false)
-        {
-            this.enabled = false;
-        }
         attackLookPoint = attackLR.gameObject.GetComponent<Transform>();
         skillLookPoint = specialLR.gameObject.GetComponent<Transform>();
         Player = transform.GetChild(4).GetComponent<Transform>();
@@ -49,6 +46,7 @@ public class NitaAttackHandler : MonoBehaviourPun
     }
 
     #region 공격
+    [PunRPC]
     public void HandleNormalAttack()
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
@@ -83,6 +81,7 @@ public class NitaAttackHandler : MonoBehaviourPun
             attackLR.gameObject.SetActive(false);
         }
     }
+    [PunRPC]
     public void HandleUltimateAttack()
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
@@ -124,13 +123,16 @@ public class NitaAttackHandler : MonoBehaviourPun
     #region 일반 공격
     public void NitaNormalAttack()
     {
-        if (photonView.IsMine)
-        {
-            Vector3 pos = normalAttackTransform.position;
-            Quaternion rot = normalAttackTransform.rotation;
+        photonView.RPC(nameof(NitaNormalAttackByRpc), RpcTarget.All);
+    }
 
-            GameObject nitaNormalAttack = PhotonNetwork.Instantiate("NitaNormalAttack", pos, rot);
-        }
+    [PunRPC]
+    public void NitaNormalAttackByRpc()
+    {
+        Vector3 pos = normalAttackTransform.position;
+        Quaternion rot = normalAttackTransform.rotation;
+
+        GameObject nitaNormalAttack = Instantiate(nitanormalAttack, pos, rot);
     }
 
     #endregion

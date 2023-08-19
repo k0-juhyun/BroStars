@@ -28,14 +28,19 @@ public class JHJoyStick : Joystick
 
     }
 
+    void nitaNormal()
+    {
+        NitaAttackHandler nitaAttackHandler = GetComponentInParent<NitaAttackHandler>();
+    }
+
     public override void OnPointerUp(PointerEventData eventData)
     {
         if(photonView.IsMine == false)
             return;
-        NitaAttackHandler nitaAttackHandler = FindAnyObjectByType<NitaAttackHandler>();
-        ElprimoAttackHandler elprimoAttackHandler = FindObjectOfType<ElprimoAttackHandler>();
-        LeonAttackHandler leonAttackHandler = FindObjectOfType<LeonAttackHandler>();
-        AnimatorHandler animHandler = FindObjectOfType<AnimatorHandler>();
+        NitaAttackHandler nitaAttackHandler = GetComponentInParent<NitaAttackHandler>();
+        ElprimoAttackHandler elprimoAttackHandler = GetComponentInParent<ElprimoAttackHandler>();
+        LeonAttackHandler leonAttackHandler = GetComponentInParent<LeonAttackHandler>();
+        AnimatorHandler animHandler = GetComponentInChildren<AnimatorHandler>();
 
         #region ¿¤ÇÁ¸®¸ð
         if (elprimoAttackHandler != null)
@@ -60,7 +65,8 @@ public class JHJoyStick : Joystick
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
-                nitaAttackHandler.NitaNormalAttack();
+                photonView.RPC(nameof(nitaAttackHandler.NitaNormalAttackByRpc), RpcTarget.All);
+                //nitaAttackHandler.NitaNormalAttack();
             }
         }
         #endregion

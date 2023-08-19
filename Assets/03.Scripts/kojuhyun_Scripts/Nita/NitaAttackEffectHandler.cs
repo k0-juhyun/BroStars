@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class NitaAttackEffectHandler : MonoBehaviourPun
+public class NitaAttackEffectHandler : MonoBehaviour
 {
     [Header("Speed")]
     [SerializeField]
@@ -15,17 +14,12 @@ public class NitaAttackEffectHandler : MonoBehaviourPun
     }
     void Update()
     {
-        if(photonView.IsMine)
-        {
-            transform.position += transform.forward * Time.deltaTime * speed;
-        }
+        transform.position += transform.forward * Time.deltaTime * speed;
     }
     IEnumerator destroy()
     {
         yield return new WaitForSeconds(0.8f);
-        if(photonView.IsMine) 
-        {
-            Destroy(this.gameObject);
-        }
+
+        Destroy(this.gameObject);
     }
 }

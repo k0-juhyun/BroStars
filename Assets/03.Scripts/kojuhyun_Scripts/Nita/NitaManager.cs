@@ -28,7 +28,8 @@ public class NitaManager : MonoBehaviourPun
 
         moveHandler.HandleMovement();
 
-        nitaAttackHandler.HandleNormalAttack();
+        photonView.RPC(nameof(nitaAttackHandler.HandleNormalAttack), RpcTarget.All);
+        //nitaAttackHandler.HandleNormalAttack();
         nitaAttackHandler.HandleUltimateAttack();
 
         hpHandler.UpdateHp();
