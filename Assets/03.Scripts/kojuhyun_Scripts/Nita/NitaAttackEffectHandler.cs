@@ -15,17 +15,14 @@ public class NitaAttackEffectHandler : MonoBehaviourPun
     }
     void Update()
     {
-        if(photonView.IsMine)
-        {
-            transform.position += transform.forward * Time.deltaTime * speed;
-        }
+        transform.position += transform.forward * Time.deltaTime * speed;
     }
     IEnumerator destroy()
     {
         yield return new WaitForSeconds(0.8f);
-        if(photonView.IsMine) 
+        if (photonView.IsMine)
         {
-            Destroy(this.gameObject);
+            PhotonNetwork.Destroy(this.gameObject);
         }
     }
 }
