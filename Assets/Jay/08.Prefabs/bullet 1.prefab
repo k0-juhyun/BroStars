@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8285813740534529542}
   - component: {fileID: 3551169902003410719}
   - component: {fileID: 1681239620072110414}
+  - component: {fileID: 5089451891477197485}
   - component: {fileID: 3229675183291378876}
   m_Layer: 0
   m_Name: bullet 1
@@ -107,12 +108,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762953760858786040}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1379dcac4058fac4ba44454df12c44c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 5
+  knockBackForce: 0.5
+  AutoDestroyTime: 5
 --- !u!54 &1681239620072110414
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,6 +132,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5089451891477197485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762953760858786040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62c30a087f7a4fb4e8a2a271b1c72ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 10.33
 --- !u!96 &3229675183291378876
 TrailRenderer:
   serializedVersion: 2

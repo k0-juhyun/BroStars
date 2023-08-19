@@ -29,11 +29,15 @@ public class ShellyAttackHandler : MonoBehaviourPun
     //public Transform[] RightHand;
     //public GameObject bulletFactory;
     //public GameObject Mesh;
-
+    //카트리지 
+    //public float shootingSlowness;
+    //public GameObject Cardridge;
+    //private bool beingHandled = false;
+    [Header("TrailRenderer")]
 
     [Header("Fire Info")]
     public GameObject attackBulletFactory;
-    //public GameObject specialBulletFactory;
+    public GameObject specialBulletFactory;
     public Transform firePos;
     public float startAngle = -10;
 
@@ -62,7 +66,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
         //animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>(); 
+        rb = GetComponent<Rigidbody>();
         moveHandler = GetComponent<MoveHandler>();
     }
 
@@ -77,11 +81,11 @@ public class ShellyAttackHandler : MonoBehaviourPun
             transform.LookAt(new Vector3(attackLookPoint.position.x, 5.1f, attackLookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-           
-            //attackLR.SetPosition(0, new Vector3(transform.position.x, 4.2f, transform.position.z));
-            Shoot();
-            //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
 
+            //attackLR.SetPosition(0, new Vector3(transform.position.x, 4.2f, transform.position.z));
+ 
+            //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            
 
             //if (Physics.Raycast(rayStartPos, transform.forward, out hit, TrailDistance))
             //{
@@ -103,22 +107,63 @@ public class ShellyAttackHandler : MonoBehaviourPun
             attackLR.gameObject.SetActive(false);
         }
     }
-
-    void Shoot()
+    public void CallShoot()
+    {
+        StartCoroutine(Shoot());
+    }
+    IEnumerator Shoot()
     {
         //총알 나오는 위치의 각도를 조정
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
         for (int i = 0; i < 5; i++)
         {
+            print("1");
             GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
             //자식 하위오브젝트에서 생성
-            bullet.transform.parent = this.transform;
+            bullet.transform.forward = this.transform.forward;
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
             Destroy(bullet, 2f);
         }
         //animator.Play("attack");
     }
+    void SuperShell()
+    {
+        //총알 나오는 위치의 각도를 조정
+        firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
+        List<GameObject> spawnedSpecialBullets = new List<GameObject>();
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.position, firePos.rotation);
+            spawnedSpecialBullets.Add(specialBullet);
+            //각도 설정
+            firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
+            //Destroy(specialBullet, 2f);
+        }
+        //animator.Play("attack");
+        //StartCoroutine(Shooting());
+
+        foreach (GameObject bullet in spawnedSpecialBullets)
+        {
+            Destroy(bullet, 2f);
+        }
+    }
+    //private IEnumerator Shooting()
+    //{
+    //    beingHandled = true;
+    //    GameObject cardridge;
+    //    for (int i = 0; i <= 5; i++)
+    //    {
+    //        if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, firePos.transform.rotation);
+    //        else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, firePos.transform.rotation);
+
+    //    }
+    //    yield return new WaitForSeconds(shootingSlowness);
+
+    //    beingHandled = false;
+
+    //}
 
     //public void HandleUltimateAttack()
     //{
