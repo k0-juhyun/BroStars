@@ -25,7 +25,7 @@ public class NitaAttackEffectHandler : MonoBehaviourPun
         yield return new WaitForSeconds(0.8f);
         if(photonView.IsMine) 
         {
-            Destroy(this.gameObject);
+            PhotonNetwork.Destroy(this.gameObject);
         }
     }
 }
