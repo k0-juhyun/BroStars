@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System;
+using static GameManager;
 
 // GameManager 스크립트
 // 1. 게임 플레이 씬의 리스폰 지역에서 브롤러 생성
@@ -38,12 +40,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "ElprimoController", "LeonController", "NitaController", "ShellyController"};
+    public static List<string> PlayerName = new List<string>() { "ShellyController", "LeonController", "NitaController", "ElprimoController" };
 
     // 팀 클래스 변수
-    MyTeam myTeam;
-    EnemyTeam enemyTeam;
+    public MyTeam myTeam;
+    public EnemyTeam enemyTeam;
 
+    [Serializable]
     public class Player
     {
         public GameObject player;
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    [Serializable]
     public class MyTeam
     {
         // 잼 점수표 : 우리팀
@@ -89,12 +93,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
+    [Serializable]
     public class EnemyTeam
     { 
         // 잼 점수표 : 상대팀
         public int EnemyTeamScore = 0;
         // 팀원 
-        private List<Player> enemyMembers;
+        public List<Player> enemyMembers;
 
         public EnemyTeam()
         {
@@ -171,12 +176,75 @@ public class GameManager : MonoBehaviourPunCallbacks
         // RPC를 통해서 RpcTarget.other를 통해 팀 클래스에 나의 Player를 추가. 
 
         // RPC를 통해서 RpcTarget.MasterClient 호출. 
-        BuildTeam(player, index, spawnPos[index]);
+        //BuildTeam(player, index, spawnPos[index]);
 
         // 마우스 포인터를 비 활성화.
         Cursor.visible = false; 
 
+    }
 
+    public List<PhotonView> allPlayer = new List<PhotonView>();
+    public void AddPlayer(PhotonView pv)
+    {
+        allPlayer.Add(pv);
+        
+        if(PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
+        }
+
+        //if(allPlayer.Count == 4)
+        //{
+        //    if (PhotonNetwork.IsMasterClient)
+        //    {
+        //        StartCoroutine(AAA());
+        //    }
+        //}
+    }
+
+    public int myTeamIdx;
+    public void SetTeamInfo()
+    {
+        if (PhotonNetwork.IsMasterClient == false) return;
+        if (allPlayer.Count < 4) return;
+
+        StartCoroutine(AAA());
+    }
+
+    IEnumerator AAA()
+    {
+        yield return new WaitForSeconds(3);
+        for (int i = 0; i < allPlayer.Count; i++)
+        {
+            photonView.RPC(nameof(RpcSetMyMebers), RpcTarget.AllBuffered, allPlayer[i].ViewID, i);
+        }
+    }
+
+
+    [PunRPC]
+    public void RpcSetMyMebers(int viewId, int index)
+    {
+
+        TargetHandler th;
+        for(int i = 0; i < allPlayer.Count; i++)
+        {
+            if (allPlayer[i].ViewID == viewId)
+            {
+                
+                th = allPlayer[i].GetComponent<TargetHandler>();
+                print("th.teamIdx " + th.teamIdx);
+                if (myTeamIdx == th.teamIdx)
+                {
+                    myTeam.SetMyMebers(allPlayer[i].gameObject, index, spawnPos[index]);
+                }
+                else
+                {
+                    enemyTeam.SetMyMebers(allPlayer[i].gameObject, index, spawnPos[index]);
+                }
+                break;
+                
+            }
+        }
     }
 
     private void BuildTeam(GameObject gameobject, int index, Vector3 pos)

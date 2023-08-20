@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEditor.Experimental.GraphView;
+
 
 public class ShellyAttackHandler : MonoBehaviourPun
 {
@@ -41,7 +41,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
     public Transform firePos;
     public float startAngle = -10;
 
-    private float TrailDistance = 4f;
+    //private float TrailDistance = 4f;
     public float meshResolution;
     private float launchForce = 10;
 
@@ -92,6 +92,14 @@ public class ShellyAttackHandler : MonoBehaviourPun
     
     void Shot()
     {
+        photonView.RPC(nameof(RpcShot), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
+
+        //firePos.transform.rotation = originalRotation;
+    }
+
+    [PunRPC]
+    void RpcShot(Vector3 firePos, Vector3 fireForward)
+    {
         int numBullets = 5;
 
         float spreadAngle = 20f;
@@ -100,17 +108,15 @@ public class ShellyAttackHandler : MonoBehaviourPun
         {
             Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
 
-            Vector3 bulletDirection = bulletRotation * firePos.transform.forward;
+            Vector3 bulletDirection = bulletRotation * fireForward;
 
-            GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position, Quaternion.identity);
+            GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
 
             bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
             //bullet.transform.forward = firePos.transform.forward;
 
             Destroy(bullet, 1f);
         }
-
-        //firePos.transform.rotation = originalRotation;
     }
 
 

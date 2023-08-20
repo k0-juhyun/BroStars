@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEditor.Experimental.GraphView;
 
 public class ShellyAttackHandler1 : MonoBehaviourPun
 {
@@ -37,9 +36,9 @@ public class ShellyAttackHandler1 : MonoBehaviourPun
     public Transform firePos;
     public float startAngle = -10;
 
-    private float TrailDistance = 4f;
+    //private float TrailDistance = 4f;
     public float meshResolution;
-    private float launchForce = 10;
+    //private float launchForce = 10;
 
     private bool isTransparented;
 

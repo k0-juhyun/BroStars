@@ -3833,6 +3833,7 @@ MonoBehaviour:
   Target: {fileID: 2958859482033357846}
   DyingEffect: {fileID: 2724276264615532960}
   isDestroy: 0
+  teamIdx: 0
 --- !u!114 &7006022151728514173
 MonoBehaviour:
   m_ObjectHideFlags: 0

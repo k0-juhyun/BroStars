@@ -32,7 +32,7 @@ public class J_attackHandler : MonoBehaviour
     //카트리지 
     public float shootingSlowness;
     public GameObject Cardridge;
-    private bool beingHandled = false;
+    //private bool beingHandled = false;
     [Header("TrailRenderer")]
     //트레일렌더러
     TrailRenderer tr;
@@ -76,7 +76,7 @@ public class J_attackHandler : MonoBehaviour
     }
     private IEnumerator Shooting()
     {
-        beingHandled = true;
+        //beingHandled = true;
         GameObject cardridge;
         for (int i = 0; i <= 5; i++)
         {
@@ -87,7 +87,7 @@ public class J_attackHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(shootingSlowness);
 
-        beingHandled = false;
+        //beingHandled = false;
 
     }
     //공격

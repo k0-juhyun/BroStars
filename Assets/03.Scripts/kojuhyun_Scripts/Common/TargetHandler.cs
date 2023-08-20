@@ -13,6 +13,8 @@ public class TargetHandler : MonoBehaviourPun
     public bool isDestroy;
 
     HpHandler hpHandler;
+
+    public int teamIdx;
     private void Awake()
     {
         mainCamera = transform.GetChild(0).GetComponent<Camera>();
@@ -26,6 +28,8 @@ public class TargetHandler : MonoBehaviourPun
         }
 
         hpHandler = GetComponentInChildren<HpHandler>();
+
+        GameManager.instance.AddPlayer(photonView);
     }
 
     private void Update()
@@ -45,5 +49,16 @@ public class TargetHandler : MonoBehaviourPun
         {
             Destroy(this.gameObject);
         }
+    }
+
+    [PunRPC]
+    public void SetMyTeamIdx(int index)
+    {
+        teamIdx = index;
+        if (photonView.IsMine)
+        {
+            GameManager.instance.myTeamIdx = index;
+        }
+        GameManager.instance.SetTeamInfo();
     }
 }
