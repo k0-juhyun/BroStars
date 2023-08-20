@@ -24810,6 +24810,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1025465969}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1031945115 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5948910910253088860, guid: e7cf77f9ab0a3e340a6bb28c78f19127,
+    type: 3}
+  m_PrefabInstance: {fileID: 6310555529119182418}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1032335024
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56179,6 +56185,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShellyController
       objectReference: {fileID: 0}
+    - target: {fileID: 1938202386752569169, guid: e7cf77f9ab0a3e340a6bb28c78f19127,
+        type: 3}
+      propertyPath: startEffect
+      value: 
+      objectReference: {fileID: 1031945115}
     - target: {fileID: 1939108429856241611, guid: e7cf77f9ab0a3e340a6bb28c78f19127,
         type: 3}
       propertyPath: m_AnchorMax.y

@@ -89,7 +89,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
             attackLR.gameObject.SetActive(false);
         }
     }
-
+    
     void Shot()
     {
         int numBullets = 5;
