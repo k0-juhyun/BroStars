@@ -8,15 +8,22 @@ public class ShellyEffectBullet1 : MonoBehaviour
     public float bulletSpeed = 10.33f;
     Vector3 startPos;
 
+    SphereCollider sphereCollider;
+
     public float AutoDestroyTime = 5f;
     //public poolableobject 
 
     // Start is called before the first frame update
     void Start()
     {
+
         this.gameObject.transform.SetParent(null);
         rb = GetComponent<Rigidbody>();
         startPos = transform.position;
+    }
+    private void OnEnable()
+    {
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     // Update is called once per frame
