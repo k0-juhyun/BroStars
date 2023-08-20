@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 
 public class ShellyAttackHandler : MonoBehaviourPun
 {
+    private HpHandler hpHandler;
     private MoveHandler moveHandler;
     private AnimatorHandler animatorHandler;
     //private Animator animator;
@@ -62,6 +64,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
     private void Awake()
     {
+        hpHandler = GetComponent<HpHandler>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
@@ -122,7 +125,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
             bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
             //bullet.transform.forward = firePos.transform.forward;
-
+            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
             Destroy(bullet, 1f);
         }
     }

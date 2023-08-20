@@ -39,7 +39,7 @@ public class ShellyEffectBullet1 : MonoBehaviour
         // 충돌체의 태그가 player일때
         if (collision.gameObject.CompareTag("Player"))
         {
-
+            //DamageHandler damageHandler = GetComponent<DamageHandler>();
             //1차 사거리
             float firstDistance = 1.5f;
             //2차 사거리
@@ -53,6 +53,7 @@ public class ShellyEffectBullet1 : MonoBehaviour
             //사거리 안에 있으면 
             if (range < firstDistance)
             {
+                //damageHandler
                 //takedamage(5);
             }
 
