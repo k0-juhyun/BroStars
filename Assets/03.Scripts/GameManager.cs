@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "ShellyController", "LeonController", "NitaController", "ElprimoController" };
+    public static List<string> PlayerName = new List<string>() { "ElprimoController", "LeonController", "NitaController", "ShellyController" };
 
     // 팀 클래스 변수
     public MyTeam myTeam;
@@ -52,8 +52,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         public GameObject player;
         public string PlayerName;
         public Vector3 ResawnPos;
-       
-        public Player(GameObject gameobject ,string name, Vector3 pos)
+
+        public Player(GameObject gameobject, string name, Vector3 pos)
         {
             this.player = gameobject;
             this.PlayerName = name;
@@ -73,29 +73,27 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             myMembers = new List<Player>();
         }
-       
-        public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos) 
+
+        public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos)
         {
             myMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
 
-        public void show()
+        public void CalculateScore()
         {
-            print("우리팀 리스트를 보여준다.");
             for (int i = 0; i < myMembers.Count; i++)
             {
-                print(myMembers[i].player.name);
-                print(myMembers[i].PlayerName);
-                print(myMembers[i].ResawnPos);
-
+                int score = myMembers[i].player.GetComponentInChildren<GemHandler>().gem;
+                myTeamScore += score;
             }
+
         }
 
     }
 
     [Serializable]
     public class EnemyTeam
-    { 
+    {
         // 잼 점수표 : 상대팀
         public int EnemyTeamScore = 0;
         // 팀원 
@@ -110,23 +108,22 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             enemyMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
-
-        public void show()
+        public void CalculateScore()
         {
-            print("상대팀 리스트를 보여준다.");
-            for(int i = 0; i < enemyMembers.Count; i++)
+            for (int i = 0; i < enemyMembers.Count; i++)
             {
-                print(enemyMembers[i].player.name);
-                print(enemyMembers[i].PlayerName);
-                print(enemyMembers[i].ResawnPos);
-
+                int score = enemyMembers[i].player.GetComponentInChildren<GemHandler>().gem;
+                EnemyTeamScore += score;
             }
+
         }
+
+
     }
 
     private void Awake()
     {
-       
+
 
         if (instance == null)
         {
@@ -147,6 +144,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        // 팀 인스턴스를 생성한다. 
         myTeam = new MyTeam();
         enemyTeam = new EnemyTeam();
 
@@ -163,7 +161,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerLength = PhotonNetwork.CurrentRoom.PlayerCount;
 
         // 내가 위치해야 하는 index.
-        index = PhotonNetwork.CurrentRoom.PlayerCount - 1; 
+        index = PhotonNetwork.CurrentRoom.PlayerCount - 1;
 
         // 각 Player의 spawnManager의 리스폰 위치를 생성한다. 
         CreateSpawn();
@@ -171,15 +169,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 나의 Player 생성
         player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
 
-        // MasterClient만 팀 클래스를 생성한다. 
-
-        // RPC를 통해서 RpcTarget.other를 통해 팀 클래스에 나의 Player를 추가. 
-
-        // RPC를 통해서 RpcTarget.MasterClient 호출. 
-        //BuildTeam(player, index, spawnPos[index]);
-
         // 마우스 포인터를 비 활성화.
-        Cursor.visible = false; 
+        Cursor.visible = false;
 
     }
 
@@ -187,8 +178,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void AddPlayer(PhotonView pv)
     {
         allPlayer.Add(pv);
-        
-        if(PhotonNetwork.IsMasterClient)
+
+        if (PhotonNetwork.IsMasterClient)
         {
             pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
         }
@@ -226,47 +217,34 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
 
         TargetHandler th;
-        for(int i = 0; i < allPlayer.Count; i++)
+        for (int i = 0; i < allPlayer.Count; i++)
         {
             if (allPlayer[i].ViewID == viewId)
             {
-                
+
                 th = allPlayer[i].GetComponent<TargetHandler>();
                 print("th.teamIdx " + th.teamIdx);
                 if (myTeamIdx == th.teamIdx)
                 {
+                    // 플레이어의 참여한 순서 index가 2명 이하 이면 같은 팀.
                     myTeam.SetMyMebers(allPlayer[i].gameObject, index, spawnPos[index]);
                 }
                 else
                 {
+                    // 플레이어의 참여한 순서 index가 2명 이상 이면 다른 팀.
                     enemyTeam.SetMyMebers(allPlayer[i].gameObject, index, spawnPos[index]);
                 }
                 break;
-                
+
             }
         }
-    }
-
-    private void BuildTeam(GameObject gameobject, int index, Vector3 pos)
-    {
-
-        // 플레이어의 참여한 순서 index가 2명 이하 이면 같은 팀.
-        if (index <= 1) 
-        {
-            myTeam.SetMyMebers(gameobject, index, pos);
-        }
-        else // 플레이어의 참여한 순서 index가 2명 이상 이면 다른 팀.
-        {
-            enemyTeam.SetMyMebers(gameobject, index, pos);
-        }
-
     }
 
     private void CreateSpawn()
     {
         // spawnPos 리스트
         spawnPos = new List<Vector3>();
-        
+
         // 리스폰 갯수. : 4
         for (int i = 0; i < 4; i++)
         {
@@ -277,19 +255,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
-    private void Update()
-    {
-        myTeam.show();
-        //enemyTeam.show();
-    }
-
 
 
     // 새로운 인원이 방에 들어왔을 때 호출되는 함수
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-      
+
 
     }
 
@@ -297,7 +269,20 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-       
+
+    }
+
+    private void Update()
+    {
+        myTeam.CalculateScore();
+        enemyTeam.CalculateScore();
+        print(myTeam.myTeamScore);
+        print(enemyTeam.EnemyTeamScore);
+    }
+
+    private void CheckWinner()
+    {
+
     }
 
 
@@ -353,12 +338,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         while (winnerCurrentTimer > 0)
         {
             winnerCurrentTimer -= Time.deltaTime;
-            
+
             yield return null;
 
             if (winnerCurrentTimer <= 0)
             {
-                if(isGameOver == true)
+                if (isGameOver == true)
                 {
                     // 우리 팀 승리.!! 
 
@@ -368,7 +353,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     // 상태 팀 승리.!! 
                 }
 
-              
+
                 winnerCurrentTimer = 0;
                 yield break;
             }
