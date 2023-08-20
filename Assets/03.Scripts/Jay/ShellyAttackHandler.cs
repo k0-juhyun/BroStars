@@ -40,8 +40,9 @@ public class ShellyAttackHandler : MonoBehaviourPun
     public GameObject specialBulletFactory;
     public Transform firePos;
     public float startAngle = -10;
+    //public Transform rayStartPos;
 
-    //private float TrailDistance = 4f;
+    private float TrailDistance = 4f;
     public float meshResolution;
     private float launchForce = 10;
 
@@ -68,10 +69,12 @@ public class ShellyAttackHandler : MonoBehaviourPun
         //animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         moveHandler = GetComponent<MoveHandler>();
+        //rayStartPos = transform.GetChild(2).gameObject.GetComponent<Transform>();
     }
 
     public void HandleNormalAttack()
     {
+       
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
             attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
@@ -79,10 +82,15 @@ public class ShellyAttackHandler : MonoBehaviourPun
             attackLR.gameObject.SetActive(true);
 
             transform.LookAt(new Vector3(attackLookPoint.position.x, 5.1f, attackLookPoint.position.z));
-
+            //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-            Shot();
+            Ray ray = new Ray(firePos.position, firePos.forward);
+            //if (Physics.Raycast(ray, transform.forward, out hit, TrailDistance))
+            {
+                print("111");
+                Shot();
+            }
         }
         else
         {
