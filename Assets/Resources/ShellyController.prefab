@@ -5286,6 +5286,7 @@ GameObject:
   - component: {fileID: 7285216191984354746}
   - component: {fileID: 7285216191984354749}
   - component: {fileID: 7413985001454216015}
+  - component: {fileID: 8923861696253293224}
   m_Layer: 11
   m_Name: New Shelly
   m_TagString: Untagged
@@ -6095,6 +6096,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8923861696253293224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5750911240521027617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cd09ca283a91d4c85cc40692db5bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5880381543199857309
 GameObject:
   m_ObjectHideFlags: 0
@@ -9813,7 +9826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1213172861959022670
 RectTransform:
   m_ObjectHideFlags: 0

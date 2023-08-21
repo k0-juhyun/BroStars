@@ -141,7 +141,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
             bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
             //bullet.GetComponent<ShellyEffectBullet1>().attackHandler = this;
             
-            Destroy(bullet, 0.6f);
+            //Destroy(bullet, 0.6f);
         }
         
     }

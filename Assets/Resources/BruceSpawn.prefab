@@ -805,7 +805,7 @@ MonoBehaviour:
   Mesh: {fileID: 249535706069358073}
   curHp: 0
   maxHp: 4000
-  AttackDamage: 100
+  AttackDamage: 2
   SkillDamage: 0
   hpRegenValue: 0
   isDamaged: 0
