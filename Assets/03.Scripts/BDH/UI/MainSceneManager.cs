@@ -11,11 +11,12 @@ public class MainSceneManager : MonoBehaviour
 {
     public Text PlayerNickName;
     public Button btnPlay;
+
     // Start is called before the first frame update
     void Start()
     {
         // 사용자가 입력한 닉네임으로 TEXT UI 표시. 
-        PlayerNickName.text = PhotonNetwork.NickName;
+       PlayerNickName.text = PhotonNetwork.NickName;
 
         btnPlay.onClick.AddListener(OnClickConnect);
 
@@ -24,7 +25,6 @@ public class MainSceneManager : MonoBehaviour
 
     public void OnClickConnect()
     {
-        print("클릭이 일어났어요.");
         // 03_ConnectionScene으로 이동.
         PhotonNetwork.LoadLevel("03_ConnectionScene");
     }
