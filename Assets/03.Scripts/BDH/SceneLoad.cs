@@ -14,7 +14,14 @@ public class SceneLoad : MonoBehaviour
 
     public void Start()
     {
-        StartCoroutine(LoadScene()); 
+        
+        
+
+        PhotonNetwork.AutomaticallySyncScene = true;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(LoadScene()); 
+        }
         //PhotonNetwork.LoadLevel
     }
 

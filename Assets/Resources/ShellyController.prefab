@@ -917,7 +917,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &688189667099186454
 Transform:
   m_ObjectHideFlags: 0
@@ -1000,6 +1000,7 @@ MonoBehaviour:
   Messages: {fileID: 9136641548183934278}
   Canvas: {fileID: 5598488723299745111}
   UrgentImage: {fileID: 3136638260377378448}
+  RespawnImage: {fileID: 0}
   smoothTime: 0.3
   distanceZFromTarget: -110
   distanceXFromTarget: 0

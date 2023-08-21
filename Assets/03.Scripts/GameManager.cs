@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             instance = this;
         }
-        else if (instance != this)
+        else
         {
             Destroy(this.gameObject);
 
@@ -161,8 +161,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerLength = PhotonNetwork.CurrentRoom.PlayerCount;
 
         // 내가 위치해야 하는 index.
-        index = PhotonNetwork.CurrentRoom.PlayerCount - 1;
-
+        index = ProjectManager.instance.myFirstPosIndex - 1;// PhotonNetwork.CurrentRoom.PlayerCount - 1;
+        print("111111 : " + index);
         // 각 Player의 spawnManager의 리스폰 위치를 생성한다. 
         CreateSpawn();
 
@@ -175,10 +175,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     public List<PhotonView> allPlayer = new List<PhotonView>();
+
+    // 각자 플레이어 게임 매니저에서 AddPlayer메소드를 통해서 PhotonView를 추가.
     public void AddPlayer(PhotonView pv)
     {
         allPlayer.Add(pv);
 
+        // 마스터인 플레이어만 RPC 실행.
         if (PhotonNetwork.IsMasterClient)
         {
             pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
@@ -276,8 +279,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         myTeam.CalculateScore();
         enemyTeam.CalculateScore();
-        print(myTeam.myTeamScore);
-        print(enemyTeam.EnemyTeamScore);
+        //print(myTeam.myTeamScore);
+        //print(enemyTeam.EnemyTeamScore);
     }
 
     private void CheckWinner()
