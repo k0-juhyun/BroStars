@@ -18,6 +18,7 @@ public class CameraHandler : MonoBehaviourPun
 
     [Header("피격 이미지")]
     public Image UrgentImage;
+    public Image RespawnImage;
 
     private Transform target;
 
@@ -44,7 +45,7 @@ public class CameraHandler : MonoBehaviourPun
         target = targetHandler.Target.transform;
         hpHandler = target.GetComponent<HpHandler>();
 
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             Messages.gameObject.SetActive(false);
         }
@@ -56,16 +57,25 @@ public class CameraHandler : MonoBehaviourPun
             return;
 
         if (target == null)
-            return;
+        {
+            #region 죽을때 카메라
+
+            if (targetHandler.isDestroy)
+            {
+                RespawnImage.gameObject.SetActive(true);
+            }
+
+            #endregion
+        }
 
         float targetZPos = target.transform.position.z + distanceZFromTarget;
         float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
-        if(gameStart == false)
+        if (gameStart == false)
         {
             Vector3 startCamPos = new Vector3(startXPos, startYPos, currentZpos);
             transform.position = Vector3.Lerp(transform.position, startCamPos, startCamSpeed);
-            if(Vector3.Distance(transform.position,startCamPos) < 0.05f && photonView.IsMine)
+            if (Vector3.Distance(transform.position, startCamPos) < 0.05f && photonView.IsMine)
             {
                 Messages.SetActive(false);
                 Canvas.SetActive(true);
@@ -83,12 +93,13 @@ public class CameraHandler : MonoBehaviourPun
         if (hpHandler.isDamaged)
         {
             StartCoroutine(HandleCamerShake(0.5f));
-            if(hpHandler.isUrgent) 
+            if (hpHandler.isUrgent)
             {
                 StartCoroutine(HandleActivateUrgentImage(0.3f));
             }
         }
         #endregion
+
     }
 
     IEnumerator HandleCamerShake(float duration)

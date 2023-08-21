@@ -6,6 +6,7 @@ public class BruceAIHandler : MonoBehaviour
 {
     AnimatorHandler animatorHandler;
     HpHandler hpHandler;
+    DamageHandler damageHandler;
 
     public float moveSpeed = 5f;
 
@@ -17,8 +18,13 @@ public class BruceAIHandler : MonoBehaviour
     {
         animatorHandler = GetComponent<AnimatorHandler>();
         hpHandler = GetComponent<HpHandler>();
+        damageHandler = GetComponent<DamageHandler>();
 
         StartCoroutine(HandleAttack(3));
+    }
+    private void Start()
+    {
+        damageHandler.damage = hpHandler.AttackDamage;
     }
 
     private void FixedUpdate()

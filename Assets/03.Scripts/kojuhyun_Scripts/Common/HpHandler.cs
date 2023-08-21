@@ -49,6 +49,8 @@ public class HpHandler : MonoBehaviourPun
         soundHandler = GetComponentInChildren<SoundHandler>();
         targetHandler = GetComponentInParent<TargetHandler>();
         gemHandler = GetComponent<GemHandler>();
+
+        targetHandler.Target = this.gameObject;
     }
 
 
@@ -94,7 +96,7 @@ public class HpHandler : MonoBehaviourPun
     {
         hpPercentage = curHp / maxHp;
         HpBar.value = curHp / maxHp;
-        if (hpPercentage < 0.2f ? isUrgent = true : isUrgent = false)
+        if (hpPercentage < 0.3f ? isUrgent = true : isUrgent = false)
 
             if (curHp <= 0)
             {

@@ -6514,6 +6514,7 @@ MonoBehaviour:
   Messages: {fileID: 6351333746736463604}
   Canvas: {fileID: 6351333746349582619}
   UrgentImage: {fileID: 6351333746477962195}
+  RespawnImage: {fileID: 0}
   smoothTime: 0.3
   distanceZFromTarget: -110
   distanceXFromTarget: 0

@@ -47,7 +47,7 @@ public class TargetHandler : MonoBehaviourPun
 
         else if (hpHandler == null)
         {
-            Destroy(this.gameObject);
+
         }
     }
 
