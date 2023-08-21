@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+// 최대 생성할 수 있는 보석의 숫자는 29개로 제한한다.
+// 보석은 7초마다 하나씩 생성된다. 
 public class ZemManager : MonoBehaviourPun
 {
+    // 소환할 Zem의 제한 숫자 
+    private int limitZemCount = 29; 
     // 소환할 Zem 오브젝트
     public GameObject zem;
     // zem을 생성할 오브젝트 
@@ -40,7 +44,7 @@ public class ZemManager : MonoBehaviourPun
     // 마스터 클라이언트에서 젬을 생성하고 정보를 다른 클라이언트들에게 전달하는 코루틴
     IEnumerator RandomCreateCoroutine()
     {
-        while (true)
+        while (limitZemCount > 0 )
         {
             yield return new WaitForSeconds(7f);
 
@@ -61,6 +65,9 @@ public class ZemManager : MonoBehaviourPun
             // Zem을 생성한다.
             GameObject Zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
 
+            // Zem을 생성할 수 있는 최대 29개로 제한한다.  
+            limitZemCount -= 1;
+           
             // CreateRandomPosition()의 위치를 목표 지점으로 설정한다. 
             Vector3 targetPosition = CreateRandomPosition();
 
