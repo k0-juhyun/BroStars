@@ -41,7 +41,7 @@ public class HpHandler : MonoBehaviourPun
     private void Awake()
     {
         // 추가 스크립트.
-        gem = Resources.Load<GameObject>("Prefabs/Crystal_Sparkle");
+        gem = Resources.Load<GameObject>("Crystal_Sparkle");
 
         curHp = maxHp;
 
