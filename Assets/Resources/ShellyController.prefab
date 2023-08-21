@@ -1413,6 +1413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 5750911240521027617}
   DyingEffect: {fileID: 9126123211451897639}
+  NoneTarget: {fileID: 0}
   isDestroy: 0
   teamIdx: 0
 --- !u!114 &7285216192649770628
@@ -5286,6 +5287,7 @@ GameObject:
   - component: {fileID: 7285216191984354746}
   - component: {fileID: 7285216191984354749}
   - component: {fileID: 7413985001454216015}
+  - component: {fileID: 3689528888700449078}
   m_Layer: 11
   m_Name: New Shelly
   m_TagString: Untagged
@@ -6095,6 +6097,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3689528888700449078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5750911240521027617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cd09ca283a91d4c85cc40692db5bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5880381543199857309
 GameObject:
   m_ObjectHideFlags: 0
