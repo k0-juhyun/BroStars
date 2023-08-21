@@ -113,7 +113,12 @@ public class ShellyAttackHandler : MonoBehaviourPun
     void Shot()
     {
         photonView.RPC(nameof(RpcShot), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
-
+        //photonView.RPC(nameof(RpcSuperShellShot), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
+        //firePos.transform.rotation = originalRotation;
+    }
+    void SuperShellShot()
+    {
+        photonView.RPC(nameof(RpcSuperShellShot), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
         //firePos.transform.rotation = originalRotation;
     }
 
@@ -165,6 +170,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
             transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
 
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            SuperShellShot();
         }
         else
         {
@@ -174,29 +180,56 @@ public class ShellyAttackHandler : MonoBehaviourPun
     }
 
     //슈퍼쉘 수정
+    void RpcSuperShellShot(Vector3 firePos, Vector3 fireForward)
+    {
+        int numBullets = 10;
 
-    public void CallShoot()
-    {
-        StartCoroutine(SuperShell());
-    }
-    IEnumerator SuperShell()
-    {
-        //총알 나오는 위치의 각도를 조정
-        firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
-        for (int i = 0; i < 5; i++)
+        float spreadAngle = 5f;
+
+        if (audioSource.isPlaying == false)
         {
-            //print("1");
-            GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
-            //자식 하위오브젝트에서 생성
-            bullet.transform.forward = this.transform.forward;
-            //각도 설정
-            firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
-            Destroy(bullet, 0.7f);
+            audioSource.Play();
         }
-        animatorHandler.playTargetAnim("Attack");
-        //animator.Play("attack");
+        for (int i = 0; i < numBullets; i++)
+        {
+            Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
+
+            Vector3 bulletDirection = bulletRotation * fireForward;
+
+            GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
+
+            bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
+            //bullet.transform.forward = firePos.transform.forward;
+            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+            //bullet.GetComponent<ShellyEffectBullet1>().attackHandler = this;
+
+            Destroy(bullet, 0.8f);
+        }
+
     }
+
+    //public void CallShoot()
+    //{
+    //    StartCoroutine(SuperShell());
+    //}
+    //IEnumerator SuperShell()
+    //{
+    //    //총알 나오는 위치의 각도를 조정
+    //    firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
+    //    for (int i = 0; i < 5; i++)
+    //    {
+    //        //print("1");
+    //        GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position, Quaternion.identity);
+    //        yield return new WaitForSeconds(0.1f);
+    //        //자식 하위오브젝트에서 생성
+    //        bullet.transform.forward = this.transform.forward;
+    //        //각도 설정
+    //        firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
+    //        Destroy(bullet, 0.7f);
+    //    }
+    //    animatorHandler.playTargetAnim("Attack");
+    //    //animator.Play("attack");
+    //}
 
 
     //    //총알 나오는 위치의 각도를 조정

@@ -36,7 +36,7 @@ public class JayJoyStick : Joystick
             if(this.gameObject.name == "SkillJoyStick")
             {
                 anim.playTargetAnim("Attack");
-                handler.CallShoot();
+                //handler.CallShoot();
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
