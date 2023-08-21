@@ -10,13 +10,19 @@ public class ShellyEffectBullet1 : MonoBehaviour
 
     SphereCollider sphereCollider;
 
+    //private AudioSource audioSource;
+    //public AudioClip shotGunClip;
+
+
     public float AutoDestroyTime = 5f;
     //public poolableobject 
+
+    //public ShellyAttackHandler attackHandler;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        //audioSource = GetComponent<AudioSource>();
         this.gameObject.transform.SetParent(null);
         rb = GetComponent<Rigidbody>();
         startPos = transform.position;
@@ -30,6 +36,12 @@ public class ShellyEffectBullet1 : MonoBehaviour
     void Update()
     {
         rb.velocity = transform.forward * bulletSpeed;
+        
+        //shllyAttackHandler에서 Shot이 실행될때 한 번 소리가 발생한다
+        
+        //audioSource.PlayOneShot(shotGunClip);
+       
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
