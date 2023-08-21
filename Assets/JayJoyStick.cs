@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class JayJoyStick : Joystick
 {
+
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
     [SerializeField] private float moveThreshold = 1;
@@ -40,7 +41,6 @@ public class JayJoyStick : Joystick
             else if (this.gameObject.name == "AttackJoyStick")
             {
                 anim.playTargetAnim("Attack");
-                //handler.CallShot();
             }
 
         }

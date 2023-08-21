@@ -8,21 +8,40 @@ public class ShellyEffectBullet1 : MonoBehaviour
     public float bulletSpeed = 10.33f;
     Vector3 startPos;
 
+    SphereCollider sphereCollider;
+
+    //private AudioSource audioSource;
+    //public AudioClip shotGunClip;
+
+
     public float AutoDestroyTime = 5f;
     //public poolableobject 
+
+    //public ShellyAttackHandler attackHandler;
 
     // Start is called before the first frame update
     void Start()
     {
+        //audioSource = GetComponent<AudioSource>();
         this.gameObject.transform.SetParent(null);
         rb = GetComponent<Rigidbody>();
         startPos = transform.position;
+    }
+    private void OnEnable()
+    {
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
         rb.velocity = transform.forward * bulletSpeed;
+        
+        //shllyAttackHandler에서 Shot이 실행될때 한 번 소리가 발생한다
+        
+        //audioSource.PlayOneShot(shotGunClip);
+       
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -39,7 +58,7 @@ public class ShellyEffectBullet1 : MonoBehaviour
         // 충돌체의 태그가 player일때
         if (collision.gameObject.CompareTag("Player"))
         {
-
+            //DamageHandler damageHandler = GetComponent<DamageHandler>();
             //1차 사거리
             float firstDistance = 1.5f;
             //2차 사거리
@@ -53,6 +72,7 @@ public class ShellyEffectBullet1 : MonoBehaviour
             //사거리 안에 있으면 
             if (range < firstDistance)
             {
+                //damageHandler
                 //takedamage(5);
             }
 

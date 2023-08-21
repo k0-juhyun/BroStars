@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 
 public class ShellyAttackHandler : MonoBehaviourPun
 {
+    private SoundHandler soundHandler;
+    private HpHandler hpHandler;
     private MoveHandler moveHandler;
     private AnimatorHandler animatorHandler;
     //private Animator animator;
@@ -51,6 +54,10 @@ public class ShellyAttackHandler : MonoBehaviourPun
     public LayerMask groundLayer;
 
     RaycastHit hit;
+
+    private AudioSource audioSource;
+    public AudioClip shotGunClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +69,8 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        hpHandler = GetComponent<HpHandler>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
@@ -69,7 +78,6 @@ public class ShellyAttackHandler : MonoBehaviourPun
         //animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         moveHandler = GetComponent<MoveHandler>();
-        //rayStartPos = transform.GetChild(2).gameObject.GetComponent<Transform>();
     }
 
     public void HandleNormalAttack()
@@ -86,10 +94,14 @@ public class ShellyAttackHandler : MonoBehaviourPun
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
             Ray ray = new Ray(firePos.position, firePos.forward);
+
+            
+           
             //if (Physics.Raycast(ray, transform.forward, out hit, TrailDistance))
             {
-                print("111");
+               // print("111");
                 Shot();
+
             }
         }
         else
@@ -110,8 +122,12 @@ public class ShellyAttackHandler : MonoBehaviourPun
     {
         int numBullets = 5;
 
-        float spreadAngle = 20f;
+        float spreadAngle = 5f;
 
+        if(audioSource.isPlaying == false)
+        {
+           audioSource.Play();
+        }
         for (int i = 0; i < numBullets; i++)
         {
             Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
@@ -122,9 +138,12 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
             bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
             //bullet.transform.forward = firePos.transform.forward;
-
-            Destroy(bullet, 1f);
+            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+            //bullet.GetComponent<ShellyEffectBullet1>().attackHandler = this;
+            
+            Destroy(bullet, 0.6f);
         }
+        
     }
 
 
@@ -154,7 +173,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
     }
 
-
+    //슈퍼쉘 수정
 
     public void CallShoot()
     {
@@ -166,15 +185,16 @@ public class ShellyAttackHandler : MonoBehaviourPun
         firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
         for (int i = 0; i < 5; i++)
         {
-            print("1");
+            //print("1");
             GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
             //자식 하위오브젝트에서 생성
             bullet.transform.forward = this.transform.forward;
             //각도 설정
             firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
-            Destroy(bullet, 2f);
+            Destroy(bullet, 0.7f);
         }
+        animatorHandler.playTargetAnim("Attack");
         //animator.Play("attack");
     }
 
