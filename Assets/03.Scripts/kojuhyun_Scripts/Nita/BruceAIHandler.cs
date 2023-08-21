@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BruceAIHandler : MonoBehaviour
+public class BruceAIHandler : MonoBehaviourPun
 {
     AnimatorHandler animatorHandler;
     HpHandler hpHandler;
@@ -35,11 +36,7 @@ public class BruceAIHandler : MonoBehaviour
 
     private void Update()
     {
-        hpHandler.UpdateHp();
-        if (hpHandler.curHp <= 0)
-        {
-            Destroy(this);
-        }
+        photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
     }
 
     private void FindClosestPlayer()

@@ -57,6 +57,7 @@ public class JHJoyStick : Joystick
         {
             if (this.gameObject.name == "SkillJoyStick")
             {
+                print("RPCTest");
                 photonView.RPC("LaunchBearRPC", RpcTarget.All, Horizontal, Vertical);
             }
             else if (this.gameObject.name == "AttackJoyStick")

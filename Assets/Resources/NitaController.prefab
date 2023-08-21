@@ -5110,7 +5110,6 @@ GameObject:
   - component: {fileID: 5965694774813238415}
   - component: {fileID: 632263404739788709}
   - component: {fileID: 4940804774144204735}
-  - component: {fileID: 7873795529093491852}
   - component: {fileID: 5160995158211322160}
   m_Layer: 0
   m_Name: NitaController
@@ -5194,27 +5193,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &7873795529093491852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5965694774813238412}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c1322ec69b0d64fb7e2b720f6bba7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackJoystick: {fileID: 5965694773925602587}
-  skillJoystick: {fileID: 5965694774359330186}
-  attackLR: {fileID: 5965694775791610165}
-  specialLR: {fileID: 5965694773935545938}
-  lineRendererStartTransform: {fileID: 5965694774595165713}
-  normalAttackTransform: {fileID: 5965694775609818905}
-  SpawnPos: {fileID: 5965694775379612858}
-  Bruce: {fileID: 3193361373983426863, guid: ef8a4c73ce4400748bb33d2bb8a3809a, type: 3}
-  nitaNormal: {fileID: 0}
 --- !u!114 &5160995158211322160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7673,6 +7651,7 @@ GameObject:
   - component: {fileID: 6956608980924326381}
   - component: {fileID: 1491451498889233031}
   - component: {fileID: 1480917880478517368}
+  - component: {fileID: 8116225325819651724}
   m_Layer: 11
   m_Name: Nita
   m_TagString: Player
@@ -7921,6 +7900,18 @@ MonoBehaviour:
   Bruce: {fileID: 3193361373983426863, guid: ef8a4c73ce4400748bb33d2bb8a3809a, type: 3}
   nitaNormal: {fileID: 1677970727425304249, guid: 8aa87fc323fd0234c9f0ab5eb4fad8a7,
     type: 3}
+--- !u!114 &8116225325819651724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776525576294437264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cd09ca283a91d4c85cc40692db5bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6861823864152321088
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -1360263931201409467}
   - component: {fileID: -4239136984625278748}
   - component: {fileID: -6875738148215290391}
+  - component: {fileID: 2158001848158143813}
   m_Layer: 0
   m_Name: NitaNormalAttack
   m_TagString: Untagged
@@ -4911,6 +4912,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a5242038f061c4e9a1560416f7bae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+--- !u!135 &2158001848158143813
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677970727425304249}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1677970727425323339
 GameObject:
   m_ObjectHideFlags: 0

@@ -122,9 +122,6 @@ public class NitaAttackHandler : MonoBehaviourPun
     [PunRPC]
     public void LaunchBear(float h, float v)
     {
-        Vector3 joystickDirection = new Vector3(h, 0.5f, v);
-        Vector3 startVelocity = joystickDirection * launchForce;
-
         //if(내가 myTeam 이라면)
         //{
         //    bruceSpawn.tag = myTeamAttack;
@@ -133,8 +130,15 @@ public class NitaAttackHandler : MonoBehaviourPun
         //{
         //    bruceSpawn.tage = awayTeamAttack;
         //}
-        GameObject bruceSpawn = Instantiate(Bruce, SpawnPos.transform.position, Quaternion.identity);
-        bruceSpawn.GetComponent<Rigidbody>().velocity = startVelocity;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            Vector3 joystickDirection = new Vector3(h, 0.5f, v);
+            Vector3 startVelocity = joystickDirection * launchForce;
+
+            GameObject bruceSpawn = PhotonNetwork.Instantiate("BruceSpawn", SpawnPos.transform.position, Quaternion.identity);
+            print("bearTest");
+            bruceSpawn.GetComponent<Rigidbody>().velocity = startVelocity;
+        }
     }
 
     [PunRPC]

@@ -32,9 +32,8 @@ public class NitaManager : MonoBehaviourPun
         nitaAttackHandler.HandleNormalAttack();
         nitaAttackHandler.HandleUltimateAttack();
 
-        hpHandler.UpdateHp();
-        hpHandler.RegenerateHpInBush();
-
+        photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+        photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
     }
 
     private void Update()

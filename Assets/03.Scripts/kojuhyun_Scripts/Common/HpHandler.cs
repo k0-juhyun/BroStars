@@ -50,7 +50,10 @@ public class HpHandler : MonoBehaviourPun
         targetHandler = GetComponentInParent<TargetHandler>();
         gemHandler = GetComponent<GemHandler>();
 
-        targetHandler.Target = this.gameObject;
+        if (this.gameObject.name != "Bruce")
+        {
+            targetHandler.Target = this.gameObject;
+        }
     }
 
 
@@ -59,10 +62,13 @@ public class HpHandler : MonoBehaviourPun
     {
         if (damage < 0)
         {
-            isDamaged = true;
-            if (isDamaged)
+            if (this.gameObject.name != "Bruce")
             {
-                StartCoroutine(HandlePlayerMat());
+                isDamaged = true;
+                if (isDamaged)
+                {
+                    StartCoroutine(HandlePlayerMat());
+                }
             }
         }
 
@@ -127,6 +133,13 @@ public class HpHandler : MonoBehaviourPun
                     Destroy(this.gameObject);
 
                 }
+
+                #region Bruce
+                if (this.gameObject.name == "Bruce")
+                {
+                    Destroy(this.gameObject);
+                }
+                #endregion
             }
     }
 
