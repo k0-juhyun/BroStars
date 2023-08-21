@@ -3021,6 +3021,7 @@ GameObject:
   - component: {fileID: 5965694774158482807}
   - component: {fileID: 5965694774158482801}
   - component: {fileID: 5965694774158482806}
+  - component: {fileID: 2494549697025445308}
   m_Layer: 11
   m_Name: NickName
   m_TagString: Untagged
@@ -3090,6 +3091,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Nita
+--- !u!114 &2494549697025445308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5965694774158482804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b1877b48fb65e40838efead95b693c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5965694774186942119
 GameObject:
   m_ObjectHideFlags: 0
@@ -7765,7 +7778,7 @@ MonoBehaviour:
   Mesh: {fileID: 5965694774361623629}
   curHp: 0
   maxHp: 3800
-  AttackDamage: 740
+  AttackDamage: 100
   SkillDamage: 400
   hpRegenValue: 1
   isDamaged: 0

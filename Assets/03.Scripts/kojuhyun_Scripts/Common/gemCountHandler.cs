@@ -10,7 +10,7 @@ public class gemCountHandler : MonoBehaviour
     GemHandler gemHandler;
     void Start()
     {
-        gemHandler = FindObjectOfType<GemHandler>();
+        gemHandler = GetComponentInChildren<GemHandler>();
         tmp = this.gameObject.GetComponent<TMP_Text>();
     }
 

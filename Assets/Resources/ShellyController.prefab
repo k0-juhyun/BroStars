@@ -4340,6 +4340,7 @@ GameObject:
   - component: {fileID: 2335388806094427039}
   - component: {fileID: 673525031625522856}
   - component: {fileID: 4476630524671872734}
+  - component: {fileID: 7062614260717980650}
   m_Layer: 11
   m_Name: NickName
   m_TagString: Untagged
@@ -4409,6 +4410,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Shelly
+--- !u!114 &7062614260717980650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4772288379027041644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b1877b48fb65e40838efead95b693c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4782246491606536277
 GameObject:
   m_ObjectHideFlags: 0

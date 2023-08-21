@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.UI;
 
-public class ProjectManager : MonoBehaviour
+public class ProjectManager : MonoBehaviourPun
 {
     public static ProjectManager instance;
 
+    public InputField inputNickName;
     public int myFirstPosIndex;
+
+    public Button btnConnect;
+
+    public string myNickName;
 
     private void Awake()
     {
@@ -20,15 +27,50 @@ public class ProjectManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    // Start is called before the first frame update
     void Start()
     {
-        
+        // 버튼에 OnCick 클릭 리스너 함수 사용 -> OnClickConnect
+        btnConnect.onClick.AddListener(OnClickConnect);
+
+        // inputNickName의 내용이 변경될 때 호출되는 함수 등록
+        inputNickName.onValueChanged.AddListener(
+            (string s) =>
+            {
+                btnConnect.interactable = s.Length > 0;
+
+                // 팝업으로 닉네임을 입력해주세요 . 알림.! 
+            }
+            );
+
+        // inputNickName에서 엔터를 쳤을 때 호출되는 함수 등록
+        inputNickName.onSubmit.AddListener(
+            (string s) =>
+            {
+
+                // 버튼이 활성화 되어있다면
+                if (btnConnect.interactable)
+                {
+                    // OnClickConnect 호출한다. 
+                    OnClickConnect();
+                }
+
+            }
+            );
+
+        // interactable 버튼을 비활성화
+        btnConnect.interactable = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnClickConnect()
     {
-        
+
+        // 닉네임 설정
+        PhotonNetwork.NickName = inputNickName.text;
+        myNickName = inputNickName.text;
+
+        // MainScene으로 이동. 
+        PhotonNetwork.LoadLevel("02_MainScene");
+
+
     }
 }

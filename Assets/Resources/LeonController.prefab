@@ -1712,6 +1712,7 @@ GameObject:
   - component: {fileID: 2724276264115463617}
   - component: {fileID: 2724276264115463647}
   - component: {fileID: 2724276264115463646}
+  - component: {fileID: 6307303993244470260}
   m_Layer: 11
   m_Name: NickName
   m_TagString: Untagged
@@ -1781,6 +1782,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Leon
+--- !u!114 &6307303993244470260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724276264115463616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b1877b48fb65e40838efead95b693c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2724276264121736283
 GameObject:
   m_ObjectHideFlags: 0
@@ -7048,7 +7061,7 @@ MonoBehaviour:
   Mesh: {fileID: 2724276264729541387}
   curHp: 0
   maxHp: 3200
-  AttackDamage: 460
+  AttackDamage: 100
   SkillDamage: 0
   hpRegenValue: 0
   isDamaged: 0

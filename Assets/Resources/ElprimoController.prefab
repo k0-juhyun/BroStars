@@ -2058,7 +2058,7 @@ MonoBehaviour:
   Mesh: {fileID: 6351333745983426831}
   curHp: 0
   maxHp: 5800
-  AttackDamage: 360
+  AttackDamage: 100
   SkillDamage: 500
   hpRegenValue: 1
   isDamaged: 0
@@ -7317,6 +7317,7 @@ GameObject:
   - component: {fileID: 6351333747296472348}
   - component: {fileID: 6351333747296472346}
   - component: {fileID: 6351333747296472347}
+  - component: {fileID: 306708315728386178}
   m_Layer: 11
   m_Name: NickName
   m_TagString: Untagged
@@ -7386,6 +7387,18 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: El Primo
+--- !u!114 &306708315728386178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6351333747296472349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b1877b48fb65e40838efead95b693c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6351333747309143792
 GameObject:
   m_ObjectHideFlags: 0
