@@ -109,8 +109,6 @@ public class HpHandler : MonoBehaviourPun
                 isDie = true;
                 if (targetHandler.isDestroy)
                 {
-
-
                     // 보유하고 있는 잼을 뿌린다. 
                     // 플레이어가 죽은 위치를 기준으로 잼을 떨어지는 위치로 설정한 후 랜덤한 위치로 생성한다.
                     int length = gemHandler.gem;

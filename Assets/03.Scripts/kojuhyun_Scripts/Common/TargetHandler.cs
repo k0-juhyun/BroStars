@@ -9,20 +9,28 @@ public class TargetHandler : MonoBehaviourPun
 
     public GameObject Target;
     public GameObject DyingEffect;
+    public GameObject NoneTarget;
+
+    private string playerNickName;
 
     public bool isDestroy;
+
+    private Coroutine respawnCoroutine;
 
     HpHandler hpHandler;
 
     public int teamIdx;
     private void Awake()
     {
+        if (photonView.IsMine == false)
+            return;
         mainCamera = transform.GetChild(0).GetComponent<Camera>();
+        playerNickName = Target.gameObject.name;
     }
 
     private void Start()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             mainCamera.gameObject.SetActive(true);
         }
@@ -34,20 +42,28 @@ public class TargetHandler : MonoBehaviourPun
 
     private void Update()
     {
-        if (hpHandler != null)
+        if (photonView.IsMine)
         {
-            if (hpHandler.isDie)
+            if (hpHandler != null)
             {
-                DyingEffect.transform.position = hpHandler.transform.position;
-                DyingEffect.SetActive(true);
-                isDestroy = true;
-                hpHandler.isDie = false;
+                if (hpHandler.isDie)
+                {
+                    DyingEffect.transform.position = hpHandler.transform.position;
+                    NoneTarget.transform.position = hpHandler.transform.position;
+                    NoneTarget.SetActive(true);
+                    DyingEffect.SetActive(true);
+                    Target = NoneTarget;
+                    mainCamera.transform.SetParent(null);
+                    isDestroy = true;
+                    hpHandler.isDie = false;
+                }
             }
-        }
 
-        else if (hpHandler == null)
-        {
-
+            if (Target == NoneTarget)
+            {
+                print("복제");
+                StartCoroutine(RespawnPlayer(5.0f));
+            }
         }
     }
 
@@ -60,5 +76,19 @@ public class TargetHandler : MonoBehaviourPun
             GameManager.instance.myTeamIdx = index;
         }
         GameManager.instance.SetTeamInfo();
+    }
+
+    IEnumerator RespawnPlayer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Destroy(mainCamera.gameObject);
+
+        PhotonNetwork.Instantiate(GameManager.instance.callBrawlerName[GameManager.instance.index],
+            GameManager.instance.spawnPos[GameManager.instance.index], Quaternion.identity);
+
+        print("여기2");
+        respawnCoroutine = null;
+        PhotonNetwork.Destroy(this.gameObject);
     }
 }

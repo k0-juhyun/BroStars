@@ -68,38 +68,40 @@ public class CameraHandler : MonoBehaviourPun
             #endregion
         }
 
-        float targetZPos = target.transform.position.z + distanceZFromTarget;
-        float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
-
-        if (gameStart == false)
-        {
-            Vector3 startCamPos = new Vector3(startXPos, startYPos, currentZpos);
-            transform.position = Vector3.Lerp(transform.position, startCamPos, startCamSpeed);
-            if (Vector3.Distance(transform.position, startCamPos) < 0.05f && photonView.IsMine)
-            {
-                Messages.SetActive(false);
-                Canvas.SetActive(true);
-
-                gameStart = true;
-            }
-        }
-
         else
         {
-            this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
-        }
+            float targetZPos = target.transform.position.z + distanceZFromTarget;
+            float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
-        #region 피격시 카메라 쉐이크
-        if (hpHandler.isDamaged)
-        {
-            StartCoroutine(HandleCamerShake(0.5f));
-            if (hpHandler.isUrgent)
+            if (gameStart == false)
             {
-                StartCoroutine(HandleActivateUrgentImage(0.3f));
-            }
-        }
-        #endregion
+                Vector3 startCamPos = new Vector3(startXPos, startYPos, currentZpos);
+                transform.position = Vector3.Lerp(transform.position, startCamPos, startCamSpeed);
+                if (Vector3.Distance(transform.position, startCamPos) < 0.05f && photonView.IsMine)
+                {
+                    Messages.SetActive(false);
+                    Canvas.SetActive(true);
 
+                    gameStart = true;
+                }
+            }
+
+            else
+            {
+                this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
+            }
+
+            #region 피격시 카메라 쉐이크
+            if (hpHandler.isDamaged)
+            {
+                StartCoroutine(HandleCamerShake(0.5f));
+                if (hpHandler.isUrgent && UrgentImage != null)
+                {
+                    StartCoroutine(HandleActivateUrgentImage(0.3f));
+                }
+            }
+            #endregion
+        }
     }
 
     IEnumerator HandleCamerShake(float duration)
@@ -121,8 +123,11 @@ public class CameraHandler : MonoBehaviourPun
 
     IEnumerator HandleActivateUrgentImage(float duration)
     {
-        UrgentImage.gameObject.SetActive(true);
-        yield return new WaitForSeconds(duration);
-        UrgentImage.gameObject.SetActive(false);
+        if (UrgentImage != null)
+        {
+            UrgentImage.gameObject.SetActive(true);
+            yield return new WaitForSeconds(duration);
+            UrgentImage.gameObject.SetActive(false);
+        }
     }
 }

@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject spawnManager;
 
     // 스폰 Pos
-    private List<Vector3> spawnPos;
+    public List<Vector3> spawnPos;
 
     GameObject player;
 
@@ -37,10 +37,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     int PlayerLength;
 
     // 나의 플레이어의 인덱스
-    int index;
+    public int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "LeonController", "ElprimoController", "NitaController", "ShellyController" };
+    public static List<string> BrawlerName = new List<string>() { "LeonController", "ElprimoController", "NitaController", "ShellyController" };
+
+    public List<string> callBrawlerName = BrawlerName;
 
     // 팀 클래스 변수
     public MyTeam myTeam;
@@ -76,7 +78,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos)
         {
-            myMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
+            myMembers.Add(new Player(gameobject, BrawlerName[index], respawnPos));
         }
 
         public void CalculateScore()
@@ -106,7 +108,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos)
         {
-            enemyMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
+            enemyMembers.Add(new Player(gameobject, BrawlerName[index], respawnPos));
         }
         public void CalculateScore()
         {
@@ -167,7 +169,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         CreateSpawn();
 
         // 나의 Player 생성
-        player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
+        player = PhotonNetwork.Instantiate(BrawlerName[index], spawnPos[index], Quaternion.identity);
 
         // 마우스 포인터를 비 활성화.
         Cursor.visible = false;
