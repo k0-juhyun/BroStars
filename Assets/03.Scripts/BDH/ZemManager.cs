@@ -28,6 +28,7 @@ public class ZemManager : MonoBehaviourPun
         zemEffect = this.gameObject.GetComponentInChildren<ParticleSystem>();
         rangeCollider = rangeObject.GetComponent<BoxCollider>();
 
+        // 마스터 클라이언트일 때만 잼 생성.
         if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(RandomCreateCoroutine());
@@ -63,7 +64,8 @@ public class ZemManager : MonoBehaviourPun
             SoundManager.instance.PlayZemBGM();
 
             // Zem을 생성한다.
-            GameObject Zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
+            //GameObject Zems = Instantiate(zem, zemsRandomPosition, Quaternion.identity);
+            GameObject Zems = PhotonNetwork.Instantiate("Crystal_Sparkle", zemsRandomPosition, Quaternion.identity);
 
             // Zem을 생성할 수 있는 최대 29개로 제한한다.  
             limitZemCount -= 1;

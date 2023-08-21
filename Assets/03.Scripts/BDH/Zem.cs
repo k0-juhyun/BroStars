@@ -58,11 +58,12 @@ public class Zem : MonoBehaviourPun
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(AbsorptedToCollider(collision));
-            collision.gameObject.GetComponent<GemHandler>().gem += 1;
-            Destroy(gameObject);
-
-            // Àë °¹¼ö UI ¾÷µ¥ÀÌÆ® 
-            //zemScore.text = collision.gameObject.GetComponent<GemHandler>().gem.ToString();
+            if (photonView.IsMine)
+            {
+                collision.gameObject.GetComponent<GemHandler>().gem += 1;
+                Destroy(gameObject);
+            }
+            
         }
     }
   
