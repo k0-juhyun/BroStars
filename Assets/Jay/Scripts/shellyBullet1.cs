@@ -24,7 +24,7 @@ public class shellyBullet1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //현재거리 = 총구와 총알 사이 거리
         float currentDistnace = Vector3.Distance(firePos, transform.position);
 
         //앞으로 이동하고싶다
@@ -45,7 +45,7 @@ public class shellyBullet1 : MonoBehaviour
         {
             otherRB.AddForce(transform.forward * otherRB.mass * 3, ForceMode.Impulse);
         }
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
         
     }
 }

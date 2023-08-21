@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Unity.VisualScripting;
-
+using UnityEngine.UIElements;
 
 public class ShellyAttackHandler : MonoBehaviourPun
 {
-    private SoundHandler soundHandler;
     private HpHandler hpHandler;
     private MoveHandler moveHandler;
     private AnimatorHandler animatorHandler;
@@ -75,28 +74,29 @@ public class ShellyAttackHandler : MonoBehaviourPun
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
-        //animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         moveHandler = GetComponent<MoveHandler>();
     }
 
+    //기본공격
     public void HandleNormalAttack()
     {
-       
+       //조이스틱이 절대값내로 움직인다면
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
+            //attackLookPoint의 위치 설정 (플레이어의 y값 위)
             attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
 
+            //attack라인랜더러의 오브젝트  true
             attackLR.gameObject.SetActive(true);
-
+            //attackLookPoint를 바라본다
             transform.LookAt(new Vector3(attackLookPoint.position.x, 5.1f, attackLookPoint.position.z));
             //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            //회전은 y값만 움직인다
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-
+            //
             Ray ray = new Ray(firePos.position, firePos.forward);
 
-            
-           
             //if (Physics.Raycast(ray, transform.forward, out hit, TrailDistance))
             {
                // print("111");
@@ -120,16 +120,23 @@ public class ShellyAttackHandler : MonoBehaviourPun
     [PunRPC]
     void RpcShot(Vector3 firePos, Vector3 fireForward)
     {
+        // 총알의 갯수
         int numBullets = 5;
 
-        float spreadAngle = 5f;
+        //회전각도
+        float spreadAngle = 20f;
 
+        //오디오소스 플레이가 안된다면
         if(audioSource.isPlaying == false)
         {
+            //오디오소스를 튼다
            audioSource.Play();
         }
+
+        //부채꼴 모양
         for (int i = 0; i < numBullets; i++)
         {
+            //총알회전은 
             Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
 
             Vector3 bulletDirection = bulletRotation * fireForward;
@@ -141,7 +148,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
             bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
             //bullet.GetComponent<ShellyEffectBullet1>().attackHandler = this;
             
-            //Destroy(bullet, 0.6f);
+            Destroy(bullet, 0.6f);
         }
         
     }
@@ -274,4 +281,36 @@ public class ShellyAttackHandler : MonoBehaviourPun
     //    //뒤로 0.5f만큼 흔들리고싶다
     //    transform.position = transform.position.z * backSpeed * Time.deltaTime;
     //}
+
+    #region AutoAim
+    ////오토에임 by 주현
+    //List<GameObject> list = new List<GameObject>();
+    //private float[] disatanceFromBrawlers;
+
+    //private string Tag;
+
+    //Awake()
+    //{
+    //    for (int i = 0; i < go.Length; i++)
+    //    {
+    //        list.Add(GameObject.FindWithTag("Player"));
+    //    }
+    //}
+    //private void FixedUpdate()
+    //{
+    //    for (int i = 0; i < list.Count; i++)
+    //    {
+    //        float testdis = Vector3.Distance(transform.position, list[i].transform.position)
+    //        testdis = disatanceFromBrawlers[i];
+    //        testdis = list[i].transform.position;
+    //    }
+    //    for(int i =0; i< disatanceFromBrawlers.Length; i++)
+    //    {
+    //        //최솟값 크기 비교
+    //    }
+    //    //min
+
+
+    //}
+    #endregion
 }

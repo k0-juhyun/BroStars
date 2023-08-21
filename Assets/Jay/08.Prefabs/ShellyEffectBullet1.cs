@@ -50,7 +50,7 @@ public class ShellyEffectBullet1 : MonoBehaviour
         if (otherRB != null)
         {
             otherRB.AddForce(transform.forward * otherRB.mass * 10, ForceMode.Impulse);
-            Destroy(gameObject, 0.6f);
+            
         }
 
 
@@ -86,6 +86,9 @@ public class ShellyEffectBullet1 : MonoBehaviour
             {
                 //takedamage(1);
             }
+            //ÃÑ¾Ë ÆÄ±«
+            Destroy(this.gameObject);
+
         }
 
     }
