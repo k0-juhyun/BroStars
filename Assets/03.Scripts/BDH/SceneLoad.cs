@@ -58,7 +58,7 @@ public class SceneLoad : MonoBehaviour
                 loadText.text = "100";
             }
 
-            if(Input.GetKeyDown(KeyCode.Space) && progressbar.value >= 1f && operation.progress >= 0.9f)
+            if(Input.GetMouseButtonDown(0) && progressbar.value >= 1f && operation.progress >= 0.9f)
             {
                 operation.allowSceneActivation = true; 
             }
