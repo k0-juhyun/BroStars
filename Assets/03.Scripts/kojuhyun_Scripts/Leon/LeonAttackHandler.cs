@@ -118,24 +118,28 @@ public class LeonAttackHandler : MonoBehaviourPun
         shuriken1.SetActive(true);
         shuriken1.transform.forward = this.transform.forward;
         shuriken1.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        shuriken1.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
         yield return new WaitForSeconds(0.03f);
 
         GameObject shuriken2 = Instantiate(Shuriken, RightHand[1].transform.position, RightHand[1].transform.rotation);
         shuriken2.SetActive(true);
         shuriken2.transform.forward = this.transform.forward;
         shuriken2.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        shuriken2.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
         yield return new WaitForSeconds(0.03f);
 
         GameObject shuriken3 = Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
         shuriken3.SetActive(true);
         shuriken3.transform.forward = this.transform.forward;
         shuriken3.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        shuriken3.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
         yield return new WaitForSeconds(0.03f);
 
         GameObject shuriken4 = Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
         shuriken4.SetActive(true);
         shuriken4.transform.forward = this.transform.forward;
         shuriken4.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        shuriken4.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
     }
 
 

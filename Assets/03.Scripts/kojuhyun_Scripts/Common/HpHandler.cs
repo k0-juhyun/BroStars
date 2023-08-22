@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Unity.VisualScripting;
 
 public class HpHandler : MonoBehaviourPun
 {
@@ -10,6 +11,7 @@ public class HpHandler : MonoBehaviourPun
     SoundHandler soundHandler;
     TargetHandler targetHandler;
     GemHandler gemHandler;
+    LogHandler logHandler;
 
     [Header("HP Bar")]
     public Slider HpBar;
@@ -49,6 +51,7 @@ public class HpHandler : MonoBehaviourPun
         soundHandler = GetComponentInChildren<SoundHandler>();
         targetHandler = GetComponentInParent<TargetHandler>();
         gemHandler = GetComponent<GemHandler>();
+        logHandler = FindObjectOfType<LogHandler>();
 
         if (this.gameObject.name != "Bruce")
         {
@@ -102,43 +105,49 @@ public class HpHandler : MonoBehaviourPun
     {
         hpPercentage = curHp / maxHp;
         HpBar.value = curHp / maxHp;
-        if (hpPercentage < 0.3f ? isUrgent = true : isUrgent = false)
+        if (hpPercentage < 0.3f)
+        {
+            isUrgent = true;
+        }
+        else
+        {
+            isUrgent = false;
+        }
 
-            if (curHp <= 0)
+        if (curHp <= 0)
+        {
+            isDie = true;
+            if (targetHandler.isDestroy)
             {
-                isDie = true;
-                if (targetHandler.isDestroy)
-                {
-                    // 보유하고 있는 잼을 뿌린다. 
-                    // 플레이어가 죽은 위치를 기준으로 잼을 떨어지는 위치로 설정한 후 랜덤한 위치로 생성한다.
-                    int length = gemHandler.gem;
+                int length = gemHandler.gem;
 
-                    // 잼의 갯수만큼 반복문을 돌면서 랜덤한 위치에 생성한 후 
-                    for (int i = 0; i < length; i++)
+                for (int i = 0; i < length; i++)
+                {
+                    Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
+                    photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                }
+
+                gemHandler.gem = 0;
+
+                // 피격한 오브젝트의 ViewID를 찾아서 출력
+                int hittingObjectViewID = PhotonNetwork.LocalPlayer.ActorNumber; // 임시로 자신의 ViewID를 사용
+                foreach (var log in logHandler.killLogs)
+                {
+                    if (log.victimViewID == hittingObjectViewID)
                     {
-                        Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
-
-                        //// Zem을 생성한다.
-                        //Instantiate(gem, gemsRandomPosition, Quaternion.identity);
-
-                        photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                        GameObject hittingObject = PhotonView.Find(log.killerViewID).gameObject;
+                        Debug.Log(this.gameObject.name + "를 죽인 브롤러: " + hittingObject.name);
+                        break; // 이미 피격한 오브젝트를 찾았으므로 반복 종료
                     }
-
-                    // 보유한 브롤의 잼의 숫자를 0으로 초기화. 
-                    gemHandler.gem = 0;
-
-                    // 해당 브롤러를 파괴한다. 
-                    Destroy(this.gameObject);
-
                 }
-
-                #region Bruce
-                if (this.gameObject.name == "Bruce")
-                {
-                    Destroy(this.gameObject);
-                }
-                #endregion
+                Destroy(this.gameObject);
             }
+
+            if (this.gameObject.name == "Bruce")
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     [PunRPC]

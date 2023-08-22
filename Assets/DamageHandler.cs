@@ -5,4 +5,5 @@ using UnityEngine;
 public class DamageHandler : MonoBehaviour
 {
     public float damage;
+    public int viewID;
 }

@@ -9,7 +9,7 @@ public class BillboardHandler : MonoBehaviour
     private void Start()
     {
         //mainCamera = Camera.main.transform;
-        StartCoroutine(FindMainCamera());
+        //StartCoroutine(FindMainCamera());
     }
 
     private void LateUpdate()
@@ -20,13 +20,17 @@ public class BillboardHandler : MonoBehaviour
             transform.LookAt(transform.position + mainCamera.rotation * Vector3.forward,
                 mainCamera.rotation * Vector3.up);
         }
+        else
+        {
+            mainCamera = Camera.main.transform;
+            return;
+        }
     }
 
     IEnumerator FindMainCamera()
     {
-        while(mainCamera ==null)
+        while(mainCamera == null)
         {
-            mainCamera = Camera.main.transform;
             yield return null;
         }
     }

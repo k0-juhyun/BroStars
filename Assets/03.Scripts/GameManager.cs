@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> BrawlerName = new List<string>() { "LeonController", "ElprimoController", "NitaController", "ShellyController" };
+    public static List<string> BrawlerName = new List<string>() { "ElprimoController", "LeonController", "ReverseNitaController", "ReverseElprimoController" };
 
     public List<string> callBrawlerName = BrawlerName;
 

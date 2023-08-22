@@ -169,6 +169,7 @@ public class NitaAttackHandler : MonoBehaviourPun
 
         GameObject nitaNormalAttack = Instantiate(nitaNormal, pos, rot);
         nitaNormalAttack.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        nitaNormalAttack.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
         //if(내가 myTeam 이라면)
         //{
         //    nitaNormal.tag = myTeamAttack;

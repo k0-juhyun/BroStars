@@ -42414,6 +42414,7 @@ GameObject:
   - component: {fileID: 1672718956}
   - component: {fileID: 1672718958}
   - component: {fileID: 1672718959}
+  - component: {fileID: 1672718960}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -42499,6 +42500,19 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1672718960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672718955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70236557ae884a44dbd24fc949da6c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killLogs: []
 --- !u!1001 &1676392262
 PrefabInstance:
   m_ObjectHideFlags: 0

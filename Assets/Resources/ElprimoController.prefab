@@ -2107,6 +2107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7b901e34f5f264d92da6285e355a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logHandler: {fileID: 0}
   attackJoystick: {fileID: 6351333747425604061}
   skillJoystick: {fileID: 6351333746798339594}
   attackLR: {fileID: 6351333745752325353}
@@ -2118,6 +2119,9 @@ MonoBehaviour:
   elprimoFists:
   - {fileID: 6351333746110108981}
   - {fileID: 6351333745882308323}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isReverse: 0
 --- !u!114 &670734862999506758
 MonoBehaviour:
@@ -6057,10 +6061,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948ff9e017e2ff4ba43b0b699747eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestroy: 0
   Target: {fileID: 6117315141165109133}
   DyingEffect: {fileID: 6351333746086790191}
   NoneTarget: {fileID: 1669037139193917744}
-  isDestroy: 0
   teamIdx: 0
 --- !u!114 &1961495485546599590
 MonoBehaviour:
@@ -6113,6 +6117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7b901e34f5f264d92da6285e355a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logHandler: {fileID: 0}
   attackJoystick: {fileID: 6351333747425604061}
   skillJoystick: {fileID: 6351333746798339594}
   attackLR: {fileID: 6351333745752325353}
@@ -6124,6 +6129,9 @@ MonoBehaviour:
   elprimoFists:
   - {fileID: 6351333746110108981}
   - {fileID: 6351333745882308323}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2147483648
   isReverse: 0
 --- !u!1 &6351333747071469960
 GameObject:
@@ -6567,7 +6575,6 @@ MonoBehaviour:
   RespawnImage: {fileID: 8374964670765955113}
   smoothTime: 0.3
   distanceZFromTarget: -110
-  distanceXFromTarget: 0
   shakeMagnitude: 0.1
   startCamSpeed: 0.1
   gameStart: 0

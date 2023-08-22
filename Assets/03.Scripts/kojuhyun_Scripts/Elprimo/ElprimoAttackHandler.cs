@@ -35,6 +35,8 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     private float TrailDistance = 1.3f;
     private float launchForce = 10;
 
+    public LayerMask groundLayer;
+
     [SerializeField]
     private bool isReverse;
 
@@ -52,7 +54,6 @@ public class ElprimoAttackHandler : MonoBehaviourPun
         targetHandler = GetComponentInParent<TargetHandler>();
         rb = GetComponent<Rigidbody>();
     }
-
 
     #region 공격
 
@@ -181,6 +182,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
         Vector3 startVelocity = joystickDirection * launchForce;   
 
         GetComponent<Rigidbody>().velocity = startVelocity;
+        StartCoroutine(HandleLanding());
     }
 
     [PunRPC]
@@ -195,7 +197,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        int viewId = photonView.ViewID;
+        _fistEffect.GetComponent<DamageHandler>().viewID = _fistEffect.GetComponent<PhotonView>().ViewID;
         //if(내가 myTeam 이라면)
         //{
         //    _fistEffect.tag = myTeamAttack;
@@ -210,7 +212,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        int viewId = photonView.ViewID;
+        _fistEffect.GetComponent<DamageHandler>().viewID = _fistEffect.GetComponent<PhotonView>().ViewID;
         //if (내가 myTeam 이라면)
         //{
         //    _fistEffect.tag = myTeamAttack;
@@ -221,5 +223,34 @@ public class ElprimoAttackHandler : MonoBehaviourPun
         //}
     }
     #endregion
+
+    private IEnumerator HandleLanding()
+    {
+        while(true)
+        {
+            print("Coroutine");
+            Ray ray = new Ray(transform.position, Vector3.down);
+            float maxDistance = 0.2f;
+
+            if(Physics.Raycast(ray, maxDistance, groundLayer))
+            {
+                print("Raycast");
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 20f);
+                foreach (Collider collider in colliders)
+                {
+                    HpHandler hittedHpHandler= collider.GetComponent<HpHandler>();
+                    if (hittedHpHandler != null)
+                    {
+                        float ultiDamage = -hpHandler.SkillDamage;
+                        print("Jump1");
+                        hittedHpHandler.HandleHP(ultiDamage);
+                        print("Jump2");
+                    }
+                }
+                break;
+            }
+            yield return null;
+        }
+    }
 
 }
