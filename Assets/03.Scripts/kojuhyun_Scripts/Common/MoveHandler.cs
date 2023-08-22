@@ -17,7 +17,8 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
     #endregion
 
     #region Boolean Values
-    bool moveFlag;
+    private bool moveFlag;
+    public bool isReverse;
     #endregion
 
     #region Float Values
@@ -49,14 +50,20 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
         {
             transform.position = Vector3.Lerp(transform.position, receivePos, lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, receiveRot, lerpSpeed * Time.deltaTime);
-
         }
     }
     public void HandleMovement()
     {
-        if (joystick.Horizontal > 0 || joystick.Horizontal < 0 || joystick.Vertical > 0 || joystick.Vertical < 0)
+        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
-            lookPoint.position = new Vector3(joystick.Horizontal + transform.position.x, 4.11f, joystick.Vertical + transform.position.z);
+            Vector3 movement = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+
+            if (isReverse)
+            {
+                movement = new Vector3(-movement.x, 0, -movement.z);
+            }
+
+            lookPoint.position = new Vector3(movement.x + transform.position.x, 4.11f, movement.z + transform.position.z);
 
             transform.LookAt(new Vector3(lookPoint.position.x, 6.1f, lookPoint.position.z));
 

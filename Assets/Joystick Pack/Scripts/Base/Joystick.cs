@@ -10,6 +10,9 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
 
+    public float ReverseHorizontal { get { return (snapX) ? -SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
+    public float ReverseVertical { get { return (snapY) ? -SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
+    public Vector2 ReverseDirection { get { return new Vector2(ReverseHorizontal, ReverseVertical); } }
 
     public float HandleRange
     {
