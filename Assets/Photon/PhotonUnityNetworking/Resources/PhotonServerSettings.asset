@@ -66,6 +66,7 @@ MonoBehaviour:
   - RpcShot
   - RpcSetMyMebers
   - SetMyTeamIdx
+  - RpcSuperShell
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

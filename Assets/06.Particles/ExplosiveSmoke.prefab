@@ -14467,7 +14467,7 @@ GameObject:
   - component: {fileID: 19900006}
   - component: {fileID: 11400000}
   m_Layer: 0
-  m_Name: WFXMR_ExplosiveSmokeGround 1
+  m_Name: ExplosiveSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

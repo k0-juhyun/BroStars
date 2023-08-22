@@ -9,15 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7708014865340578997}
+  - component: {fileID: -8260838986397364645}
   - component: {fileID: 4001234322606886394}
   - component: {fileID: 1598982069853017183}
   - component: {fileID: 985379166692373299}
   - component: {fileID: 6017872210988016009}
   - component: {fileID: 6161100813391030408}
   - component: {fileID: -8638953699814050144}
-  - component: {fileID: 189349305429324126}
   m_Layer: 26
-  m_Name: AttackBullet 1
+  m_Name: Special Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,11 +35,28 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 4021652429752662077}
-  - {fileID: 1452759109985501045}
+  - {fileID: 8814587226512509187}
+  - {fileID: 6181607758363917657}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8260838986397364645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7432803646438753741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62c30a087f7a4fb4e8a2a271b1c72ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 10.33
+  attackBulelt: {fileID: 0}
+  specialBullet: {fileID: 0}
+  bulletSmoke: {fileID: 8814587226493111363}
+  muzzleSmoke: {fileID: 6181607758383314969}
 --- !u!33 &4001234322606886394
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -241,7 +258,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7432803646438753741}
   serializedVersion: 2
-  m_Mass: 0.3
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -249,22 +266,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &189349305429324126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7432803646438753741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4492041527b1094593add9bd46781b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpeed: 7.33
-  bulletSmoke: {fileID: 4021652429733264765}
-  muzzleSmoke: {fileID: 1452759110000704053}
---- !u!1001 &1452759109985363445
+--- !u!1001 &6181607758363781081
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -329,19 +331,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20432393161f704caf97b3458647247, type: 3}
---- !u!4 &1452759109985501045 stripped
+--- !u!4 &6181607758363917657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b20432393161f704caf97b3458647247,
     type: 3}
-  m_PrefabInstance: {fileID: 1452759109985363445}
+  m_PrefabInstance: {fileID: 6181607758363781081}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1452759110000704053 stripped
+--- !u!198 &6181607758383314969 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19800000, guid: b20432393161f704caf97b3458647247,
     type: 3}
-  m_PrefabInstance: {fileID: 1452759109985363445}
+  m_PrefabInstance: {fileID: 6181607758363781081}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4021652429752263355
+--- !u!1001 &8814587226512905093
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -454,15 +456,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d188630462a8db549a262f1943ba6199, type: 3}
---- !u!198 &4021652429733264765 stripped
+--- !u!198 &8814587226493111363 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19800006, guid: d188630462a8db549a262f1943ba6199,
     type: 3}
-  m_PrefabInstance: {fileID: 4021652429752263355}
+  m_PrefabInstance: {fileID: 8814587226512905093}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4021652429752662077 stripped
+--- !u!4 &8814587226512509187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: d188630462a8db549a262f1943ba6199,
     type: 3}
-  m_PrefabInstance: {fileID: 4021652429752263355}
+  m_PrefabInstance: {fileID: 8814587226512905093}
   m_PrefabAsset: {fileID: 0}

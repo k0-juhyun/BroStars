@@ -1,5 +1,7 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
@@ -20,6 +22,8 @@ public class JayJoyStick : Joystick
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if (photonView.IsMine == false)
+            return;
         background.anchoredPosition = ScreenPointToAnchoredPosition(eventData.position);
         background.gameObject.SetActive(true);
         base.OnPointerDown(eventData);
@@ -28,18 +32,22 @@ public class JayJoyStick : Joystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        ShellyAttackHandler handler = GetComponentInParent<ShellyAttackHandler>();
+        if (photonView.IsMine == false)
+            return;
+        ShellyAttackHandler shellyAttackHandler = GetComponentInParent<ShellyAttackHandler>();
         AnimatorHandler anim = GetComponentInParent<AnimatorHandler>();
  
-        if(handler != null)
+        if(shellyAttackHandler != null)
         {
             if(this.gameObject.name == "SkillJoyStick")
             {
                 anim.playTargetAnim("Attack");
-                handler.CallShoot();
+                shellyAttackHandler.SuperShell();
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
+                photonView.RPC(nameof(anim.playTargetAnimRpc), RpcTarget.All, "Normal");
+                shellyAttackHandler.Shot();
                 anim.playTargetAnim("Attack");
             }
 

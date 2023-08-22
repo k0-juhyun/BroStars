@@ -35,8 +35,8 @@ public class ShellyManager : MonoBehaviourPun
             return;
 
         moveHandler.HandleMovement();
-        attackHandler.HandleNormalAttack();
-        attackHandler.HandleUltimateAttack();
+        attackHandler.ShellyNormalAttack();
+        attackHandler.ShellyUltimateAttack();
         //attackHandler.UpdateFire();
         hpHandler.UpdateHp();
         hpHandler.RegenerateHpInBush();
