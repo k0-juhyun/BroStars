@@ -24,8 +24,7 @@ public class CameraHandler : MonoBehaviourPun
 
     [Header("Camera Settings")]
     public float smoothTime = 0.3f;
-    public float distanceZFromTarget = -5;
-    public float distanceXFromTarget = -5;
+    public float distanceZFromTarget = -110;
     private float startXPos;
     private float startYPos;
     private float currentVelocity = 0;

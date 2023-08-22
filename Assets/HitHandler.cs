@@ -7,10 +7,12 @@ using Photon.Pun;
 public class HitHandler : MonoBehaviourPun
 {
     HpHandler hpHandler;
+    private int myViewID;
 
     private void Awake()
     {
-        hpHandler = GetComponent<HpHandler>();   
+        hpHandler = GetComponent<HpHandler>();
+        myViewID = photonView.ViewID;
     }
 
     private void OnCollisionEnter(Collision collision)

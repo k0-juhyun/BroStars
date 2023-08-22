@@ -5,6 +5,9 @@ using Photon.Pun;
 
 public class NitaAttackHandler : MonoBehaviourPun
 {
+    [SerializeField]
+    private bool isReverse;
+
     TargetHandler targetHandler;
     NitaManager nitaManager;
     HpHandler hpHandler;
@@ -36,10 +39,6 @@ public class NitaAttackHandler : MonoBehaviourPun
 
     RaycastHit hit;
 
-    private void Start()
-    {
-
-    }
     private void Awake()
     {
         if (photonView.IsMine == false)
@@ -61,12 +60,19 @@ public class NitaAttackHandler : MonoBehaviourPun
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
+            Vector3 Direction = new Vector3(attackJoystick.Horizontal, 0, attackJoystick.Vertical);
+
+            if (isReverse)
+            {
+                Direction = new Vector3(-Direction.x, Direction.y, -Direction.z);
+            }
+
             if (!attackLR.gameObject.activeInHierarchy)
             {
                 attackLR.gameObject.SetActive(true);
             }
 
-            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
+            attackLookPoint.position = new Vector3(Direction.x + transform.position.x, 4.11f, Direction.z + transform.position.z);
 
             transform.LookAt(new Vector3(attackLookPoint.position.x, 5.11f, attackLookPoint.position.z));
 
@@ -94,6 +100,12 @@ public class NitaAttackHandler : MonoBehaviourPun
     public void HandleUltimateAttack()
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
+
+        if (isReverse)
+        {
+            joystickDirection = new Vector3(-joystickDirection.x, joystickDirection.y, -joystickDirection.z);
+        }
+
         Vector3 startVelocity = joystickDirection * launchForce;
 
         if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
@@ -104,7 +116,7 @@ public class NitaAttackHandler : MonoBehaviourPun
             }
             DrawTrajectory(startVelocity, 10, 0.1f);
 
-            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
+            skillLookPoint.position = new Vector3(joystickDirection.x + transform.position.x, 4.11f, joystickDirection.z + transform.position.z);
 
             transform.LookAt(new Vector3(skillLookPoint.position.x, 4.11f, skillLookPoint.position.z));
 

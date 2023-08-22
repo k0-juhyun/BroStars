@@ -6,10 +6,14 @@ using Photon.Pun;
 
 public class LeonAttackHandler : MonoBehaviourPun
 {
+    [SerializeField]
+    private bool isReverse;
+
     private MoveHandler moveHandler;
     private HpHandler hpHandler;
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
+    private TargetHandler targetHandler;
 
     [Header("JoyStick")]
     public Joystick attackJoystick;
@@ -41,6 +45,7 @@ public class LeonAttackHandler : MonoBehaviourPun
     private void Awake()
     {
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
+        targetHandler = GetComponentInParent<TargetHandler>();  
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
         hpHandler = GetComponent<HpHandler>();
@@ -52,7 +57,13 @@ public class LeonAttackHandler : MonoBehaviourPun
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
-            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
+            Vector3 Direction = new Vector3(attackJoystick.Horizontal, 0, attackJoystick.Vertical);
+
+            if (isReverse)
+            {
+                Direction = new Vector3(-Direction.x, 0, -Direction.z);
+            }
+            attackLookPoint.position = new Vector3(Direction.x + transform.position.x, 4.11f, Direction.z + transform.position.z);
 
             attackLR.gameObject.SetActive(true);
 

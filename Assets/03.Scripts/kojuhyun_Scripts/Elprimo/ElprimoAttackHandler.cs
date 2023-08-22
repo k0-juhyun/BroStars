@@ -7,10 +7,13 @@ using static GameManager;
 
 public class ElprimoAttackHandler : MonoBehaviourPun
 {
+    private TargetHandler targetHandler;
     private HpHandler hpHandler;
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
+    public LogHandler logHandler;
 
+    #region 인스펙터창
     [Header("JoyStick")]
     public Joystick attackJoystick;
     public Joystick skillJoystick;
@@ -32,7 +35,12 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     private float TrailDistance = 1.3f;
     private float launchForce = 10;
 
+    [SerializeField]
+    private bool isReverse;
+
     RaycastHit hit;
+
+    #endregion
 
     private void Awake()
     {
@@ -41,12 +49,8 @@ public class ElprimoAttackHandler : MonoBehaviourPun
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
+        targetHandler = GetComponentInParent<TargetHandler>();
         rb = GetComponent<Rigidbody>();
-    }
-
-    private void Start()
-    {
-        
     }
 
 
@@ -56,12 +60,19 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
+            Vector3 Direction = new Vector3(attackJoystick.Horizontal, 0, attackJoystick.Vertical);
+
+            if (isReverse)
+            {
+                Direction = new Vector3(-Direction.x, 0, -Direction.z);
+            }
+
             if (attackLR.gameObject.activeInHierarchy == false)
             {
                 attackLR.gameObject.SetActive(true);
             }
 
-            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
+            attackLookPoint.position = new Vector3(Direction.x + transform.position.x, 4.11f, Direction.z + transform.position.z);
 
             transform.LookAt(new Vector3(attackLookPoint.position.x, 5.11f, attackLookPoint.position.z));
 
@@ -73,12 +84,26 @@ public class ElprimoAttackHandler : MonoBehaviourPun
 
             if (Physics.Raycast(rayStartPos, transform.forward, out hit, TrailDistance))
             {
-                attackLR.SetPosition(1, hit.point);
+                if(isReverse)
+                {
+                    attackLR.SetPosition(1, new Vector3(hit.point.x, hit.point.y - 0.1f, hit.point.z));
+                }
+                else
+                {
+                    attackLR.SetPosition(1, hit.point);
+                }
             }
             else
             {
                 Vector3 yUp = new Vector3(0, 0.1f, 0);
-                attackLR.SetPosition(1, transform.position + transform.forward * TrailDistance + yUp);
+                if(isReverse)
+                {
+                    attackLR.SetPosition(1, transform.position + transform.forward * TrailDistance - yUp);
+                }
+                else
+                {
+                    attackLR.SetPosition(1, transform.position + transform.forward * TrailDistance + yUp);
+                }
             }
         }
         else
@@ -90,6 +115,12 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     public void HandleUltimateAttack()
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
+
+        if(isReverse)
+        {
+            joystickDirection = new Vector3(-joystickDirection.x, 0.5f, -joystickDirection.z);
+        }
+
         Vector3 startVelocity = joystickDirection * launchForce;
 
         DrawTrajectory(startVelocity, 100, 0.1f);
@@ -101,7 +132,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
                 specialLR.gameObject.SetActive(true);
             }
 
-            skillLookPoint.position = new Vector3(skillJoystick.Horizontal + transform.position.x, 4.11f, skillJoystick.Vertical + transform.position.z);
+            skillLookPoint.position = new Vector3(joystickDirection.x + transform.position.x, 4.11f, joystickDirection.z+ transform.position.z);
 
             transform.LookAt(new Vector3(skillLookPoint.position.x, 4.11f, skillLookPoint.position.z)); ;
 
@@ -114,8 +145,6 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     }
 
     #endregion
-
-
 
     #region 일반공격
     [PunRPC]
@@ -166,6 +195,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        int viewId = photonView.ViewID;
         //if(내가 myTeam 이라면)
         //{
         //    _fistEffect.tag = myTeamAttack;
@@ -180,6 +210,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        int viewId = photonView.ViewID;
         //if (내가 myTeam 이라면)
         //{
         //    _fistEffect.tag = myTeamAttack;

@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class TargetHandler : MonoBehaviourPun
 {
+    public bool isDestroy;
+
     private Camera mainCamera;
 
     public GameObject Target;
@@ -13,11 +15,11 @@ public class TargetHandler : MonoBehaviourPun
 
     private string playerNickName;
 
-    public bool isDestroy;
 
     private Coroutine respawnCoroutine;
 
     HpHandler hpHandler;
+    MoveHandler moveHandler;
 
     public int teamIdx;
     private void Awake()
@@ -25,6 +27,7 @@ public class TargetHandler : MonoBehaviourPun
         if (photonView.IsMine == false)
             return;
         mainCamera = transform.GetChild(0).GetComponent<Camera>();
+        moveHandler = GetComponentInChildren<MoveHandler>();
         playerNickName = Target.gameObject.name;
     }
 

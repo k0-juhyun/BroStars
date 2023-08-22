@@ -10,6 +10,7 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
     [SerializeField]
     Joystick joystick;
     AnimatorHandler animatorHandler;
+    TargetHandler targetHandler;
     #endregion
 
     #region Transform Values
@@ -18,7 +19,8 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
 
     #region Boolean Values
     private bool moveFlag;
-    public bool isReverse;
+    [SerializeField]
+    private bool isReverse;
     #endregion
 
     #region Float Values
@@ -43,7 +45,9 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
     {
         lookPoint = transform.GetChild(0).gameObject.GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
+        targetHandler = GetComponentInChildren<TargetHandler>();
     }
+
     private void FixedUpdate()
     {
         if (photonView.IsMine == false)
