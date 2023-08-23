@@ -42436,11 +42436,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: []
   index: 0
-  callBrawlerName:
-  - LeonController
-  - ElprimoController
-  - NitaController
-  - ShellyController
   myTeam:
     myTeamScore: 0
     myMembers: []
@@ -53468,6 +53463,10 @@ PrefabInstance:
     - target: {fileID: 1735091408818888, guid: a0e2d45f3de82b74dba1179a61dad2b4, type: 3}
       propertyPath: m_Layer
       value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1735091408818888, guid: a0e2d45f3de82b74dba1179a61dad2b4, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 1735091408818888, guid: a0e2d45f3de82b74dba1179a61dad2b4, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -18,7 +18,7 @@ public class NicknameHandler : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            nickNameText.text = ProjectManager.instance.myNickName;
+            nickNameText.text = PhotonNetwork.NickName;
         }
     }
 }

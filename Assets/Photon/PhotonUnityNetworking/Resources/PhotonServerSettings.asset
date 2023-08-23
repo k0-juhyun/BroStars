@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 2
+    AppVersion: 3
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -66,6 +66,8 @@ MonoBehaviour:
   - RpcShot
   - RpcSetMyMebers
   - SetMyTeamIdx
+  - LeonSkillAttack
+  - SetTransparencyAfterDelay
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

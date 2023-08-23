@@ -12,6 +12,7 @@ public class HpHandler : MonoBehaviourPun
     TargetHandler targetHandler;
     GemHandler gemHandler;
     LogHandler logHandler;
+    HitHandler hitHandler;
 
     [Header("HP Bar")]
     public Slider HpBar;
@@ -52,6 +53,7 @@ public class HpHandler : MonoBehaviourPun
         targetHandler = GetComponentInParent<TargetHandler>();
         gemHandler = GetComponent<GemHandler>();
         logHandler = FindObjectOfType<LogHandler>();
+        hitHandler = GetComponent<HitHandler>();
 
         if (this.gameObject.name != "Bruce")
         {
@@ -128,8 +130,10 @@ public class HpHandler : MonoBehaviourPun
                 }
 
                 gemHandler.gem = 0;
-
-                Destroy(this.gameObject);
+                if(hitHandler.isProgress)
+                {
+                    Destroy(this.gameObject);
+                }
             }
 
             if (this.gameObject.name == "Bruce")

@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +9,7 @@ public class HitHandler : MonoBehaviourPun
     LogHandler logHandler;
     HpHandler hpHandler;
 
+    public bool isProgress;
     private void Awake()
     {
         logHandler = FindObjectOfType<LogHandler>();
@@ -18,21 +18,26 @@ public class HitHandler : MonoBehaviourPun
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<DamageHandler>() != null 
-            && collision.gameObject.GetComponent<PhotonView>().ViewID != GetComponent<PhotonView>().ViewID) 
+        DamageHandler damageHandler = collision.gameObject.GetComponent<DamageHandler>();
+
+        if (damageHandler != null && damageHandler.viewID != photonView.ViewID)
         {
-            float hitDamage = collision.gameObject.GetComponent<DamageHandler>().damage;
+            float hitDamage = damageHandler.damage;
             photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage);
 
-            if(GetComponent<HpHandler>().curHp <0)
+            if (GetComponent<HpHandler>().curHp < 0)
             {
-                int killerViewID = collision.gameObject.GetComponent<DamageHandler>().viewID;
-                int victimViewID = GetComponent<PhotonView>().ViewID;
-                int killCount = 1;
-                logHandler.AddKillLog(killerViewID, victimViewID, killCount);
-            }
+                GameObject attacker = PhotonNetwork.GetPhotonView(damageHandler.viewID).gameObject;
+                string attackerName = "Unknown";
 
-            Debug.Log(this.gameObject.name + "가 피해를 입었습니다: " + hitDamage);
+                if (attacker != null)
+                {
+                    attackerName = attacker.name;
+                }
+
+                Debug.LogFormat("({0}) 가 {1} 에게 죽었습니다.", photonView.ViewID, attackerName);
+                isProgress = true;
+            }
         }
     }
 }

@@ -87,7 +87,7 @@ public class LeonAttackHandler : MonoBehaviourPun
         {
             if (photonView.IsMine)
             {
-                photonView.RPC("StartResetTransparencyCoroutine", RpcTarget.All, 6f);
+                photonView.RPC(nameof(LeonSkillAttack), RpcTarget.All);
             }
         }
     }
@@ -158,9 +158,9 @@ public class LeonAttackHandler : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void ResetTransparencyAfterDelay(float delay)
+    private void SetTransparencyAfterDelay(float delay)
     {
-        photonView.RPC("HandleDamageTransparent", RpcTarget.All, 0.2f);
+        photonView.RPC(nameof(HandleDamageTransparent), RpcTarget.All, 0.2f);
         moveHandler.moveSpeed = 4;
 
         StartCoroutine(ResetTransparencyCoroutine(1.0f, delay));
@@ -170,8 +170,14 @@ public class LeonAttackHandler : MonoBehaviourPun
     {
         yield return new WaitForSeconds(delay);
 
-        photonView.RPC("HandleDamageTransparent", RpcTarget.All, 1.0f);
+        photonView.RPC(nameof(HandleDamageTransparent), RpcTarget.All, 1.0f);
         moveHandler.moveSpeed = 2;
+    }
+
+    [PunRPC]
+    private void LeonSkillAttack()
+    {
+        SetTransparencyAfterDelay(6);
     }
 }
 

@@ -51,4 +51,23 @@ public class LogHandler : MonoBehaviour
         }
         return totalKillCount;
     }
+
+    private void Update()
+    {
+        foreach (var log in killLogs)
+        {
+            PhotonView killerView = playerViewList.Find(view => view.ViewID == log.killerViewID);
+            PhotonView victimView = playerViewList.Find(view => view.ViewID == log.victimViewID);
+
+            if (killerView != null && victimView != null)
+            {
+                string killerName = killerView.Owner.NickName;
+                string victimName = victimView.Owner.NickName;
+                int killCount = log.killCount;
+
+                string message = $"{killerName} killed {victimName} ({killCount} times).";
+                Debug.Log(message);
+            }
+        }
+    }
 }

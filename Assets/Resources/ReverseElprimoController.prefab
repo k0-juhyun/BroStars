@@ -1313,6 +1313,37 @@ Transform:
   m_Father: {fileID: 6971042425073582849}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3886374182991879129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4401989265840028399}
+  m_Layer: 11
+  m_Name: RayPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4401989265840028399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886374182991879129}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6868145190856466676}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3910169722130125185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,6 +1979,7 @@ Transform:
   - {fileID: 6402487907464794703}
   - {fileID: 6402487907446746518}
   - {fileID: 6402487905887132889}
+  - {fileID: 4401989265840028399}
   m_Father: {fileID: 6402487906597647926}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2075,12 +2107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7b901e34f5f264d92da6285e355a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logHandler: {fileID: 0}
   attackJoystick: {fileID: 6402487906966815774}
   skillJoystick: {fileID: 6402487907409499081}
   attackLR: {fileID: 6402487906232535338}
   specialLR: {fileID: 6402487905926661100}
   lineRendererStartTransform: {fileID: 6402487906806167476}
+  rayStartTransform: {fileID: 0}
   fistEffect:
   - {fileID: 3080530868119555557, guid: 7bf93a307f8d1b746aead0b63c44a670, type: 3}
   - {fileID: 7956542572857430429, guid: f48e4eec6a21f334c87b883e312bf44f, type: 3}
@@ -4851,12 +4883,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7b901e34f5f264d92da6285e355a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logHandler: {fileID: 0}
   attackJoystick: {fileID: 6402487906966815774}
   skillJoystick: {fileID: 6402487907409499081}
   attackLR: {fileID: 6402487906232535338}
   specialLR: {fileID: 6402487905926661100}
   lineRendererStartTransform: {fileID: 6402487906806167476}
+  rayStartTransform: {fileID: 4401989265840028399}
   fistEffect:
   - {fileID: 3080530868119555557, guid: 7bf93a307f8d1b746aead0b63c44a670, type: 3}
   - {fileID: 7956542572857430429, guid: f48e4eec6a21f334c87b883e312bf44f, type: 3}
@@ -4865,7 +4897,7 @@ MonoBehaviour:
   - {fileID: 6402487906362534688}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2147483648
   isReverse: 0
 --- !u!1 &6402487906638644679
 GameObject:

@@ -180,6 +180,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public List<PhotonView> allPlayer = new List<PhotonView>();
 
+    //public Dictionary<int,MoveHandler>
+
     // 각자 플레이어 게임 매니저에서 AddPlayer메소드를 통해서 PhotonView를 추가.
     public void AddPlayer(PhotonView pv)
     {

@@ -386,7 +386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647745898}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 498345d1190986543a65910ae0092026, type: 3}
   m_Name: 
@@ -620,6 +620,7 @@ MonoBehaviour:
   inputNickName: {fileID: 1168716002}
   myFirstPosIndex: 0
   btnConnect: {fileID: 1656280652}
+  myNickName: 
 --- !u!4 &817307275
 Transform:
   m_ObjectHideFlags: 0

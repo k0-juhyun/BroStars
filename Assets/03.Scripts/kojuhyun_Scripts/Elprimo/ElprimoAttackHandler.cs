@@ -11,7 +11,6 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     private HpHandler hpHandler;
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
-    public LogHandler logHandler;
 
     #region ¿ŒΩ∫∆Â≈Õ√¢
     [Header("JoyStick")]
@@ -27,6 +26,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     private Transform skillLookPoint;
     private Transform Player;
     public Transform lineRendererStartTransform;
+    public Transform rayStartTransform;
 
     [Header("Normal Attack Event")]
     public GameObject[] fistEffect;
@@ -39,6 +39,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
 
     [SerializeField]
     private bool isReverse;
+    private bool isJump;
 
     RaycastHit hit;
 
@@ -117,10 +118,10 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
 
-        if(isReverse)
-        {
-            joystickDirection = new Vector3(-joystickDirection.x, 0.5f, -joystickDirection.z);
-        }
+        //if(isReverse)
+        //{
+        //    joystickDirection = new Vector3(-joystickDirection.x, 0.5f, -joystickDirection.z);
+        //}
 
         Vector3 startVelocity = joystickDirection * launchForce;
 
@@ -176,13 +177,13 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     [PunRPC]
     public void LaunchPlayer(float h, float v)
     {
+        isJump = true;
         photonView.RPC(nameof(animatorHandler.playTargetAnimRpc), RpcTarget.All, "Special");
 
         Vector3 joystickDirection = new Vector3(h, 0.5f, v);
         Vector3 startVelocity = joystickDirection * launchForce;   
 
         GetComponent<Rigidbody>().velocity = startVelocity;
-        StartCoroutine(HandleLanding());
     }
 
     [PunRPC]
@@ -224,33 +225,30 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     }
     #endregion
 
-    private IEnumerator HandleLanding()
+    private void OnCollisionEnter(Collision collision)
     {
-        while(true)
+        if(isJump)
         {
-            print("Coroutine");
-            Ray ray = new Ray(transform.position, Vector3.down);
-            float maxDistance = 0.2f;
-
-            if(Physics.Raycast(ray, maxDistance, groundLayer))
+            if(collision.gameObject.layer == LayerMask.NameToLayer("Hittable"))
             {
-                print("Raycast");
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 20f);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 1.8f);
                 foreach (Collider collider in colliders)
                 {
-                    HpHandler hittedHpHandler= collider.GetComponent<HpHandler>();
+                    HpHandler hittedHpHandler = collider.GetComponent<HpHandler>();
                     if (hittedHpHandler != null)
                     {
+                        if (collider.gameObject == this.gameObject)
+                            continue;
+
                         float ultiDamage = -hpHandler.SkillDamage;
-                        print("Jump1");
+                        print("Jump");
                         hittedHpHandler.HandleHP(ultiDamage);
-                        print("Jump2");
+                        print("Damage");
+                        print(hittedHpHandler.gameObject.name +": "+ultiDamage);
                     }
                 }
-                break;
+                isJump = false;
             }
-            yield return null;
         }
     }
-
 }

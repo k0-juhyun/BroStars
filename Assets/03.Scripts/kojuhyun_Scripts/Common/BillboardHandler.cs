@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class BillboardHandler : MonoBehaviour
+public class BillboardHandler : MonoBehaviourPun
 {
     private Transform mainCamera;
 
@@ -14,7 +15,6 @@ public class BillboardHandler : MonoBehaviour
 
     private void LateUpdate()
     {
-        
         if(mainCamera != null)
         {
             transform.LookAt(transform.position + mainCamera.rotation * Vector3.forward,
