@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 56327eb8de0b92e46b78fd30f9775cd3
+guid: e36168238483dbc45ad7e3825b927598
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Default_OBJmat
-    second: {fileID: 2100000, guid: 6a4890911207ca74583a84330b6ae0e1, type: 2}
+    second: {fileID: 2100000, guid: 6cc4779977eb3f246ac0d9dc0de81ec0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -49,7 +49,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
