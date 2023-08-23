@@ -53,8 +53,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 10.33
-  attackBulelt: {fileID: 0}
-  specialBullet: {fileID: 0}
   bulletSmoke: {fileID: 8814587226493111363}
   muzzleSmoke: {fileID: 6181607758383314969}
 --- !u!33 &4001234322606886394
@@ -282,6 +280,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b20432393161f704caf97b3458647247, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b20432393161f704caf97b3458647247, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b20432393161f704caf97b3458647247, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b20432393161f704caf97b3458647247, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -321,6 +331,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b20432393161f704caf97b3458647247, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: b20432393161f704caf97b3458647247, type: 3}
+      propertyPath: lengthInSec
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: b20432393161f704caf97b3458647247, type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -357,6 +375,18 @@ PrefabInstance:
     - target: {fileID: 400006, guid: d188630462a8db549a262f1943ba6199, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: d188630462a8db549a262f1943ba6199, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: d188630462a8db549a262f1943ba6199, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: d188630462a8db549a262f1943ba6199, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: d188630462a8db549a262f1943ba6199, type: 3}
       propertyPath: m_LocalPosition.x
@@ -398,6 +428,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: d188630462a8db549a262f1943ba6199, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: d188630462a8db549a262f1943ba6199, type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -409,6 +443,10 @@ PrefabInstance:
     - target: {fileID: 19800004, guid: d188630462a8db549a262f1943ba6199, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: d188630462a8db549a262f1943ba6199, type: 3}
+      propertyPath: lengthInSec
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 19800006, guid: d188630462a8db549a262f1943ba6199, type: 3}
       propertyPath: playOnAwake

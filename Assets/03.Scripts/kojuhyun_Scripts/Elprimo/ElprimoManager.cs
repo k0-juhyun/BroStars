@@ -34,8 +34,6 @@ public class ElprimoManager : MonoBehaviourPun
 
             photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
             photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
-            //hpHandler.UpdateHp();
-            //hpHandler.RegenerateHpInBush();
         }
     }
 

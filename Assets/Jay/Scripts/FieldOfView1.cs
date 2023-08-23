@@ -79,7 +79,12 @@ public class FieldOfView1 : MonoBehaviour
         }
 
         line.positionCount = viewPoints.Length;
-        line.SetPositions(viewPoints);
+
+        for(int i = 0; i< viewPoints.Length; i++)
+        {
+            line.SetPositions(viewPoints);
+        }
+
     }
 
     ViewCastInfo ViewCast(float globalAngle)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShellyEffectBullet1 : MonoBehaviour
@@ -12,9 +13,9 @@ public class ShellyEffectBullet1 : MonoBehaviour
     //public GameObject attackBulelt;
     //public GameObject specialBullet;
     SphereCollider sphereCollider;
-    [Header("Particle")]
-    public ParticleSystem bulletSmoke;
-    public ParticleSystem muzzleSmoke;
+    //[Header("Particle")]
+    //public ParticleSystem bulletSmoke;
+    //public ParticleSystem muzzleSmoke;
 
     //[Header("KnockBack")]
     //public float knockBackSpeed = 0.5f;
@@ -38,14 +39,17 @@ public class ShellyEffectBullet1 : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        bulletSmoke.Play();
-        muzzleSmoke.Play();
+
+        //bulletSmoke.Play();
+        //muzzleSmoke.Play();
         var otherRB = collision.gameObject.GetComponent<Rigidbody>();
         
             if (otherRB != null)
             {
                 otherRB.AddForce(transform.forward * otherRB.mass * 0.3f, ForceMode.Impulse);
-            }
+              //print("2222");
+
+             }
         
         //Destroy(collision.gameObject);
         Destroy(this.gameObject);

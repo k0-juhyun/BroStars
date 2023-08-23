@@ -35,10 +35,11 @@ public class ShellyManager : MonoBehaviourPun
             return;
 
         moveHandler.HandleMovement();
-        attackHandler.ShellyNormalAttack();
-        attackHandler.ShellyUltimateAttack();
+        attackHandler.HandleNormalAttack();
+        attackHandler.HandleUltimateAttack();
         //attackHandler.UpdateFire();
-        hpHandler.UpdateHp();
-        hpHandler.RegenerateHpInBush();
+
+        photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+        photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
     }
 }

@@ -41,14 +41,17 @@ public class JayJoyStick : Joystick
         {
             if(this.gameObject.name == "SkillJoyStick")
             {
-                anim.playTargetAnim("Attack");
-                shellyAttackHandler.SuperShell();
+                //anim.playTargetAnim("Attack");
+                //shellyAttackHandler.SuperShell();
+                //photonView.RPC(nameof(anim.playTargetAnimRpc), RpcTarget.All, "Normal");
+                photonView.RPC(nameof(shellyAttackHandler.SuperShell), RpcTarget.All);
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
-                photonView.RPC(nameof(anim.playTargetAnimRpc), RpcTarget.All, "Normal");
-                shellyAttackHandler.Shot();
-                anim.playTargetAnim("Attack");
+                //photonView.RPC(nameof(anim.playTargetAnimRpc), RpcTarget.All, "Normal");
+                photonView.RPC(nameof(shellyAttackHandler.Shot), RpcTarget.All);
+                //shellyAttackHandler.Shot();
+                //anim.playTargetAnim("Attack");
             }
 
         }

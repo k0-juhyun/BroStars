@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.SlotRacer.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
@@ -17,6 +18,8 @@ public class Fov : MonoBehaviour
     Mesh viewMesh;
 
     LineRenderer lr;
+    public int numSegments = 10; // Number of scalloped segments
+    public float gapAngle = 10f; // Angle between each scalloped segment
 
 
     void Start()
@@ -79,36 +82,43 @@ public class Fov : MonoBehaviour
 
         return isView;
     }
-    public void DrawFieldOfView()
+    void DrawFieldOfView()
     {
+
         int stepCount = Mathf.RoundToInt(viewAngle);
         float stepAngleSize = viewAngle / stepCount;
 
-        Vector3[] viewPoints = new Vector3[stepCount + 2];
-        viewPoints[0] = bossTr.position; // Start from the boss's position
+        viewMesh.Clear();
+
+        Vector3[] viewPoints = new Vector3[stepCount + 1];
+        //각도설정
+        float startAngle = transform.eulerAngles.z - viewAngle / 2 - 90f;
 
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
-            Vector3 dir = CirclePoint(angle) * viewRange;
-
-            RaycastHit hit;
-            if (Physics.Raycast(bossTr.position, dir, out hit, viewRange, layerMask))
-            {
-                viewPoints[i + 1] = hit.point;
-            }
-            else
-            {
-                viewPoints[i + 1] = bossTr.position + dir;
-            }
-
-            Debug.DrawLine(bossTr.position, viewPoints[i + 1], Color.red);
+            float angle = transform.eulerAngles.z - viewAngle / 2 + stepAngleSize * i;
+            //ViewCastInfo newViewCast = ViewCast(angle);
+            //viewPoints[i] = newViewCast.point;
+            //print(transform.position);
+            Debug.DrawLine(transform.position, transform.forward + DirFromAngle(angle, true) * viewRange, Color.red);
         }
 
         lr.positionCount = viewPoints.Length;
-        lr.SetPositions(viewPoints);
-    }
 
+        for (int i = 0; i < viewPoints.Length; i++)
+        {
+            lr.SetPositions(viewPoints);
+        }
+
+    }
+    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
+    {
+        if (!angleIsGlobal)
+        {
+            angleInDegrees += transform.eulerAngles.z;
+        }
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
     void LateUpdate()
     {
         DrawFieldOfView();

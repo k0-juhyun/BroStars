@@ -81,7 +81,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
         moveHandler = GetComponent<MoveHandler>();
     }
 
-    public void ShellyNormalAttack()
+    public void HandleNormalAttack()
     {
 
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
@@ -99,7 +99,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
         }
     }
 
-    public void ShellyUltimateAttack()
+    public void HandleUltimateAttack()
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
         Vector3 startVelocity = joystickDirection * launchForce;
@@ -124,15 +124,18 @@ public class ShellyAttackHandler : MonoBehaviourPun
         }
 
     }
+
+    [PunRPC]
     public void Shot()
     {
-        photonView.RPC(nameof(RpcShot), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
-        //photonView.RPC(nameof(RpcSuperShell), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
-        //firePos.transform.rotation = originalRotation;
+        RpcShot(firePos.transform.position, firePos.transform.forward);
+        animatorHandler.playTargetAnimRpc("Attack");
     }
+    [PunRPC]
     public void SuperShell()
     {
-        photonView.RPC(nameof(RpcSuperShell), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
+        RpcSuperShell(firePos.transform.position, firePos.transform.forward);
+        animatorHandler.playTargetAnimRpc("Attack");
     }
 
     [PunRPC]
@@ -156,43 +159,42 @@ public class ShellyAttackHandler : MonoBehaviourPun
             GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
 
             bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
-
+            
             //나를 제외한 player 태그 
 
-            if (gameObject.CompareTag("Player"))
+            //if (gameObject.CompareTag("Player"))
             {
-
+            
                 //DamageHandler damageHandler = GetComponent<DamageHandler>();
                 //1차 사거리
-                float firstDistance = 1.5f;
-                //2차 사거리
-                float secondDistance = 3.5f;
-                //3차 사거리
-                float thirdDistance = 5f;
+                //float firstDistance = 1.5f;
+                ////2차 사거리
+                //float secondDistance = 3.5f;
+                ////3차 사거리
+                //float thirdDistance = 5f;
 
-                // 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
-                float range = Vector3.Distance(transform.position, transform.position);
+                //// 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
+                //float range = Vector3.Distance(transform.position, transform.position);
 
-                //사거리 안에 있으면 
-                if (range < firstDistance)
-                {
-                    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage * 5; //5배
-                }
-                else if (firstDistance < range && range < secondDistance)
-                {
-                    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage * 3; //3배
-                }
-                else if (secondDistance < range && range < thirdDistance)
-                {
-                    bullet.GetComponent<DamageHandler>().damage  = hpHandler.AttackDamage * 1; //1배
-                }
+                ////사거리 안에 있으면 
+                //if (range < firstDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //5배
+                //}
+                //else if (firstDistance < range && range < secondDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //3배
+                //}
+                //else if (secondDistance < range && range < thirdDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage  = hpHandler.AttackDamage; //1배
+                //}
             }
+            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+
             Destroy(bullet, 0.6f);
         }
-        //animatorHandler.playTargetAnim("Attack");
     }
-    
-
 
     #region  슈퍼쉘
     [PunRPC]
@@ -212,50 +214,46 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
             Vector3 bulletDirection = bulletRotation * fireForward;
 
-            GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
+            GameObject bullet = Instantiate(specialBulletFactory, firePos, Quaternion.identity);
 
             bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
 
             if (gameObject.CompareTag("Player"))
             {
-                //DamageHandler damageHandler = GetComponent<DamageHandler>();
-                //1차 사거리
-                float firstDistance = 1.5f;
-                //2차 사거리
-                float secondDistance = 3.5f;
-                //3차 사거리
-                float thirdDistance = 5f;
+                ////DamageHandler damageHandler = GetComponent<DamageHandler>();
+                ////1차 사거리
+                //float firstDistance = 1.5f;
+                ////2차 사거리
+                //float secondDistance = 3.5f;
+                ////3차 사거리
+                //float thirdDistance = 5f;
 
-                // 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
-                float range = Vector3.Distance(transform.position, transform.position);
+                //// 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
+                //float range = Vector3.Distance(transform.position, transform.position);
 
-                //사거리 안에 있으면 
-                if (range < firstDistance)
-                {
-                    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-                    //5배
-                }
+                ////사거리 안에 있으면 
+                //if (range < firstDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+                //    //5배
+                //}
 
-                else if (firstDistance < range && range < secondDistance)
-                {
-                    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-                    //3배
-                }
-                else if (secondDistance < range && range < thirdDistance)
-                {
-                    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+                //else if (firstDistance < range && range < secondDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+                //    //3배
+                //}
+                //else if (secondDistance < range && range < thirdDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
 
-                    //1배
-                }
+                //    //1배
+                //}
             }
-
-
-
             bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
 
             Destroy(bullet, 0.9f);
         }
-        //animatorHandler.playTargetAnim("Attack");
     }
     #endregion
 

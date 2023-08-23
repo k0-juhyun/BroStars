@@ -35,40 +35,44 @@ public class shellyBullet1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //rb.velocity = transform.forward * bulletSpeed;
         rb.velocity = transform.forward * bulletSpeed;
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        ParticleSystem particles = Instantiate(bulletPrefab[0]);
-        particles.Play();
-        Destroy(particles.gameObject, particles.main.duration);
-        //if (specialBullet != null)
-        {
-            var otherRB = collision.gameObject.GetComponent<Rigidbody>();
-            if (otherRB != null)
-            {
-                //otherRB.AddForce(transform.forward * otherRB.mass * 0.3f, ForceMode.Impulse);
-            }
-        }
-        //Destroy(collision.gameObject);
-        Destroy(this.gameObject);
-        
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-
- 
-    }
-
-    //is collider를 비활성화
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.GetComponent<CapsuleCollider>() != null)
-        {
-            print(collider.gameObject + "충돌 된 이름");
-            //콜라이더 기능을 끄고싶다
-             //collider.gameObject.SetActive(false)
-             collider.enabled = false;
-        }
+        //ParticleSystem particles = Instantiate(bulletPrefab[0]);
+        //particles.Play();
+        //Destroy(particles.gameObject);
+        //rb.velocity = Vector3.zero;
+        //rb.isKinematic = true;
+        //rb.detectCollisions = false;
+
+        //if(sphereCollider != null)
+        //{
+        //    sphereCollider.enabled = false;
+        //}
+
+        ////if (specialBullet != null)
+        //{
+        //    var otherRB = collision.gameObject.GetComponent<Rigidbody>();
+        //    if (otherRB != null)
+        //    {
+        //        //otherRB.AddForce(transform.forward * otherRB.mass * 0.3f, ForceMode.Impulse);
+        //    }
+        //}
+        //Destroy(collision.gameObject);
+        Destroy(this.gameObject);
+
     }
+    //is collider를 비활성화
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    if (collider.gameObject.GetComponent<CapsuleCollider>() != null)
+    //    {
+    //        print(collider.gameObject + "충돌 된 이름");
+    //        //콜라이더 기능을 끄고싶다
+    //        //collider.gameObject.SetActive(false)
+    //        collider.enabled = false;
+    //    }
+    //}
 }
