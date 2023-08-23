@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows.WebCam;
 using Photon.Pun;
 
 public class SceneLoad : MonoBehaviour
@@ -14,7 +13,6 @@ public class SceneLoad : MonoBehaviour
 
     public void Start()
     {
-
 
 
         PhotonNetwork.AutomaticallySyncScene = true;

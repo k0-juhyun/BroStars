@@ -260,25 +260,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
 
-    // 새로운 인원이 방에 들어왔을 때 호출되는 함수
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
-
-
-    }
-
-    // 기존 인원이 방에 나갔을 때 호출되는 함수
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
-    {
-        base.OnPlayerLeftRoom(otherPlayer);
-
-    }
-
-    private void CheckWinner()
-    {
-
-    }
+  
 
 
 

@@ -83,12 +83,10 @@ public class MainSceneManager : MonoBehaviour
 
     public void OnClickConnect()
     {
-        // 사용자가 플레이 버튼을 클릭시 선택한 브롤러의 인덱스 정보를 저장. 
-        //brawlListIndex = brawlList[index].name;
-
-        // 저장한 브롤러 정보를 ProjectManager에 저장.
-        //ProjectManager.instance.myBrawlerIndex = brawlListIndex;
+  
+        // 저장한 브롤러 Index 정보를 ProjectManager에 저장.
         ProjectManager.instance.myBrawlerIndex = index;
+
         // 03_ConnectionScene으로 이동.
         PhotonNetwork.LoadLevel("03_ConnectionScene");
     }

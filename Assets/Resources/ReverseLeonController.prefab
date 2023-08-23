@@ -10161,6 +10161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  viewID: 0
 --- !u!114 &4992558289726222547 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7122238897074137363, guid: e4f55c6f451c59b4d981d95af5f40ad2,

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -9,12 +9,13 @@ using System;
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
     int currentPlayer;
-    int maxPlayerCount = 1;
+    int maxPlayerCount = 4;
 
     public Text curText;
     public Text maxText;
-    public Button exitBtn; 
-    
+    public Button exitBtn;
+
+    private bool isConnection;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +29,19 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-       
+
         // 현재 참여한 플레이어의 수 업데이트
-        if(currentPlayer  > 0 && PhotonNetwork.CurrentRoom != null)
+        if (currentPlayer > 0 && PhotonNetwork.CurrentRoom != null)
         {
-                currentPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+            currentPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+
+            if (currentPlayer >= maxPlayerCount && isConnection)
+            {
+                // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
+                PhotonNetwork.LoadLevel("04_LodingScene");
+                isConnection = false;
+            }
+
         }
 
         // ConnectionUI의 Text에 현재 참여한 플레이어의 수 표시  .
@@ -52,7 +61,7 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("02_MainScene");
     }
 
-    
+
 
     // 마스터 서버 접속 완료. 
     public override void OnConnectedToMaster()
@@ -107,16 +116,21 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
 
         // 현재 나의 인덱스를 ProjectManager에 myPosIndex 저장.
         ProjectManager.instance.myPosIndex = currentPlayer;
-  
-      /*  if (currentPlayer >= maxPlayerCount)
-        {
-            // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
-            PhotonNetwork.LoadLevel("04_LodingScene");
-        }*/
+
+        // isConnection 으로 연결 가능.
+        isConnection = true; 
+
 
     }
 
-    
+    // 새로운 인원이 방에 들어왔을 때 호출되는 함수
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
 
-    
+        print(PhotonNetwork.NickName + " 브롤러님이 입장하였습니다.");
+    }
+
+
+
 }
