@@ -42436,11 +42436,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: []
   index: 0
-  callBrawlerName:
-  - LeonController
-  - ElprimoController
-  - NitaController
-  - ShellyController
   myTeam:
     myTeamScore: 0
     myMembers: []

@@ -8,12 +8,10 @@ public class ProjectManager : MonoBehaviourPun
 {
     public static ProjectManager instance;
 
-    public InputField inputNickName;
-    public int myFirstPosIndex;
-
-    public Button btnConnect;
-
+    [Header("사용자의 정보")]
     public string myNickName;
+    public int myBrawlerIndex;
+    public int myPosIndex;
 
     private void Awake()
     {
@@ -27,50 +25,12 @@ public class ProjectManager : MonoBehaviourPun
             Destroy(gameObject);
         }
     }
-    void Start()
+
+    private void Update()
     {
-        // 버튼에 OnCick 클릭 리스너 함수 사용 -> OnClickConnect
-        btnConnect.onClick.AddListener(OnClickConnect);
-
-        // inputNickName의 내용이 변경될 때 호출되는 함수 등록
-        inputNickName.onValueChanged.AddListener(
-            (string s) =>
-            {
-                btnConnect.interactable = s.Length > 0;
-
-                // 팝업으로 닉네임을 입력해주세요 . 알림.! 
-            }
-            );
-
-        // inputNickName에서 엔터를 쳤을 때 호출되는 함수 등록
-        inputNickName.onSubmit.AddListener(
-            (string s) =>
-            {
-
-                // 버튼이 활성화 되어있다면
-                if (btnConnect.interactable)
-                {
-                    // OnClickConnect 호출한다. 
-                    OnClickConnect();
-                }
-
-            }
-            );
-
-        // interactable 버튼을 비활성화
-        btnConnect.interactable = false;
+        print("사용자의 닉네임 : " + myNickName);
+        print("사용자의 브롤러 인덱스 : " + myBrawlerIndex.ToString());
+        print("사용자의 룸 입장한 인덱스 : " + myPosIndex.ToString());
     }
 
-    public void OnClickConnect()
-    {
-
-        // 닉네임 설정
-        PhotonNetwork.NickName = inputNickName.text;
-        myNickName = inputNickName.text;
-
-        // MainScene으로 이동. 
-        PhotonNetwork.LoadLevel("02_MainScene");
-
-
-    }
 }

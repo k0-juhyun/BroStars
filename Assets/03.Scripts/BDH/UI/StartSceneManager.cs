@@ -55,6 +55,9 @@ public class StartSceneManager : MonoBehaviourPun
         // 닉네임 설정
         PhotonNetwork.NickName = inputNickName.text;
 
+        // ProjectManager에 닉네임 정보를 저장.
+        ProjectManager.instance.myNickName = inputNickName.text;
+
         // MainScene으로 이동. 
         PhotonNetwork.LoadLevel("02_MainScene");
 

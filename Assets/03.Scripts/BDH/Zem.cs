@@ -61,7 +61,7 @@ public class Zem : MonoBehaviourPun
             if (photonView.IsMine)
             {
                 collision.gameObject.GetComponent<GemHandler>().gem += 1;
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
             
         }

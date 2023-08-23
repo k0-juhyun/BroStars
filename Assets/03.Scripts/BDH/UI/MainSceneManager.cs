@@ -3,28 +3,92 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-// 1. 플레이어의 이름을 StartScene에서 설정한 닉네임으로 Text 변경.
-// 2. 플레이 버튼을 누를경우 ConnectionScene으로 이동.
-// 3. 사용자 플레이어 선택에 따른 플레이어 정보를 설정.
+using System;
+
+
+// 1. 플레이어의 이름을 StartScene에서 설정한 닉네임으로 Text 변경. (0)
+// 2. 플레이 버튼을 누를경우 ConnectionScene으로 이동. (0)
+// 3. 사용자 플레이어 선택에 따른 플레이어 정보를 설정. (0) 
 
 public class MainSceneManager : MonoBehaviour
 {
     public Text PlayerNickName;
     public Button btnPlay;
+    public Button leftBtn;
+    public Button rightBtn;
+
+    // 브롤러 리스트
+    public List<GameObject> brawlList;
+
+    // 브롤러 인덱스 변수
+    public string brawlListIndex; 
+
+    // 인덱스 전역변수
+    private int index = 0;
+    private int max_length;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        max_length = brawlList.Count;
+
         // 사용자가 입력한 닉네임으로 TEXT UI 표시. 
-       PlayerNickName.text = PhotonNetwork.NickName;
+        PlayerNickName.text = PhotonNetwork.NickName;
 
         btnPlay.onClick.AddListener(OnClickConnect);
+        leftBtn.onClick.AddListener(OnClickLeftConnect);
+        rightBtn.onClick.AddListener(OnClickRightConnect);
+    }
 
+    private void Update()
+    {
+        //print(index);
+       // print(brawlList[index]);
+    }
+
+    private void OnClickRightConnect()
+    {
+       
+        // 기존의 GameObject는 비활성화
+        brawlList[index].SetActive(false);
+    
+        // 인덱스 업데이트 
+        index = (index + 1 ) % max_length;
+    
+        // 해당 인덱스 GameObject 활성화
+        brawlList[index].SetActive(true);
+
+    }
+
+    private void OnClickLeftConnect()
+    {
+       
+        // 기존의 GameObject는 비활성화
+        brawlList[index].SetActive(false);
+
+        // 인덱스 업데이트 
+        index = (index - 1) % max_length;
+       
+        if (index == -1)
+        {
+            index = max_length - 1;
+        }
         
+        // 해당 인덱스 GameObject 활성화
+        brawlList[index].SetActive(true);
+
     }
 
     public void OnClickConnect()
     {
+        // 사용자가 플레이 버튼을 클릭시 선택한 브롤러의 인덱스 정보를 저장. 
+        //brawlListIndex = brawlList[index].name;
+
+        // 저장한 브롤러 정보를 ProjectManager에 저장.
+        //ProjectManager.instance.myBrawlerIndex = brawlListIndex;
+        ProjectManager.instance.myBrawlerIndex = index;
         // 03_ConnectionScene으로 이동.
         PhotonNetwork.LoadLevel("03_ConnectionScene");
     }
