@@ -8,8 +8,8 @@ public class bl_ControllerExample : MonoBehaviour {
 
     void Update()
     {
-        float v = Joystick.Vertical; //get the vertical value of joystick
-        float h = Joystick.Horizontal;//get the horizontal value of joystick
+        float v = Joystick.Vertical; //get the vertical value of jayjoystick
+        float h = Joystick.Horizontal;//get the horizontal value of jayjoystick
 
         Vector3 translate = (new Vector3(h, 0, v) * Time.deltaTime) * Speed;
         transform.Translate(translate);

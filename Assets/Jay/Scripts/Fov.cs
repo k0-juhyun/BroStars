@@ -31,7 +31,7 @@ public class Fov : MonoBehaviour
 
         bossTr = GetComponent<Transform>();
 
-        playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+        //playerTr = GameObject.FindGameObjectWithTag("Player").transform;
 
         playerLayer = LayerMask.NameToLayer("Player");
 

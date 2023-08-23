@@ -33,6 +33,9 @@ public class CameraHandler : MonoBehaviourPun
     public float startCamSpeed = 0.1f;
 
     public bool gameStart;
+    [HideInInspector]
+    public bool isShake;
+
 
     private void Awake()
     {
@@ -91,7 +94,7 @@ public class CameraHandler : MonoBehaviourPun
                 this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
             }
 
-            #region 피격시 카메라 쉐이크
+            #region 카메라 쉐이크
             if (hpHandler.isDamaged)
             {
                 StartCoroutine(HandleCamerShake(0.5f));
@@ -100,6 +103,11 @@ public class CameraHandler : MonoBehaviourPun
                     StartCoroutine(HandleActivateUrgentImage(0.3f));
                 }
             }
+
+            if(isShake)
+            {
+                StartCoroutine(HandleCamerShake(0.5f));
+            }    
             #endregion
         }
     }
@@ -119,6 +127,7 @@ public class CameraHandler : MonoBehaviourPun
 
         this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z);
         hpHandler.isDamaged = false;
+        isShake = false;
     }
 
     IEnumerator HandleActivateUrgentImage(float duration)

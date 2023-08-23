@@ -8,7 +8,6 @@ using UnityEngine.UIElements;
 
 public class JayJoyStick : Joystick
 {
-
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
     [SerializeField] private float moveThreshold = 1;
@@ -36,7 +35,8 @@ public class JayJoyStick : Joystick
             return;
         ShellyAttackHandler shellyAttackHandler = GetComponentInParent<ShellyAttackHandler>();
         AnimatorHandler anim = GetComponentInParent<AnimatorHandler>();
- 
+    
+        
         if(shellyAttackHandler != null)
         {
             if(this.gameObject.name == "SkillJoyStick")
@@ -53,7 +53,6 @@ public class JayJoyStick : Joystick
                 //shellyAttackHandler.Shot();
                 //anim.playTargetAnim("Attack");
             }
-
         }
         base.OnPointerUp(eventData);
     }

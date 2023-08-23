@@ -7,7 +7,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 
     [Header("Settings")]
-    [SerializeField, Range(1, 15)]private float Radio = 5;//the ratio of the circumference of the joystick
+    [SerializeField, Range(1, 15)]private float Radio = 5;//the ratio of the circumference of the jayjoystick
     [SerializeField, Range(0.01f, 1)]private float SmoothTime = 0.5f;//return to default position speed
     [SerializeField, Range(0.5f, 4)] private float OnPressScale = 1.5f;//return to default position speed
     public Color NormalColor = new Color(1, 1, 1, 1);
@@ -15,7 +15,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField, Range(0.1f, 5)]private float Duration = 1;
 
     [Header("Reference")]
-    [SerializeField]private RectTransform StickRect;//The middle joystick UI
+    [SerializeField]private RectTransform StickRect;//The middle jayjoystick UI
     [SerializeField] private RectTransform CenterReference;
 
     //Privates
@@ -36,7 +36,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (StickRect == null)
         {
-            Debug.LogError("Please add the stick for joystick work!.");
+            Debug.LogError("Please add the stick for jayjoystick work!.");
             this.enabled = false;
             return;
         }
@@ -51,12 +51,12 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         else
         {
-            Debug.LogError("Required at lest one canvas for joystick work.!");
+            Debug.LogError("Required at lest one canvas for jayjoystick work.!");
             this.enabled = false;
             return;
         }
        
-        //Get the default area of joystick
+        //Get the default area of jayjoystick
         DeathArea = CenterReference.position;
         diff = CenterReference.position.magnitude;
         PressScaleVector = new Vector3(OnPressScale, OnPressScale, OnPressScale);
@@ -126,7 +126,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             //Get Position of current touch
             Vector3 position = bl_JoystickUtils.TouchPosition(m_Canvas,GetTouchID);
 
-            //Rotate into the area circumferential of joystick
+            //Rotate into the area circumferential of jayjoystick
             if (Vector2.Distance(DeathArea, position) < radio)
             {
                 StickRect.position = position;
@@ -211,7 +211,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     /// <summary>
     /// Value Horizontal of the Joystick
-    /// Get this for get the horizontal value of joystick
+    /// Get this for get the horizontal value of jayjoystick
     /// </summary>
     public float Horizontal
     {
@@ -223,7 +223,7 @@ public class bl_Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     /// <summary>
     /// Value Vertical of the Joystick
-    /// Get this for get the vertical value of joystick
+    /// Get this for get the vertical value of jayjoystick
     /// </summary>
     public float Vertical
     {

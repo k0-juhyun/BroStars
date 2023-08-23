@@ -4,7 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 using Unity.VisualScripting;
 using Photon.Pun.Demo.Asteroids;
-
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 public class ShellyAttackHandler : MonoBehaviourPun
 {
@@ -195,9 +196,52 @@ public class ShellyAttackHandler : MonoBehaviourPun
             Destroy(bullet, 0.6f);
         }
     }
+    #region 오토에임
+
+    List<GameObject> player = new List<GameObject>();
+    private float[] dstFromPlayer;
+    private string Tag;
+    public void AutoAim()
+    {
+        for(int i = 0; i < player.Count; i++)
+        {
+            //게임오브젝트 더하기
+            player.Add(GameObject.FindWithTag("Player"));
+        }
+
+    }
+    //list<gameobject> list = new list<gameobject>();
+    //private float[] disatancefrombrawlers;
+
+    //private string tag;
+
+    //awake()
+    //{
+    //    for (int i = 0; i < go.length; i++)
+    //    {
+    //        list.add(gameobject.findwithtag("player"));
+    //    }
+    //}
+    //private void fixedupdate()
+    //{
+    //    for (int i = 0; i < list.count; i++)
+    //    {
+    //        float testdis = vector3.distance(transform.position, list[i].transform.position)
+    //        testdis = disatancefrombrawlers[i];
+    //        testdis = list[i].transform.position;
+    //    }
+    //    for (int i = 0; i < disatancefrombrawlers.length; i++)
+    //    {
+    //        //최솟값 크기 비교
+    //    }
+    //    //min
+    //}
+
+        #endregion
+
 
     #region  슈퍼쉘
-    [PunRPC]
+        [PunRPC]
     void RpcSuperShell(Vector3 firePos, Vector3 fireForward)
     {
         int numBullets = 10;
@@ -303,7 +347,8 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
 }
     #endregion
-#region 일반 공격 애니메이션 이벤트
+
+    #region 일반 공격 애니메이션 이벤트
 //public void HandleBackEvent()
 //{
 //    //뒤로 0.5f만큼 흔들리고싶다

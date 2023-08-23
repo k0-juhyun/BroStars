@@ -1438,6 +1438,7 @@ MonoBehaviour:
   background: {fileID: 8210584645444585627}
   handle: {fileID: 1533731445828847184}
   input: {x: 0, y: 0}
+  isShake: 0
   moveThreshold: 1
 --- !u!1 &1378380317020269946
 GameObject:
@@ -2068,6 +2069,7 @@ MonoBehaviour:
   background: {fileID: 1937567181929308650}
   handle: {fileID: 2572884644818064555}
   input: {x: 0, y: 0}
+  isShake: 0
   moveThreshold: 1
 --- !u!1 &1958374532682377312
 GameObject:
