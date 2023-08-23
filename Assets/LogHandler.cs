@@ -1,39 +1,54 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LogHandler : MonoBehaviour
 {
+    GameManager GameManager;
+
+    private List<PhotonView> playerViewList = new List<PhotonView>();
+
+    private void Awake()
+    {
+        playerViewList = GameManager.instance.allPlayer;
+    }
+
+    private void Start()
+    {
+           
+    }
+
     [System.Serializable]
     public class KillLog
     {
         public int killerViewID;
         public int victimViewID;
-        public float damage;
+        public int killCount;
     }
 
     public List<KillLog> killLogs = new List<KillLog>();
 
-    public void AddKillLog(int killerViewID, int victimViewID, float damage)
+    public void AddKillLog(int killerViewID, int victimViewID, int killCount)
     {
         KillLog newLog = new KillLog
         {
             killerViewID = killerViewID,
             victimViewID = victimViewID,
-            damage = damage
+            killCount = killCount
         };
         killLogs.Add(newLog);
     }
 
-    public float GetTotalDamageForPlayer(int playerViewID)
+    public int GetTotalKillCountForPlayer(int playerViewID)
     {
-        float totalDamage = 0;
+        int totalKillCount = 1;
         foreach (var log in killLogs)
         {
             if (log.killerViewID == playerViewID)
             {
-                totalDamage += log.damage;
+                totalKillCount += log.killCount;
             }
         }
-        return totalDamage;
+        return totalKillCount;
     }
 }

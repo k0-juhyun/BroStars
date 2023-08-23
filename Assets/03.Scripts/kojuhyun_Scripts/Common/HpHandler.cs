@@ -129,17 +129,6 @@ public class HpHandler : MonoBehaviourPun
 
                 gemHandler.gem = 0;
 
-                // 피격한 오브젝트의 ViewID를 찾아서 출력
-                int hittingObjectViewID = PhotonNetwork.LocalPlayer.ActorNumber; // 임시로 자신의 ViewID를 사용
-                foreach (var log in logHandler.killLogs)
-                {
-                    if (log.victimViewID == hittingObjectViewID)
-                    {
-                        GameObject hittingObject = PhotonView.Find(log.killerViewID).gameObject;
-                        Debug.Log(this.gameObject.name + "를 죽인 브롤러: " + hittingObject.name);
-                        break; // 이미 피격한 오브젝트를 찾았으므로 반복 종료
-                    }
-                }
                 Destroy(this.gameObject);
             }
 

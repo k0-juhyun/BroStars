@@ -40,9 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> BrawlerName = new List<string>() { "ElprimoController", "LeonController", "ReverseNitaController", "ReverseElprimoController" };
-
-    public List<string> callBrawlerName = BrawlerName;
+    public static List<string> PlayerName = new List<string>() { "LeonController", "ElprimoController", "ReverseElprimoController", "ShellyController" };
 
     // 팀 클래스 변수
     public MyTeam myTeam;
@@ -78,7 +76,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos)
         {
-            myMembers.Add(new Player(gameobject, BrawlerName[index], respawnPos));
+            myMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
 
         public void CalculateScore()
@@ -108,7 +106,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         public void SetMyMebers(GameObject gameobject, int index, Vector3 respawnPos)
         {
-            enemyMembers.Add(new Player(gameobject, BrawlerName[index], respawnPos));
+            enemyMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
         public void CalculateScore()
         {
@@ -168,8 +166,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 각 Player의 spawnManager의 리스폰 위치를 생성한다. 
         CreateSpawn();
 
-        // 나의 Player 생성
-        player = PhotonNetwork.Instantiate(BrawlerName[index], spawnPos[index], Quaternion.identity);
+        player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
+
+        if (index > 2)
+        {
+            player.transform.rotation = new Quaternion(0, 180, 0, 0);
+        }
 
         // 마우스 포인터를 비 활성화.
         Cursor.visible = false;
@@ -279,7 +281,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-       // myTeam.CalculateScore();
+        // myTeam.CalculateScore();
         //enemyTeam.CalculateScore();
         //print(myTeam.myTeamScore);
         //print(enemyTeam.EnemyTeamScore);

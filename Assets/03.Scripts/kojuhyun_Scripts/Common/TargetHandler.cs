@@ -87,8 +87,8 @@ public class TargetHandler : MonoBehaviourPun
 
         Destroy(mainCamera.gameObject);
 
-        PhotonNetwork.Instantiate(GameManager.instance.callBrawlerName[GameManager.instance.index],
-            GameManager.instance.spawnPos[GameManager.instance.index], Quaternion.identity);
+        PhotonNetwork.Instantiate(GameManager.PlayerName[GameManager.instance.index],
+        GameManager.instance.spawnPos[GameManager.instance.index], Quaternion.identity);
 
         print("¿©±â2");
         respawnCoroutine = null;

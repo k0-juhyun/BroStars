@@ -22,12 +22,15 @@ public class HitHandler : MonoBehaviourPun
             && collision.gameObject.GetComponent<PhotonView>().ViewID != GetComponent<PhotonView>().ViewID) 
         {
             float hitDamage = collision.gameObject.GetComponent<DamageHandler>().damage;
-            int victimViewID = collision.gameObject.GetComponent<PhotonView>().ViewID;
-            int killerViewID = GetComponent<PhotonView>().ViewID;
-
             photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage);
 
-            logHandler.AddKillLog(killerViewID, victimViewID, hitDamage);
+            if(GetComponent<HpHandler>().curHp <0)
+            {
+                int killerViewID = collision.gameObject.GetComponent<DamageHandler>().viewID;
+                int victimViewID = GetComponent<PhotonView>().ViewID;
+                int killCount = 1;
+                logHandler.AddKillLog(killerViewID, victimViewID, killCount);
+            }
 
             Debug.Log(this.gameObject.name + "가 피해를 입었습니다: " + hitDamage);
         }
