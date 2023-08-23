@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
 
-        if (index > 2)
+        if (player.gameObject.name.Contains("Reverse"))
         {
             player.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
