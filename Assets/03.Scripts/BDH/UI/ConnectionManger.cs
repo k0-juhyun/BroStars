@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
     int currentPlayer;
-    int maxPlayer;
+    int maxPlayerCount = 2;
 
     public Text curText;
     public Text maxText;
-    
+    public Button exitBtn;
+
+    private bool isConnection;
 
     // Start is called before the first frame update
     void Start()
@@ -20,24 +23,46 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
         // 서버 접속 요청 
         PhotonNetwork.ConnectUsingSettings();
 
-        //maxPlayer = PhotonNetwork.CurrentRoom.MaxPlayers;
-        maxPlayer = 4; 
+        // 종료 버튼 클릭 시 현재 Room에서 나가고 메인 MainScene으로 이동.
+        exitBtn.onClick.AddListener(OnClickExit);
     }
 
     private void Update()
     {
-        // ConnectionUI의 Text에 현재 참여한 플레이어의 수 표시.
 
-        //curText.text = currentPlayer.ToString();
-        //maxText.text = maxPlayer.ToString();
+        // 현재 참여한 플레이어의 수 업데이트
+        if (currentPlayer > 0 && PhotonNetwork.CurrentRoom != null)
+        {
+            currentPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        //// currentPlay > MaxPlayer 
-        //if (currentPlayer >= maxPlayer)
-        //{
-        //    // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
-        //    PhotonNetwork.LoadLevel("BDH");
-        //}
+            if (currentPlayer >= maxPlayerCount && isConnection)
+            {
+                // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
+                PhotonNetwork.LoadLevel("04_LodingScene");
+                
+                isConnection = false;
+            }
+
+        }
+
+        // ConnectionUI의 Text에 현재 참여한 플레이어의 수 표시  .
+        curText.text = currentPlayer.ToString();
+        maxText.text = maxPlayerCount.ToString();
     }
+
+    private void OnClickExit()
+    {
+        // PhotonNetwork 현재 참여한 Room에서 나간다. 
+        PhotonNetwork.Disconnect();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        PhotonNetwork.LoadLevel("02_MainScene");
+    }
+
+
 
     // 마스터 서버 접속 완료. 
     public override void OnConnectedToMaster()
@@ -60,11 +85,7 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
         RoomOptions roomOption = new RoomOptions();
 
         // 최대 룸에 참여할 수 있는 플레이어 제한. 
-        roomOption.MaxPlayers = maxPlayer;
-
-        // ConnectionUI의 Text에 최대 플레이어 제한 수 표시.
-        //maxPlayer = (int)roomOption.MaxPlayers;
-        print("입장 가능한 최대 가능 인원 : " + maxPlayer);
+        roomOption.MaxPlayers = maxPlayerCount;
 
         PhotonNetwork.JoinOrCreateRoom("broStars", roomOption, TypedLobby.Default);
 
@@ -93,10 +114,24 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
 
         // 현재 참여한 플레이어의 수
         currentPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
-        ProjectManager.instance.myFirstPosIndex = currentPlayer;
-        print("현재 참여한 플레이어의 수 : " + currentPlayer);
 
-        // 로딩 씬으로 이동 04_LodingScene
-        PhotonNetwork.LoadLevel("04_LodingScene");
+        // 현재 나의 인덱스를 ProjectManager에 myPosIndex 저장.
+        ProjectManager.instance.myPosIndex = currentPlayer;
+
+        // isConnection 으로 연결 가능.
+        isConnection = true; 
+
+
     }
+
+    // 새로운 인원이 방에 들어왔을 때 호출되는 함수
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+
+        print(PhotonNetwork.NickName + " 브롤러님이 입장하였습니다.");
+    }
+
+
+
 }

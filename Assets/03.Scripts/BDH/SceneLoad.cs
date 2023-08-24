@@ -4,26 +4,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows.WebCam;
 using Photon.Pun;
 
 public class SceneLoad : MonoBehaviour
 {
     public Slider progressbar;
     public TMP_Text loadText;
+  
 
     public void Start()
     {
-        
-        
-
+      
         PhotonNetwork.AutomaticallySyncScene = true;
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(LoadScene()); 
+            StartCoroutine(LoadScene());
+
         }
-        //PhotonNetwork.LoadLevel
+
+      
     }
+
+  
+
 
     // 비동기 로드를 사용하기 위해 코루틴을 이용한다. 
     IEnumerator LoadScene()
@@ -41,29 +44,30 @@ public class SceneLoad : MonoBehaviour
         while (!operation.isDone)
         {
             yield return null;
-            if(progressbar.value < 0.9f)
+            if (progressbar.value < 0.9f)
             {
                 // progressbar의 value값을 조금씩 증가시켜준다. 
                 progressbar.value = Mathf.MoveTowards(progressbar.value, 0.9f, Time.deltaTime);
-              
+
                 loadText.text = Mathf.Round(progressbar.value * 100).ToString();
-            }else if(operation.progress >= 0.9f)
+            }
+            else if (operation.progress >= 0.9f)
             {
                 progressbar.value = Mathf.MoveTowards(progressbar.value, 1f, Time.deltaTime);
             }
 
             // progressbar.value가 1이 되면 로딩이 완료.
-            if(progressbar.value >= 1f)
+            if (progressbar.value >= 1f)
             {
                 loadText.text = "100";
             }
 
-            if(Input.GetMouseButtonDown(0) && progressbar.value >= 1f && operation.progress >= 0.9f)
+            if (Input.GetMouseButtonDown(0) && progressbar.value >= 1f && operation.progress >= 0.9f)
             {
-                operation.allowSceneActivation = true; 
+                operation.allowSceneActivation = true;
             }
         }
-    
-        
+
+
     }
 }

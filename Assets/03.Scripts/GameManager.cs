@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "LeonController", "ElprimoController", "ReverseElprimoController", "ShellyController" };
+    public static List<string> PlayerName = new List<string>() { "ShellyController", "NitaController", "ReverseElprimoController", "ReverseLeonController",  };
 
     // 팀 클래스 변수
     public MyTeam myTeam;
@@ -161,12 +161,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerLength = PhotonNetwork.CurrentRoom.PlayerCount;
 
         // 내가 위치해야 하는 index.
-        index = ProjectManager.instance.myFirstPosIndex - 1;// PhotonNetwork.CurrentRoom.PlayerCount - 1;
-        print("111111 : " + index);
+        index = ProjectManager.instance.myPosIndex - 1;// PhotonNetwork.CurrentRoom.PlayerCount - 1;
+      
         // 각 Player의 spawnManager의 리스폰 위치를 생성한다. 
         CreateSpawn();
 
-        player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
+        // spawnManager의 리스폰 위치에 브롤러 캐릭터 생성한다. 
+        //player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
+        player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
+        // 생성하면 무적 이펙트 기능
 
         if (player.gameObject.name.Contains("Reverse"))
         {
@@ -193,13 +196,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
         }
 
-        //if(allPlayer.Count == 4)
-        //{
-        //    if (PhotonNetwork.IsMasterClient)
-        //    {
-        //        StartCoroutine(AAA());
-        //    }
-        //}
     }
 
     public int myTeamIdx;
@@ -266,33 +262,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
 
-    // 새로운 인원이 방에 들어왔을 때 호출되는 함수
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
-
-
-    }
-
-    // 기존 인원이 방에 나갔을 때 호출되는 함수
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
-    {
-        base.OnPlayerLeftRoom(otherPlayer);
-
-    }
-
-    private void Update()
-    {
-        // myTeam.CalculateScore();
-        //enemyTeam.CalculateScore();
-        //print(myTeam.myTeamScore);
-        //print(enemyTeam.EnemyTeamScore);
-    }
-
-    private void CheckWinner()
-    {
-
-    }
+  
 
 
 

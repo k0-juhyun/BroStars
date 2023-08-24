@@ -16,7 +16,10 @@ public class SoundManager : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-        }else if(instance != this)
+            // 화면 전환이 일어나도 오브젝트가 삭제되지 않도록 한다. 
+            DontDestroyOnLoad(gameObject);
+        }
+        else if(instance != this)
         {
             Destroy(gameObject);
         }
@@ -24,8 +27,7 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
 
-        // 화면 전환이 일어나도 오브젝트가 삭제되지 않도록 한다. 
-        DontDestroyOnLoad(gameObject); 
+        
     }
 
     private void Start()
@@ -50,7 +52,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayZemBGM()
     {
-        audioSource.PlayOneShot(clips[2]);
+       // audioSource.PlayOneShot(clips[2]);
     }
 
 

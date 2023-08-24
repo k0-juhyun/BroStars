@@ -43,7 +43,6 @@ public class Zem : MonoBehaviourPun
     {
         if (this.transform.position.y <= 0.3f + 4f)
         {
-            //GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<BoxCollider>().enabled = true;
         }
@@ -58,15 +57,21 @@ public class Zem : MonoBehaviourPun
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(AbsorptedToCollider(collision));
+
+            
             if (photonView.IsMine)
             {
-                collision.gameObject.GetComponent<GemHandler>().gem += 1;
-                Destroy(gameObject);
+                // GemHandler의 PlusGem() 메소드를 토해 gem 변수 카운드 증가. 
+                GemHandler gemCountUp = collision.gameObject.GetComponent<GemHandler>();
+                // RPC ALL로 PlusGem()를 사용하여 Gem의 갯수를 증가시킨다. 
+                gemCountUp.PlusGem();
+
+                PhotonNetwork.Destroy(gameObject);
             }
             
         }
     }
-  
+
     IEnumerator AbsorptedToCollider(Collision collision)
     {
         float time = 0;

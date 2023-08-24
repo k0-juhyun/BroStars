@@ -1003,7 +1003,6 @@ MonoBehaviour:
   RespawnImage: {fileID: 0}
   smoothTime: 0.3
   distanceZFromTarget: -110
-  distanceXFromTarget: 0
   shakeMagnitude: 0.1
   startCamSpeed: 0.1
   gameStart: 0
@@ -1411,10 +1410,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948ff9e017e2ff4ba43b0b699747eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestroy: 0
   Target: {fileID: 5750911240521027617}
   DyingEffect: {fileID: 9126123211451897639}
   NoneTarget: {fileID: 0}
-  isDestroy: 0
   teamIdx: 0
 --- !u!114 &7285216192649770628
 MonoBehaviour:
@@ -5453,6 +5452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 1178165704509839777}
+  isReverse: 0
   moveSpeed: 2
   receivePos: {x: 0, y: 0, z: 0}
   receiveRot: {x: 0, y: 0, z: 0, w: 1}
