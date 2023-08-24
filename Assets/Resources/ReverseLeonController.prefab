@@ -2606,6 +2606,7 @@ MonoBehaviour:
   background: {fileID: 4650634457131571106}
   handle: {fileID: 4650634457232071025}
   input: {x: 0, y: 0}
+  camShake: 0
   moveThreshold: 1
 --- !u!1 &4650634456979624801
 GameObject:
@@ -4623,7 +4624,7 @@ GameObject:
   - component: {fileID: 4650634457454123351}
   - component: {fileID: 4650634457454123348}
   m_Layer: 11
-  m_Name: Canvas
+  m_Name: MyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4809,6 +4810,7 @@ MonoBehaviour:
   background: {fileID: 4650634457852424660}
   handle: {fileID: 4650634457307160790}
   input: {x: 0, y: 0}
+  camShake: 0
   moveThreshold: 1
 --- !u!1 &4650634457504466078
 GameObject:
@@ -8790,6 +8792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 4650634457265152316}
   isBush: 0
+  myCanvas: {fileID: 4650634457454123350}
 --- !u!114 &1288252486274572003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10161,6 +10164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attacker: {fileID: 0}
 --- !u!114 &4992558289726222547 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7122238897074137363, guid: e4f55c6f451c59b4d981d95af5f40ad2,

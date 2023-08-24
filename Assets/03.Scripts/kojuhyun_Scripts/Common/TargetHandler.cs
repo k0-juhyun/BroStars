@@ -108,8 +108,13 @@ public class TargetHandler : MonoBehaviourPun
 
         Destroy(mainCamera.gameObject);
 
-        PhotonNetwork.Instantiate(GameManager.PlayerName[GameManager.instance.index],
+        GameObject RespawnPlayer = PhotonNetwork.Instantiate(GameManager.PlayerName[GameManager.instance.index],
         GameManager.instance.spawnPos[GameManager.instance.index], Quaternion.identity);
+
+        if (RespawnPlayer.name.Contains("Reverse"))
+        {
+            RespawnPlayer.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
 
         print("¿©±â2");
         respawnCoroutine = null;

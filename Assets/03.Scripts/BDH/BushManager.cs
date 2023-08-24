@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 // 1. 은신 기능
 // 2. 일정시간마다 플레이어의 체력 회복 기능.(추후 기능) 
 
-public class BushManager : MonoBehaviour
+public class BushManager : MonoBehaviourPun
 {
     // 플레이어의 SkinedRenderer를 가지고 있는 게임 오브젝트. 
     public GameObject playerComponent;
@@ -27,10 +28,14 @@ public class BushManager : MonoBehaviour
     // 플레이어가 부쉬 범위안에 속하는 지 판단하는 변수 
     public bool isBush;
 
+    TargetHandler targetHandler;
+    public Canvas myCanvas;
+
     // Start is called before the first frame update
     void Start()
     {
         layer = 1 << LayerMask.NameToLayer("GrassLayer");
+        targetHandler = GetComponentInParent<TargetHandler>();
     }
 
     // Update is called once per frame
@@ -103,6 +108,12 @@ public class BushManager : MonoBehaviour
     {
         //// Shelly_GEO의 컴포넌트의 갯수
         int length = playerComponent.transform.childCount;
+        bool shouldHide = false;
+
+        if (isBush && playerComponent.GetComponentInParent<TargetHandler>().teamIdx != targetHandler.teamIdx)
+        {
+            shouldHide = true;
+        }
 
         for (int index = 0; index < length; index++)
         {
@@ -112,10 +123,19 @@ public class BushManager : MonoBehaviour
             Color playerMaterialColor = playerRenderer.materials[0].color;
             // SkinnedMeshRenderer 알파 값을 변경합니다.
             playerMaterialColor.a = parameter;
+
             //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
             playerRenderer.materials[0].color = playerMaterialColor;
 
-            
+            //if (!photonView.IsMine)
+            //{
+            //    playerRenderer.enabled = (!shouldHide && parameter == 1f);
+            //}
+            if (photonView.IsMine)
+            {
+                playerRenderer.enabled = !shouldHide || parameter != 1f;
+                myCanvas.gameObject.SetActive(!shouldHide || parameter != 1f);
+            }
         }
     }
 
@@ -147,10 +167,4 @@ public class BushManager : MonoBehaviour
         Gizmos.DrawWireSphere(this.transform.position, rangeRadius);
 
     }
-
-
-
-
-
-
 }

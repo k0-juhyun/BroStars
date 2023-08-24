@@ -1390,6 +1390,7 @@ MonoBehaviour:
   background: {fileID: 7417658916839304376}
   handle: {fileID: 7417658916925837761}
   input: {x: 0, y: 0}
+  camShake: 0
   moveThreshold: 1
 --- !u!1 &3750438042871950884
 GameObject:
@@ -1532,7 +1533,6 @@ MonoBehaviour:
   RespawnImage: {fileID: 2294114406022638244}
   smoothTime: 0.3
   distanceZFromTarget: 110
-  distanceXFromTarget: 0
   shakeMagnitude: 0.1
   startCamSpeed: 0.1
   gameStart: 0
@@ -2712,6 +2712,7 @@ MonoBehaviour:
   background: {fileID: 7417658918716386197}
   handle: {fileID: 7417658916864652282}
   input: {x: 0, y: 0}
+  camShake: 0
   moveThreshold: 1
 --- !u!1 &3750438043509212723
 GameObject:
@@ -3606,7 +3607,7 @@ GameObject:
   - component: {fileID: 3750438043862327492}
   - component: {fileID: 3750438043862327499}
   m_Layer: 11
-  m_Name: Canvas
+  m_Name: MyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4908,10 +4909,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948ff9e017e2ff4ba43b0b699747eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestroy: 0
   Target: {fileID: 4093018165723132921}
   DyingEffect: {fileID: 3750438043500337410}
   NoneTarget: {fileID: 8638277140720811803}
-  isDestroy: 0
   teamIdx: 0
 --- !u!114 &7926366658019106252
 MonoBehaviour:
@@ -5502,6 +5503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 3750438042871950884}
   isBush: 0
+  myCanvas: {fileID: 3750438043862327493}
 --- !u!114 &7306718958531932982
 MonoBehaviour:
   m_ObjectHideFlags: 0

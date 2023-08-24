@@ -2104,6 +2104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 6351333745983426831}
   isBush: 0
+  myCanvas: {fileID: 6351333745761424862}
 --- !u!114 &670734862999506761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2241,7 +2242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58cd09ca283a91d4c85cc40692db5bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isProgress: 0
 --- !u!1 &6184576831979139677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,7 +3199,7 @@ GameObject:
   - component: {fileID: 6351333745761424863}
   - component: {fileID: 6351333745761424832}
   m_Layer: 11
-  m_Name: Canvas
+  m_Name: MyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5620,6 +5620,7 @@ MonoBehaviour:
   background: {fileID: 6351333746233576957}
   handle: {fileID: 6351333745763852641}
   input: {x: 0, y: 0}
+  camShake: 0
   moveThreshold: 1
 --- !u!1 &6351333746865458595
 GameObject:
@@ -7967,6 +7968,7 @@ MonoBehaviour:
   background: {fileID: 6351333746944162814}
   handle: {fileID: 6351333747271673417}
   input: {x: 0, y: 0}
+  camShake: 0
   moveThreshold: 1
 --- !u!1 &6351333747430944605
 GameObject:

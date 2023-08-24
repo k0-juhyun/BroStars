@@ -20,13 +20,7 @@ public class HitHandler : MonoBehaviourPun
         if (damageHandler != null && damageHandler.attacker != photonView)
         {
             float hitDamage = damageHandler.damage;
-            photonView.RPC(nameof(HandleHP), RpcTarget.All, -hitDamage, damageHandler.attacker.ViewID);
+            photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage, damageHandler.attacker.ViewID);
         }
-    }
-
-    [PunRPC]
-    void HandleHP(float damage, int attackerViewID)
-    {
-        hpHandler.HandleHP(damage, attackerViewID);
     }
 }
