@@ -10,18 +10,23 @@ public class SceneLoad : MonoBehaviour
 {
     public Slider progressbar;
     public TMP_Text loadText;
+  
 
     public void Start()
     {
-
-
+      
         PhotonNetwork.AutomaticallySyncScene = true;
         if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(LoadScene());
+
         }
-        //PhotonNetwork.LoadLevel
+
+      
     }
+
+  
+
 
     // 비동기 로드를 사용하기 위해 코루틴을 이용한다. 
     IEnumerator LoadScene()

@@ -9,7 +9,7 @@ using System;
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
     int currentPlayer;
-    int maxPlayerCount = 4;
+    int maxPlayerCount = 2;
 
     public Text curText;
     public Text maxText;
@@ -39,6 +39,7 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
             {
                 // Loding Scene으로 이동.( 포톤 네트워크를 이용하여 씬 전환)
                 PhotonNetwork.LoadLevel("04_LodingScene");
+                
                 isConnection = false;
             }
 

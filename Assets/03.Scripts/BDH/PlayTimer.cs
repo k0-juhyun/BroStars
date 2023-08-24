@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+using Photon.Pun;
+using Photon.Realtime;
 
 // 1. 게임 플레이 기본적으로 타이머 3분 30초 설정
-public class PlayTimer : MonoBehaviour
+public class PlayTimer : MonoBehaviourPunCallbacks
 {
     private TMP_Text timerText;
 
-    private float exitTimer = 210f;
+    //private float exitTimer = 210f;
+    private float exitTimer = 30f;
     private float currentTimer;
     private int minute;
     private int second;
@@ -22,6 +24,13 @@ public class PlayTimer : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(StartTimer());
+    }
+
+    [PunRPC]
+    private void Timer()
+    {
+        // PhotonNetwork를 통해서 마스터만 실행 가능하도록.! -> PRC ALL. 
         StartCoroutine(StartTimer());
     }
 
@@ -39,7 +48,8 @@ public class PlayTimer : MonoBehaviour
 
             if (currentTimer <= 0)
             {
-                print("게임 종료");
+                // 게임 종료 -> PhotonNetwork 연결을 종료.
+                OnGameExit();
                 currentTimer = 0;
 
                 yield break;
@@ -47,4 +57,18 @@ public class PlayTimer : MonoBehaviour
 
         }
     }
+
+    private void OnGameExit()
+    {
+        // PhotonNetwork 현재 참여한 Room에서 나간다. 
+        PhotonNetwork.Disconnect();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        
+        //PhotonNetwork.LoadLevel("02_MainScene");
+    }
+
 }
