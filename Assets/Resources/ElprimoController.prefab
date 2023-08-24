@@ -6568,6 +6568,7 @@ MonoBehaviour:
   shakeMagnitude: 0.1
   startCamSpeed: 0.1
   gameStart: 0
+  isShake: 0
 --- !u!114 &6351333747142301791
 MonoBehaviour:
   m_ObjectHideFlags: 0

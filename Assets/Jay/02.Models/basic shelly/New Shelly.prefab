@@ -1433,7 +1433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1234768999665503066
 Transform:
   m_ObjectHideFlags: 0
@@ -2107,9 +2107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11db393dd9b99b439585bb399319277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 6
-  viewAngle: 35
-  line: {fileID: 0}
+  viewRadius: 7
+  viewAngle: 37
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -4585,14 +4584,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4916365691828308957}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b11db393dd9b99b439585bb399319277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 5
   viewAngle: 30
-  line: {fileID: 0}
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -7219,7 +7217,7 @@ GameObject:
   - component: {fileID: 6458406969612521285}
   m_Layer: 11
   m_Name: New Shelly
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7372,7 +7370,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 2147483648
-  shotGunClip: {fileID: 8300000, guid: c9520f7db44fc2347854ea6e64d1caa7, type: 3}
+  shotGunClip: {fileID: 8300000, guid: e027ec956ca9c87458b20162052502a7, type: 3}
 --- !u!114 &2508259570224357880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8169,7 +8167,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7993729114211015955}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ba388758e4669443b1cb087dda4510a, type: 3}
   m_Name: 

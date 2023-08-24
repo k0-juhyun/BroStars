@@ -160,41 +160,42 @@ public class ShellyAttackHandler : MonoBehaviourPun
             GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
 
             bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
-            
+            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+            #region 거리별 데미지
             //나를 제외한 player 태그 
 
             //if (gameObject.CompareTag("Player"))
-            {
-            
-                //DamageHandler damageHandler = GetComponent<DamageHandler>();
-                //1차 사거리
-                //float firstDistance = 1.5f;
-                ////2차 사거리
-                //float secondDistance = 3.5f;
-                ////3차 사거리
-                //float thirdDistance = 5f;
+            //{
 
-                //// 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
-                //float range = Vector3.Distance(transform.position, transform.position);
+            //DamageHandler damageHandler = GetComponent<DamageHandler>();
+            //1차 사거리
+            //float firstDistance = 1.5f;
+            ////2차 사거리
+            //float secondDistance = 3.5f;
+            ////3차 사거리
+            //float thirdDistance = 5f;
 
-                ////사거리 안에 있으면 
-                //if (range < firstDistance)
-                //{
-                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //5배
-                //}
-                //else if (firstDistance < range && range < secondDistance)
-                //{
-                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //3배
-                //}
-                //else if (secondDistance < range && range < thirdDistance)
-                //{
-                //    bullet.GetComponent<DamageHandler>().damage  = hpHandler.AttackDamage; //1배
-                //}
-            }
-            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+            //// 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
+            //float range = Vector3.Distance(transform.position, transform.position);
 
+            ////사거리 안에 있으면 
+            //if (range < firstDistance)
+            //{
+            //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //5배
+            //}
+            //else if (firstDistance < range && range < secondDistance)
+            //{
+            //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //3배
+            //}
+            //else if (secondDistance < range && range < thirdDistance)
+            //{
+            //    bullet.GetComponent<DamageHandler>().damage  = hpHandler.AttackDamage; //1배
+            //}
+            //}
+            #endregion
             Destroy(bullet, 0.6f);
         }
+
     }
     #region 오토에임
 
