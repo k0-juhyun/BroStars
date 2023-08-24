@@ -8,7 +8,6 @@ public class FieldOfView1 : MonoBehaviour
     [Range(0, 360)]
     public float viewAngle;
 
-    public LineRenderer line;
     public LayerMask targetMask;
     public LayerMask obstacleMask;
     [HideInInspector]
@@ -49,7 +48,7 @@ public class FieldOfView1 : MonoBehaviour
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.forward, dirToTarget, dstToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
                 }
@@ -67,32 +66,27 @@ public class FieldOfView1 : MonoBehaviour
 
         Vector3[] viewPoints = new Vector3[stepCount + 1];
         //각도설정
-        float startAngle = transform.eulerAngles.z - viewAngle / 2 - 90f;
+        float startAngle = transform.eulerAngles.y - viewAngle / 2 - 90f;
 
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = transform.eulerAngles.z - viewAngle / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = ViewCast(angle);
             viewPoints[i] = newViewCast.point;
             //print(transform.position);
-            Debug.DrawLine(transform.position, transform.forward + DirFromAngle(angle, true) * viewRadius, Color.red);
+            Debug.DrawLine(transform.position, transform.position + DirFromAngle(angle, true) * viewRadius, Color.red);
         }
 
-        line.positionCount = viewPoints.Length;
-
-        for(int i = 0; i< viewPoints.Length; i++)
-        {
-            line.SetPositions(viewPoints);
-        }
-
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = viewPoints.Length;
+        lineRenderer.SetPositions(viewPoints);
     }
 
     ViewCastInfo ViewCast(float globalAngle)
     {
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
-
-        if (Physics.Raycast(Vector3.forward, dir, out hit, viewRadius, obstacleMask))
+        if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask))
         {
             return new ViewCastInfo(hit.point, globalAngle);
 
@@ -106,7 +100,7 @@ public class FieldOfView1 : MonoBehaviour
     {
         if (!angleIsGlobal)
         {
-            angleInDegrees += transform.eulerAngles.z;
+            angleInDegrees += transform.eulerAngles.y;
         }
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
@@ -118,7 +112,7 @@ public class FieldOfView1 : MonoBehaviour
         //public float dst;
         public float angle;
 
-        public ViewCastInfo(Vector3 _point,float _angle)
+        public ViewCastInfo(Vector3 _point, float _angle)
         {
             //hit = _hit;
             point = _point;

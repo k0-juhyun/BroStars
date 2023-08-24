@@ -840,6 +840,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2002999984390231938, guid: 732aaaa2ee33f7b4cad29dc3a812217c,
+        type: 3}
+      propertyPath: viewAngle
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002999984390231938, guid: 732aaaa2ee33f7b4cad29dc3a812217c,
+        type: 3}
+      propertyPath: viewRadius
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2162369652994529285, guid: 732aaaa2ee33f7b4cad29dc3a812217c,
         type: 3}
       propertyPath: m_AnchorMax.y
