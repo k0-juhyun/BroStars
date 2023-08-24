@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "ShellyController", "NitaController", "ReverseElprimoController", "ReverseLeonController",  };
+    public static List<string> PlayerName = new List<string>() { "ShellyController", "NitaController", "ElprimoController", "LeonController",  };
 
     // 팀 클래스 변수
     public MyTeam myTeam;
@@ -170,6 +170,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         //player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
         player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
         // 생성하면 무적 이펙트 기능
+        print(ProjectManager.instance.myBrawlerIndex);
+        print(spawnPos[index]);
+        if(index > 1)
+        {
+            player.gameObject.name = "Reverse" + player.gameObject.name;
+        }
 
         if (player.gameObject.name.Contains("Reverse"))
         {

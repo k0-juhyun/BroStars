@@ -2311,7 +2311,6 @@ MonoBehaviour:
   handle: {fileID: 5965694775134588616}
   input: {x: 0, y: 0}
   moveThreshold: 1
-  callCamShake: 0
 --- !u!1 &5965694773925684314
 GameObject:
   m_ObjectHideFlags: 0
@@ -4363,7 +4362,6 @@ MonoBehaviour:
   handle: {fileID: 5965694775207881971}
   input: {x: 0, y: 0}
   moveThreshold: 1
-  callCamShake: 0
 --- !u!1 &5965694774361623629
 GameObject:
   m_ObjectHideFlags: 0

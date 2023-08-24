@@ -70,6 +70,9 @@ MonoBehaviour:
   - SetTransparencyAfterDelay
   - UpdateDyingEffect
   - SetAttacker
+  - PlusGemRPC
+  - Timer
+  - sexTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

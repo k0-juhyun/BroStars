@@ -11,20 +11,26 @@ public class PlayTimer : MonoBehaviourPunCallbacks
 {
     private TMP_Text timerText;
 
-    //private float exitTimer = 210f;
-    private float exitTimer = 30f;
+    private float exitTimer = 210f;
+   // private float exitTimer = 30f;
     private float currentTimer;
     private int minute;
     private int second;
 
+    PhotonView pv; 
+
     private void Awake()
     {
+        pv = GetComponentInParent<PhotonView>();
         timerText = GameObject.Find("TimerText").GetComponent<TMP_Text>();
     }
 
     private void Start()
     {
-        StartCoroutine(StartTimer());
+        if(PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("Timer", RpcTarget.All);
+        }
     }
 
     [PunRPC]

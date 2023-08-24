@@ -905,6 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attacker: {fileID: 0}
 --- !u!114 &7467565591032619534
 MonoBehaviour:
   m_ObjectHideFlags: 0
