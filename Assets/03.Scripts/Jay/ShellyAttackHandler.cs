@@ -193,7 +193,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
             //}
             //}
             #endregion
-            Destroy(bullet, 0.6f);
+            Destroy(bullet, 0.7f);
         }
 
     }
