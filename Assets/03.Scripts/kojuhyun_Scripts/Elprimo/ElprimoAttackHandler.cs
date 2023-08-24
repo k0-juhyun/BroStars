@@ -198,7 +198,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        _fistEffect.GetComponent<DamageHandler>().viewID = _fistEffect.GetComponent<PhotonView>().ViewID;
+        _fistEffect.GetComponent<DamageHandler>().attacker = photonView;
         _fistEffect.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
 
@@ -206,7 +206,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        _fistEffect.GetComponent<DamageHandler>().viewID = _fistEffect.GetComponent<PhotonView>().ViewID;
+        _fistEffect.GetComponent<DamageHandler>().attacker = photonView;
         _fistEffect.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
     #endregion
@@ -227,10 +227,10 @@ public class ElprimoAttackHandler : MonoBehaviourPun
                             continue;
 
                         float ultiDamage = -hpHandler.SkillDamage;
-                        print("Jump");
-                        hittedHpHandler.HandleHP(ultiDamage);
-                        print("Damage");
-                        print(hittedHpHandler.gameObject.name +": "+ultiDamage);
+
+                        PhotonView myPhotonView = GetComponent<PhotonView>();
+
+                        hittedHpHandler.photonView.RPC("HandleHP", RpcTarget.All, ultiDamage, myPhotonView.ViewID);
                     }
                 }
                 isJump = false;

@@ -51,14 +51,18 @@ public class TargetHandler : MonoBehaviourPun
             {
                 if (hpHandler.isDie)
                 {
-                    DyingEffect.transform.position = hpHandler.transform.position;
-                    NoneTarget.transform.position = hpHandler.transform.position;
+                    Vector3 dyingEffectPosition = hpHandler.transform.position;
+                    bool isDyingEffectActive = true;
+
+                    NoneTarget.transform.position = dyingEffectPosition;
                     NoneTarget.SetActive(true);
                     DyingEffect.SetActive(true);
                     Target = NoneTarget;
                     mainCamera.transform.SetParent(null);
                     isDestroy = true;
                     hpHandler.isDie = false;
+
+                    photonView.RPC("UpdateDyingEffect", RpcTarget.Others, dyingEffectPosition, isDyingEffectActive);
                 }
             }
 
@@ -68,6 +72,13 @@ public class TargetHandler : MonoBehaviourPun
                 StartCoroutine(RespawnPlayer(5.0f));
             }
         }
+    }
+
+    [PunRPC]
+    void UpdateDyingEffect(Vector3 position, bool isActive)
+    {
+        DyingEffect.transform.position = position;
+        DyingEffect.SetActive(!isActive);
     }
 
     [PunRPC]

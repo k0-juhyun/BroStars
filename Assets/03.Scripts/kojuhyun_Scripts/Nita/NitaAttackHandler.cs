@@ -164,7 +164,7 @@ public class NitaAttackHandler : MonoBehaviourPun
 
         GameObject nitaNormalAttack = Instantiate(nitaNormal, pos, rot);
         nitaNormalAttack.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        nitaNormalAttack.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
+        nitaNormalAttack.GetComponent<DamageHandler>().attacker = photonView;
         nitaNormalAttack.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
 

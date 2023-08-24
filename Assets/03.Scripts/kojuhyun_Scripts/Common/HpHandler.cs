@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 
 public class HpHandler : MonoBehaviourPun
 {
@@ -39,7 +40,7 @@ public class HpHandler : MonoBehaviourPun
 
     // 추가 오브젝트
     private GameObject gem;
-
+    PhotonView lastAttacker;
 
     private void Awake()
     {
@@ -63,8 +64,15 @@ public class HpHandler : MonoBehaviourPun
 
 
     [PunRPC]
-    public float HandleHP(float damage)
+    public float HandleHP(float damage, int attackerViewID)
     {
+        PhotonView attacker = PhotonView.Find(attackerViewID);
+
+        if (attacker != null)
+        {
+            lastAttacker = attacker;
+        }
+
         if (damage < 0)
         {
             if (this.gameObject.name != "Bruce")
@@ -91,7 +99,7 @@ public class HpHandler : MonoBehaviourPun
     {
         if (bushManager.isBush && curHp < maxHp)
         {
-            HandleHP(1);
+            HandleHP(1,0);
             HealPrefab.SetActive(true);
             soundHandler.enabled = true;
         }
@@ -130,15 +138,19 @@ public class HpHandler : MonoBehaviourPun
                 }
 
                 gemHandler.gem = 0;
-                if(hitHandler.isProgress)
+                if (lastAttacker != null)
                 {
-                    Destroy(this.gameObject);
+                    if (lastAttacker.IsMine)
+                    {
+                        Debug.Log(lastAttacker.Owner.NickName + " killed " + this.gameObject.name);
+                    }
+                    PhotonNetwork.Destroy(this.gameObject);
                 }
             }
 
             if (this.gameObject.name == "Bruce")
             {
-                Destroy(this.gameObject);
+                PhotonNetwork.Destroy(this.gameObject);
             }
         }
     }

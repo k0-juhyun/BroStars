@@ -6,13 +6,10 @@ using Unity.VisualScripting;
 
 public class HitHandler : MonoBehaviourPun
 {
-    LogHandler logHandler;
     HpHandler hpHandler;
 
-    public bool isProgress;
     private void Awake()
     {
-        logHandler = FindObjectOfType<LogHandler>();
         hpHandler = GetComponent<HpHandler>();
     }
 
@@ -20,24 +17,16 @@ public class HitHandler : MonoBehaviourPun
     {
         DamageHandler damageHandler = collision.gameObject.GetComponent<DamageHandler>();
 
-        if (damageHandler != null && damageHandler.viewID != photonView.ViewID)
+        if (damageHandler != null && damageHandler.attacker != photonView)
         {
             float hitDamage = damageHandler.damage;
-            photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage);
-
-            if (GetComponent<HpHandler>().curHp < 0)
-            {
-                GameObject attacker = PhotonNetwork.GetPhotonView(damageHandler.viewID).gameObject;
-                string attackerName = "Unknown";
-
-                if (attacker != null)
-                {
-                    attackerName = attacker.name;
-                }
-
-                Debug.LogFormat("({0}) 가 {1} 에게 죽었습니다.", photonView.ViewID, attackerName);
-                isProgress = true;
-            }
+            photonView.RPC(nameof(HandleHP), RpcTarget.All, -hitDamage, damageHandler.attacker.ViewID);
         }
+    }
+
+    [PunRPC]
+    void HandleHP(float damage, int attackerViewID)
+    {
+        hpHandler.HandleHP(damage, attackerViewID);
     }
 }

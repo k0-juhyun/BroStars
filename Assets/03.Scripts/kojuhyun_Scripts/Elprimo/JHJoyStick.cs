@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using Photon.Pun;
+using JetBrains.Annotations;
 
 public class JHJoyStick : Joystick
 {
+    [HideInInspector]
+    public bool camShake;
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
     [SerializeField] private float moveThreshold = 1;

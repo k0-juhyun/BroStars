@@ -35,12 +35,4 @@ public class NitaManager : MonoBehaviourPun
         photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
         photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            hpHandler.HandleHP(-100);
-        }
-    }
 }

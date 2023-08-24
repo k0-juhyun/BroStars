@@ -174,7 +174,7 @@ public class LeonAttackHandler : MonoBehaviourPun
 
             DamageHandler damageHandler = shuriken.GetComponent<DamageHandler>();
             damageHandler.damage = hpHandler.AttackDamage;
-            damageHandler.viewID = GetComponent<PhotonView>().ViewID;
+            damageHandler.attacker = photonView;
 
             shuriken.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
             yield return new WaitForSeconds(0.03f);

@@ -38,25 +38,4 @@ public class ElprimoManager : MonoBehaviourPun
             //hpHandler.RegenerateHpInBush();
         }
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            hpHandler.HandleHP(-100);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //if 내가 MyTeam이고
-        //if()
-        //{
-        //    other.
-        //}
-        //if(other.gameObject.tag == awayTeamAttack)
-        //{
-        //    hpHandler.HandleHP(other.gameObject.GetComponent);
-        //}
-    }
 }
