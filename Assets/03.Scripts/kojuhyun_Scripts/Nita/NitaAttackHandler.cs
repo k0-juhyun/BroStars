@@ -37,6 +37,8 @@ public class NitaAttackHandler : MonoBehaviourPun
     private float TrailDistance = 4f;
     private float launchForce = 10;
 
+    private int bruceIndex;
+
     RaycastHit hit;
 
     private void Awake()
@@ -134,22 +136,15 @@ public class NitaAttackHandler : MonoBehaviourPun
     [PunRPC]
     public void LaunchBear(float h, float v)
     {
-        //if(내가 myTeam 이라면)
-        //{
-        //    bruceSpawn.tag = myTeamAttack;
-        //}
-        //else if(내가 awayTeam 이라면)
-        //{
-        //    bruceSpawn.tage = awayTeamAttack;
-        //}
-        if(PhotonNetwork.IsMasterClient)
+        bruceIndex = (targetHandler.teamIdx == 1) ? targetHandler.teamIdx : 2;
+        if (PhotonNetwork.IsMasterClient)
         {
             Vector3 joystickDirection = new Vector3(h, 0.5f, v);
             Vector3 startVelocity = joystickDirection * launchForce;
 
             GameObject bruceSpawn = PhotonNetwork.Instantiate("BruceSpawn", SpawnPos.transform.position, Quaternion.identity);
-            print("bearTest");
             bruceSpawn.GetComponent<Rigidbody>().velocity = startVelocity;
+            bruceSpawn.layer = (bruceIndex == 1) ? LayerMask.NameToLayer("myTeam") : LayerMask.NameToLayer("enemyTeam");
         }
     }
 
@@ -170,14 +165,7 @@ public class NitaAttackHandler : MonoBehaviourPun
         GameObject nitaNormalAttack = Instantiate(nitaNormal, pos, rot);
         nitaNormalAttack.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
         nitaNormalAttack.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
-        //if(내가 myTeam 이라면)
-        //{
-        //    nitaNormal.tag = myTeamAttack;
-        //}
-        //else if(내가 awayTeam 이라면)
-        //{
-        //    nitaNormal.tage = awayTeamAttack;
-        //}
+        nitaNormalAttack.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
 
     #endregion

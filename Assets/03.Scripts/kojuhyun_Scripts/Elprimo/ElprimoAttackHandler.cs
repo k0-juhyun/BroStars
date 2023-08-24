@@ -118,10 +118,10 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
 
-        //if(isReverse)
-        //{
-        //    joystickDirection = new Vector3(-joystickDirection.x, 0.5f, -joystickDirection.z);
-        //}
+        if (isReverse)
+        {
+            joystickDirection = new Vector3(-joystickDirection.x, 0.5f, -joystickDirection.z);
+        }
 
         Vector3 startVelocity = joystickDirection * launchForce;
 
@@ -199,14 +199,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
         GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
         _fistEffect.GetComponent<DamageHandler>().viewID = _fistEffect.GetComponent<PhotonView>().ViewID;
-        //if(내가 myTeam 이라면)
-        //{
-        //    _fistEffect.tag = myTeamAttack;
-        //}
-        //else if(내가 awayTeam 이라면)
-        //{
-        //    _fistEffect.tage = awayTeamAttack;
-        //}
+        _fistEffect.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
 
     public void RightHandEventHandler()
@@ -214,14 +207,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
         GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
         _fistEffect.GetComponent<DamageHandler>().viewID = _fistEffect.GetComponent<PhotonView>().ViewID;
-        //if (내가 myTeam 이라면)
-        //{
-        //    _fistEffect.tag = myTeamAttack;
-        //}
-        //else if(내가 awayTeam 이라면)
-        //{
-        //    _fistEffect.tage = awayTeamAttack;
-        //}
+        _fistEffect.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
     #endregion
 

@@ -106,40 +106,79 @@ public class LeonAttackHandler : MonoBehaviourPun
 
     IEnumerator HandleShuriken()
     {
-        //if(내가 myTeam 이라면)
+        #region 정리 안한 코드
+        //GameObject shuriken1 = Instantiate(Shuriken, RightHand[0].transform.position, RightHand[0].transform.rotation);
+        //shuriken1.SetActive(true);
+        //shuriken1.transform.forward = this.transform.forward;
+        //shuriken1.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        //shuriken1.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
+        //if(targetHandler.teamIdx == 1)
         //{
-        //    shuriken.tag = myTeamAttack;
+        //    shuriken1.layer = LayerMask.NameToLayer("myTeamAttack");
         //}
-        //else if(내가 awayTeam 이라면)
+        //else if(targetHandler.teamIdx == 2)
         //{
-        //    shuriken.tage = awayTeamAttack;
+        //    shuriken1.layer = LayerMask.NameToLayer("enemyTeamAttack");
         //}
-        GameObject shuriken1 = Instantiate(Shuriken, RightHand[0].transform.position, RightHand[0].transform.rotation);
-        shuriken1.SetActive(true);
-        shuriken1.transform.forward = this.transform.forward;
-        shuriken1.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        shuriken1.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
-        yield return new WaitForSeconds(0.03f);
+        //yield return new WaitForSeconds(0.03f);
 
-        GameObject shuriken2 = Instantiate(Shuriken, RightHand[1].transform.position, RightHand[1].transform.rotation);
-        shuriken2.SetActive(true);
-        shuriken2.transform.forward = this.transform.forward;
-        shuriken2.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        shuriken2.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
-        yield return new WaitForSeconds(0.03f);
+        //GameObject shuriken2 = Instantiate(Shuriken, RightHand[1].transform.position, RightHand[1].transform.rotation);
+        //shuriken2.SetActive(true);
+        //shuriken2.transform.forward = this.transform.forward;
+        //shuriken2.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        //shuriken2.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
+        //if (targetHandler.teamIdx == 1)
+        //{
+        //    shuriken2.layer = LayerMask.NameToLayer("myTeamAttack");
+        //}
+        //else if (targetHandler.teamIdx == 2)
+        //{
+        //    shuriken2.layer = LayerMask.NameToLayer("enemyTeamAttack");
+        //}
+        //yield return new WaitForSeconds(0.03f);
 
-        GameObject shuriken3 = Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
-        shuriken3.SetActive(true);
-        shuriken3.transform.forward = this.transform.forward;
-        shuriken3.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        shuriken3.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
-        yield return new WaitForSeconds(0.03f);
+        //GameObject shuriken3 = Instantiate(Shuriken, RightHand[2].transform.position, RightHand[2].transform.rotation);
+        //shuriken3.SetActive(true);
+        //shuriken3.transform.forward = this.transform.forward;
+        //shuriken3.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        //shuriken3.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
+        //if (targetHandler.teamIdx == 1)
+        //{
+        //    shuriken3.layer = LayerMask.NameToLayer("myTeamAttack");
+        //}
+        //else if (targetHandler.teamIdx == 2)
+        //{
+        //    shuriken3.layer = LayerMask.NameToLayer("enemyTeamAttack");
+        //}
+        //yield return new WaitForSeconds(0.03f);
 
-        GameObject shuriken4 = Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
-        shuriken4.SetActive(true);
-        shuriken4.transform.forward = this.transform.forward;
-        shuriken4.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        shuriken4.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
+        //GameObject shuriken4 = Instantiate(Shuriken, RightHand[3].transform.position, RightHand[3].transform.rotation);
+        //shuriken4.SetActive(true);
+        //shuriken4.transform.forward = this.transform.forward;
+        //shuriken4.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+        //shuriken4.GetComponent<DamageHandler>().viewID = GetComponent<PhotonView>().ViewID;
+        //if (targetHandler.teamIdx == 1)
+        //{
+        //    shuriken4.layer = LayerMask.NameToLayer("myTeamAttack");
+        //}
+        //else if (targetHandler.teamIdx == 2)
+        //{
+        //    shuriken4.layer = LayerMask.NameToLayer("enemyTeamAttack");
+        //}s
+        #endregion
+        for (int i = 0; i < RightHand.Length; i++)
+        {
+            GameObject shuriken = Instantiate(Shuriken, RightHand[i].transform.position, RightHand[i].transform.rotation);
+            shuriken.SetActive(true);
+            shuriken.transform.forward = transform.forward;
+
+            DamageHandler damageHandler = shuriken.GetComponent<DamageHandler>();
+            damageHandler.damage = hpHandler.AttackDamage;
+            damageHandler.viewID = GetComponent<PhotonView>().ViewID;
+
+            shuriken.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
+            yield return new WaitForSeconds(0.03f);
+        }
     }
 
 

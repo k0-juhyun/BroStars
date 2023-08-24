@@ -79,6 +79,16 @@ public class TargetHandler : MonoBehaviourPun
             GameManager.instance.myTeamIdx = index;
         }
         GameManager.instance.SetTeamInfo();
+
+        if (teamIdx == 1)
+        {
+            Target.gameObject.layer = LayerMask.NameToLayer("myTeam");
+        }
+
+        else if (teamIdx == 2)
+        {
+            Target.gameObject.layer = LayerMask.NameToLayer("enemyTeam");
+        }
     }
 
     IEnumerator RespawnPlayer(float delay)

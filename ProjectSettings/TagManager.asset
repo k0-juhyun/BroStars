@@ -30,10 +30,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - myTeam
+  - myTeamAttack
+  - enemyTeam
+  - enemyTeamAttack
   - 
   - 
   - 
