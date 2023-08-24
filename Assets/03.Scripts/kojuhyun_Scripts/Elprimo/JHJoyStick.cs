@@ -8,8 +8,6 @@ using JetBrains.Annotations;
 
 public class JHJoyStick : Joystick
 {
-    [HideInInspector]
-    public bool camShake;
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
 
     [SerializeField] private float moveThreshold = 1;
@@ -33,12 +31,13 @@ public class JHJoyStick : Joystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        if(photonView.IsMine == false)
+        if (photonView.IsMine == false)
             return;
         NitaAttackHandler nitaAttackHandler = GetComponentInParent<NitaAttackHandler>();
         ElprimoAttackHandler elprimoAttackHandler = GetComponentInParent<ElprimoAttackHandler>();
         LeonAttackHandler leonAttackHandler = GetComponentInParent<LeonAttackHandler>();
         AnimatorHandler animHandler = GetComponentInParent<AnimatorHandler>();
+        CamShakeHandler camShakeHandler = GetComponentInParent<CamShakeHandler>();  
 
         #region ¿¤ÇÁ¸®¸ð
         if (elprimoAttackHandler != null)
@@ -46,11 +45,20 @@ public class JHJoyStick : Joystick
             if (this.gameObject.name == "SkillJoyStick")
             {
                 //elprimoAttackHandler.LaunchPlayer(Horizontal, Vertical);
-                photonView.RPC("LaunchPlayerRPC", RpcTarget.All, Horizontal, Vertical);
+                if(elprimoAttackHandler.isReverse)
+                {
+                    photonView.RPC("LaunchPlayerRPC", RpcTarget.All, -Horizontal, -Vertical);
+                }
+                else 
+                {
+                    photonView.RPC("LaunchPlayerRPC", RpcTarget.All, Horizontal, Vertical);
+                }
+                camShakeHandler.camShake = true;
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
                 photonView.RPC(nameof(elprimoAttackHandler.ElprimoNormalAttack), RpcTarget.All);
+                camShakeHandler.camShake = true;
             }
         }
         #endregion
@@ -60,13 +68,14 @@ public class JHJoyStick : Joystick
         {
             if (this.gameObject.name == "SkillJoyStick")
             {
-                print("RPCTest");
                 photonView.RPC("LaunchBearRPC", RpcTarget.All, Horizontal, Vertical);
                 photonView.RPC(nameof(animHandler.playTargetAnimRpc), RpcTarget.All, "Normal");
+                camShakeHandler.camShake = true;
             }
             else if (this.gameObject.name == "AttackJoyStick")
             {
                 photonView.RPC(nameof(nitaAttackHandler.NitaNormalAttack), RpcTarget.All);
+                camShakeHandler.camShake = true;
             }
         }
         #endregion
@@ -81,6 +90,7 @@ public class JHJoyStick : Joystick
             else if (this.gameObject.name == "AttackJoyStick")
             {
                 photonView.RPC(nameof(animHandler.playTargetAnimRpc), RpcTarget.All, "Normal");
+                camShakeHandler.camShake = true;
             }
         }
         #endregion

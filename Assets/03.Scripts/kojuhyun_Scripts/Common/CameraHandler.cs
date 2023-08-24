@@ -6,6 +6,7 @@ using Photon.Pun;
 
 public class CameraHandler : MonoBehaviourPun
 {
+    Joystick joystick;
     HpHandler hpHandler;
     TargetHandler targetHandler;
 
@@ -99,6 +100,11 @@ public class CameraHandler : MonoBehaviourPun
                     StartCoroutine(HandleActivateUrgentImage(0.3f));
                 }
             }
+
+            if (target.GetComponent<CamShakeHandler>().camShake)
+            {
+                StartCoroutine(HandleCamerShake(0.3f));
+            }
             #endregion
         }
     }
@@ -118,6 +124,7 @@ public class CameraHandler : MonoBehaviourPun
 
         this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z);
         hpHandler.isDamaged = false;
+        target.GetComponent<CamShakeHandler>().camShake = false;
     }
 
     IEnumerator HandleActivateUrgentImage(float duration)

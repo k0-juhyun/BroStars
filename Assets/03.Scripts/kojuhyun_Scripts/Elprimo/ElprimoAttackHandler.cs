@@ -38,7 +38,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     public LayerMask groundLayer;
 
     [SerializeField]
-    private bool isReverse;
+    public bool isReverse;
     private bool isJump;
 
     RaycastHit hit;
