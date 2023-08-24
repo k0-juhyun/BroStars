@@ -27,11 +27,15 @@ public class DropItem : MonoBehaviour
     private void MoveObj()
     {
         //플레이어와의 거리가 일정 거리안에 들어오면
-         //dist = Vector3.Distance(tplayer.transform.position, this.transform.position);
-        //transform.position = Vector3.MoveTowards(transform.position, target.position,moveSpeed * dist);
-        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed );
-        Vector3 changePosition = new Vector3(transform.position.x, target.position.y +1, transform.position.z);
-        transform.position = changePosition;
+         dist = Vector3.Distance(tplayer.transform.position, this.transform.position);
+        if(dist < 3f)
+        {
+            //transform.position = Vector3.MoveTowards(transform.position, target.position,moveSpeed * dist);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed);
+            Vector3 changePosition = new Vector3(transform.position.x, target.position.y + 1, transform.position.z);
+            transform.position = changePosition;
+        }
+
     }
 
     //충돌

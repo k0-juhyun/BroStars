@@ -73,6 +73,9 @@ MonoBehaviour:
   - PlusGemRPC
   - Timer
   - sexTimer
+  - RpcSuperShell
+  - Shot
+  - SuperShell
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

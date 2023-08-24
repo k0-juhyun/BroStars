@@ -23,4 +23,15 @@ public class HitHandler : MonoBehaviourPun
             photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage, damageHandler.attacker.ViewID);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<DamageHandler>() != null)
+        {
+            print(other.gameObject.name);
+            float HitDamage = other.gameObject.GetComponent<DamageHandler>().damage;
+            photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -HitDamage);
+            print(this.gameObject.name + "Take Damage" + HitDamage);
+        }
+    }
+
 }

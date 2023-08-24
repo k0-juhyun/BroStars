@@ -618,7 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myNickName: 
-  myBrawlerName: 
+  myBrawlerIndex: 0
   myPosIndex: 0
 --- !u!4 &817307275
 Transform:

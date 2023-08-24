@@ -64,7 +64,7 @@ public class J_attackHandler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //joystick = FindObjectOfType<Joystick>();
+        //jayjoystick = FindObjectOfType<Joystick>();
         animator = GetComponent<Animator>();
         attackLookPoint = transform.GetChild(1).gameObject.GetComponent<Transform>();
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
