@@ -80,7 +80,7 @@ public class Zem : MonoBehaviourPun
         Vector3 originalScale = transform.localScale;
 
         // ¿Î »πµÊ ªÁøÓµÂ √ﬂ∞° 
-        SoundManager.instance.PlayZemBGM();
+        //SoundManager.instance.PlayZemBGM();
 
         // ¿Î »πµÊ ¿Ã∆Â∆Æ √ﬂ∞°.
 

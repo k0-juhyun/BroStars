@@ -4748,11 +4748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7898a79c1b61874a80e0e0499758c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEffect: {fileID: 4660505314677095482}
-  clips:
-  - {fileID: 8300000, guid: 98e8b34b08530764b8983c22e58a31f0, type: 3}
-  - {fileID: 8300000, guid: 134e310a9efba604eac6c8b8cdd3a8a5, type: 3}
-  - {fileID: 8300000, guid: 876e3e970463e9247abd3b6d90a18d33, type: 3}
 --- !u!1 &6402487906537962868
 GameObject:
   m_ObjectHideFlags: 0
@@ -9813,12 +9808,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a328448d7d714323b2b9ba2835d1724, type: 3}
---- !u!1 &4660505314677095482 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1762952752276261651, guid: 1a328448d7d714323b2b9ba2835d1724,
-    type: 3}
-  m_PrefabInstance: {fileID: 6402487905937045289}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4660505314677095483 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1762952752276261650, guid: 1a328448d7d714323b2b9ba2835d1724,
