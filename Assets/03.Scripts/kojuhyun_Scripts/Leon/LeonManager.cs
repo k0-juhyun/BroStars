@@ -18,6 +18,11 @@ public class LeonManager : MonoBehaviourPun
         leonAttackHandler = GetComponent<LeonAttackHandler>();
     }
 
+    private void Start()
+    {
+        hpHandler.HpBar.value = hpHandler.maxHp;
+    }
+
     private void FixedUpdate()
     {
         if (photonView.IsMine == false)
@@ -33,8 +38,8 @@ public class LeonManager : MonoBehaviourPun
             leonAttackHandler.HandleNormalAttack();
             leonAttackHandler.HandleUltimateAttack();
 
-            hpHandler.UpdateHp();
-            //photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+            photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+            photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
 
             //photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
             //hpHandler.UpdateHp();

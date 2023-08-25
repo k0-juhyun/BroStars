@@ -34,7 +34,7 @@ public class PlayTimer : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void Timer()
+    public void Timer()
     {
         // PhotonNetwork를 통해서 마스터만 실행 가능하도록.! -> PRC ALL. 
         StartCoroutine(StartTimer());

@@ -17,6 +17,11 @@ public class HpHandler : MonoBehaviourPun
     [Header("HP Bar")]
     public Slider HpBar;
 
+    [Header("아군/적군 캔버스")]
+    public GameObject allyCanvas;
+    public GameObject enemyCanvas;
+
+
     [Header("Particle System")]
     public GameObject HealPrefab;
     public GameObject Mesh;
@@ -59,6 +64,22 @@ public class HpHandler : MonoBehaviourPun
         {
             targetHandler.Target = this.gameObject;
         }
+    }
+    private void Start()
+    {
+        if (targetHandler.teamIdx == GameManager.instance.myTeamIdx)
+        {
+            allyCanvas.gameObject.SetActive(true);
+            enemyCanvas.gameObject.SetActive(false);
+            HpBar = allyCanvas.GetComponentInChildren<Slider>();
+        }
+        else
+        {
+            allyCanvas.gameObject.SetActive(false);
+            enemyCanvas.gameObject.SetActive(true);
+            HpBar = enemyCanvas.GetComponentInChildren<Slider>();
+        }
+        HpBar.value = curHp / maxHp;
     }
 
 
@@ -109,6 +130,7 @@ public class HpHandler : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
     public void UpdateHp()
     {
         hpPercentage = curHp / maxHp;
@@ -122,7 +144,6 @@ public class HpHandler : MonoBehaviourPun
             isUrgent = false;
         }
 
-        print("1111111111111");
         if (curHp <= 0)
         {
             isDie = true;
@@ -133,18 +154,13 @@ public class HpHandler : MonoBehaviourPun
                 for (int i = 0; i < length; i++)
                 {
                     Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
-                    // 인원수만큼
                     //photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
                 }
-                print("2222222222222");
                 gemHandler.gem = 0;
                 if (lastAttacker != null)
                 {
-                    
                     Debug.Log(lastAttacker.Owner.NickName + " killed " + this.gameObject.name);
-
-
-                    //PhotonNetwork.Destroy(this.gameObject);
+                    Die(lastAttacker.ViewID);
                 }
             }
 
@@ -154,6 +170,24 @@ public class HpHandler : MonoBehaviourPun
             }
         }
     }
+
+    public void Die(int attackerViewID)
+    {
+        photonView.RPC(nameof(HandleDeath), RpcTarget.All, attackerViewID, photonView.ViewID);
+    }
+
+    [PunRPC]
+    public void HandleDeath(int attackerViewID, int playerViewID)
+    {
+        PhotonView attacker = PhotonView.Find(attackerViewID);
+        PhotonView player = PhotonView.Find(playerViewID);
+
+        if (attacker != null && player != null)
+        {
+            Debug.Log(attacker.Owner.NickName + " killed " + player.gameObject.name);
+        }
+    }
+
 
     [PunRPC]
     private void HandleDieEffect(Vector3 ranPos)

@@ -59,7 +59,6 @@ public class MainSceneManager : MonoBehaviour
     
         // 해당 인덱스 GameObject 활성화
         brawlList[index].SetActive(true);
-
     }
 
     private void OnClickLeftConnect()
@@ -86,7 +85,7 @@ public class MainSceneManager : MonoBehaviour
   
         // 저장한 브롤러 Index 정보를 ProjectManager에 저장.
         ProjectManager.instance.myBrawlerIndex = index;
-
+        print(brawlList[index] + " 섹스 :" + index);
         // 03_ConnectionScene으로 이동.
         PhotonNetwork.LoadLevel("03_ConnectionScene");
     }

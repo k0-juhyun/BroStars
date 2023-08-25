@@ -91,7 +91,6 @@ public class TargetHandler : MonoBehaviourPun
             {
                 transform.rotation = new Quaternion(0, 180, 0, 0);
                 isReverseController = true;
-                cameraHandler.isReverse = true;
             }
         }
 

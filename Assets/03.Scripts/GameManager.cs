@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
         }
 
-        // maxplayer와 현재 들어온 플레이어가 같으면 그때 
+        // maxplayer와 현재 들어온 플레이어가 같으면 그때
     }
 
     public int myTeamIdx;

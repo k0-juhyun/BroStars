@@ -9,6 +9,8 @@ public class CameraHandler : MonoBehaviourPun
     Joystick joystick;
     HpHandler hpHandler;
     TargetHandler targetHandler;
+    ObjectHandler objectHandler;
+    PlayTimer timer;
 
     [HideInInspector]
     public GameObject mainCamera;
@@ -38,12 +40,15 @@ public class CameraHandler : MonoBehaviourPun
     private void Awake()
     {
         targetHandler = GetComponentInParent<TargetHandler>();
+        objectHandler = FindObjectOfType<ObjectHandler>();
+
         mainCamera = this.gameObject;
 
         this.startXPos = this.transform.position.x;
         this.startYPos = this.transform.position.y;
 
         target = targetHandler.Target.transform;
+        timer = target.GetComponentInChildren<PlayTimer>();
         hpHandler = target.GetComponent<HpHandler>();
 
         if (photonView.IsMine)
@@ -53,11 +58,15 @@ public class CameraHandler : MonoBehaviourPun
     }
     private void Start()
     {
-        
+
     }
 
     private void LateUpdate()
     {
+        if (GameManager.instance.myTeamIdx == 2)
+        {
+            distanceZFromTarget = 110;
+        }
         if (photonView.IsMine == false)
             return;
 
@@ -75,10 +84,6 @@ public class CameraHandler : MonoBehaviourPun
 
         else
         {
-            if(isReverse)
-            {
-                distanceZFromTarget = 110;
-            }
             float targetZPos = target.transform.position.z + distanceZFromTarget;
             float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 

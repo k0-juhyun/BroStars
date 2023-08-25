@@ -6,7 +6,7 @@ public class ObjectHandler : MonoBehaviour
 {
     CameraHandler[] cameraHandlers;
     bool[] cameraHandlerGameStartValues;
-    bool allCameraHandlersGameStart = false;
+    public bool allCameraHandlersGameStart = false;
 
     private void Start()
     {
