@@ -168,15 +168,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // spawnManager의 리스폰 위치에 브롤러 캐릭터 생성한다. 
         //player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
-        player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
-        // 생성하면 무적 이펙트 기능
-        print(ProjectManager.instance.myBrawlerIndex);
-        print(spawnPos[index]);
-        if(index > 1)
-        {
-            player.gameObject.name = "Reverse" + player.gameObject.name;
-        }
-
+        string playerName = PlayerName[ProjectManager.instance.myBrawlerIndex];
+        string prefabName = (myTeamIdx == 1) ? playerName : "Reverse" + playerName;
+        player = PhotonNetwork.Instantiate(prefabName, spawnPos[index], Quaternion.identity);
         if (player.gameObject.name.Contains("Reverse"))
         {
             player.transform.rotation = new Quaternion(0, 180, 0, 0);
