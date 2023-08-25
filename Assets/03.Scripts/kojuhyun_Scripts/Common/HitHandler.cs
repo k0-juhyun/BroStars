@@ -15,12 +15,16 @@ public class HitHandler : MonoBehaviourPun
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (PhotonNetwork.IsMasterClient == false) return;
+
+        //ismasterclient
         DamageHandler damageHandler = collision.gameObject.GetComponent<DamageHandler>();
 
-        if (damageHandler != null && damageHandler.attacker != photonView)
+        if (damageHandler != null && damageHandler.attackviewID != photonView.ViewID)
         {
             float hitDamage = damageHandler.damage;
-            photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage, damageHandler.attacker.ViewID);
+
+            photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage, damageHandler.attackviewID);
         }
     }
 }

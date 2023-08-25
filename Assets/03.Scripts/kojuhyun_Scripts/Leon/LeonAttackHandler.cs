@@ -7,7 +7,7 @@ using Photon.Pun;
 public class LeonAttackHandler : MonoBehaviourPun
 {
     [SerializeField]
-    private bool isReverse;
+    public bool isReverse;
 
     private MoveHandler moveHandler;
     private HpHandler hpHandler;
@@ -174,7 +174,7 @@ public class LeonAttackHandler : MonoBehaviourPun
 
             DamageHandler damageHandler = shuriken.GetComponent<DamageHandler>();
             damageHandler.damage = hpHandler.AttackDamage;
-            damageHandler.attacker = photonView;
+            damageHandler.attackviewID = photonView.ViewID;
 
             shuriken.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
             yield return new WaitForSeconds(0.03f);

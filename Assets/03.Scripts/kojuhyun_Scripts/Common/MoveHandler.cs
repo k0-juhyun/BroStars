@@ -20,7 +20,7 @@ public class MoveHandler : MonoBehaviourPun, IPunObservable
     #region Boolean Values
     private bool moveFlag;
     [SerializeField]
-    private bool isReverse;
+    public bool isReverse;
     #endregion
 
     #region Float Values

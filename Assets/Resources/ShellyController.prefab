@@ -3013,11 +3013,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7898a79c1b61874a80e0e0499758c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEffect: {fileID: 5948910910253088860}
-  clips:
-  - {fileID: 8300000, guid: 98e8b34b08530764b8983c22e58a31f0, type: 3}
-  - {fileID: 8300000, guid: 134e310a9efba604eac6c8b8cdd3a8a5, type: 3}
-  - {fileID: 8300000, guid: 876e3e970463e9247abd3b6d90a18d33, type: 3}
 --- !u!1 &3118492046072958472
 GameObject:
   m_ObjectHideFlags: 0
@@ -5385,6 +5380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 3562546944418456516}
   isBush: 0
+  myCanvas: {fileID: 0}
 --- !u!114 &5616366292466133270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10366,12 +10362,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a328448d7d714323b2b9ba2835d1724, type: 3}
---- !u!1 &5948910910253088860 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1762952752276261651, guid: 1a328448d7d714323b2b9ba2835d1724,
-    type: 3}
-  m_PrefabInstance: {fileID: 5402493007627651919}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5948910910253088861 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1762952752276261650, guid: 1a328448d7d714323b2b9ba2835d1724,

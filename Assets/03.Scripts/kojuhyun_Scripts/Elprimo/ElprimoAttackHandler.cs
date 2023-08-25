@@ -198,7 +198,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[0], elprimoFists[0].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        _fistEffect.GetComponent<DamageHandler>().attacker = photonView;
+        _fistEffect.GetComponent<DamageHandler>().attackviewID = photonView.ViewID;
         _fistEffect.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
 
@@ -206,7 +206,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     {
         GameObject _fistEffect = Instantiate(fistEffect[1], elprimoFists[1].transform.position, elprimoFists[0].transform.rotation);
         _fistEffect.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        _fistEffect.GetComponent<DamageHandler>().attacker = photonView;
+        _fistEffect.GetComponent<DamageHandler>().attackviewID = photonView.ViewID;
         _fistEffect.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
     #endregion

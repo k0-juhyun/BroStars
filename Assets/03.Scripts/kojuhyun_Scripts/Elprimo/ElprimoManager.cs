@@ -10,9 +10,11 @@ public class ElprimoManager : MonoBehaviourPun
     ElprimoAttackHandler attackHandler;
     HpHandler hpHandler;
     BushManager bushManager;
+    TargetHandler targetHandler;
 
     private void Awake()
     {
+        targetHandler = GetComponentInParent<TargetHandler>();
         moveHandler = GetComponent<MoveHandler>();
         attackHandler = GetComponent<ElprimoAttackHandler>();
         hpHandler = GetComponent<HpHandler>();
@@ -27,15 +29,28 @@ public class ElprimoManager : MonoBehaviourPun
         }
         else
         {
+            HandleReverse();
+
             moveHandler.HandleMovement();
 
             attackHandler.HandleNormalAttack();
             attackHandler.HandleUltimateAttack();
 
-            photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
-            photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+            hpHandler.UpdateHp();
+            //photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+
+            //photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
             //hpHandler.UpdateHp();
             //hpHandler.RegenerateHpInBush();
+        }
+    }
+
+    void HandleReverse()
+    {
+        if(targetHandler.isReverseController)
+        {
+            moveHandler.isReverse = true;
+            attackHandler.isReverse = true;
         }
     }
 }

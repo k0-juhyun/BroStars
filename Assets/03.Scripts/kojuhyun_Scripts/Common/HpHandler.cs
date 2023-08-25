@@ -66,7 +66,7 @@ public class HpHandler : MonoBehaviourPun
     public float HandleHP(float damage, int attackerViewID)
     {
         PhotonView attacker = PhotonView.Find(attackerViewID);
-
+        //attacker = GameManager.instance.allPhotonView[attackerViewID];
         if (attacker != null)
         {
             lastAttacker = attacker;
@@ -109,7 +109,6 @@ public class HpHandler : MonoBehaviourPun
         }
     }
 
-    [PunRPC]
     public void UpdateHp()
     {
         hpPercentage = curHp / maxHp;
@@ -123,6 +122,7 @@ public class HpHandler : MonoBehaviourPun
             isUrgent = false;
         }
 
+        print("1111111111111");
         if (curHp <= 0)
         {
             isDie = true;
@@ -133,23 +133,24 @@ public class HpHandler : MonoBehaviourPun
                 for (int i = 0; i < length; i++)
                 {
                     Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
-                    photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                    // 인원수만큼
+                    //photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
                 }
-
+                print("2222222222222");
                 gemHandler.gem = 0;
                 if (lastAttacker != null)
                 {
-                    if (lastAttacker.IsMine)
-                    {
-                        Debug.Log(lastAttacker.Owner.NickName + " killed " + this.gameObject.name);
-                    }
-                    PhotonNetwork.Destroy(this.gameObject);
+                    
+                    Debug.Log(lastAttacker.Owner.NickName + " killed " + this.gameObject.name);
+
+
+                    //PhotonNetwork.Destroy(this.gameObject);
                 }
             }
 
             if (this.gameObject.name == "Bruce")
             {
-                PhotonNetwork.Destroy(this.gameObject);
+                //PhotonNetwork.Destroy(this.gameObject);
             }
         }
     }

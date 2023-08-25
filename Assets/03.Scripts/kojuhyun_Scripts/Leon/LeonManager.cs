@@ -8,9 +8,11 @@ public class LeonManager : MonoBehaviourPun
     MoveHandler moveHandler;
     HpHandler hpHandler;
     LeonAttackHandler leonAttackHandler;
+    TargetHandler targetHandler;
 
     private void Awake()
     {
+        targetHandler = GetComponentInParent<TargetHandler>();
         moveHandler = GetComponent<MoveHandler>();
         hpHandler = GetComponent<HpHandler>();
         leonAttackHandler = GetComponent<LeonAttackHandler>();
@@ -24,15 +26,28 @@ public class LeonManager : MonoBehaviourPun
         }
         else
         {
+            HandleReverse();
+
             moveHandler.HandleMovement();
 
             leonAttackHandler.HandleNormalAttack();
             leonAttackHandler.HandleUltimateAttack();
 
-            photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
-            photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+            hpHandler.UpdateHp();
+            //photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+
+            //photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
             //hpHandler.UpdateHp();
             //hpHandler.RegenerateHpInBush();
+        }
+    }
+
+    void HandleReverse()
+    {
+        if (targetHandler.isReverseController)
+        {
+            moveHandler.isReverse = true;
+            leonAttackHandler.isReverse = true;
         }
     }
 }

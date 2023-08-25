@@ -6,7 +6,7 @@ using Photon.Pun;
 public class NitaAttackHandler : MonoBehaviourPun
 {
     [SerializeField]
-    private bool isReverse;
+    public bool isReverse;
 
     TargetHandler targetHandler;
     NitaManager nitaManager;
@@ -164,7 +164,7 @@ public class NitaAttackHandler : MonoBehaviourPun
 
         GameObject nitaNormalAttack = Instantiate(nitaNormal, pos, rot);
         nitaNormalAttack.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-        nitaNormalAttack.GetComponent<DamageHandler>().attacker = photonView;
+        nitaNormalAttack.GetComponent<DamageHandler>().attackviewID = photonView.ViewID;
         nitaNormalAttack.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
     }
 

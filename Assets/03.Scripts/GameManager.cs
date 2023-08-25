@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int index;
 
     // 플레이어 이름 List 선언 및 초기화. 
-    public static List<string> PlayerName = new List<string>() { "ShellyController", "NitaController", "ElprimoController", "LeonController",  };
+    public static List<string> PlayerName = new List<string>() { "ShellyController", "NitaController", "ElprimoController", "LeonController", };
 
     // 팀 클래스 변수
     public MyTeam myTeam;
@@ -123,8 +123,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-
-
         if (instance == null)
         {
             instance = this;
@@ -162,19 +160,25 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // 내가 위치해야 하는 index.
         index = ProjectManager.instance.myPosIndex - 1;// PhotonNetwork.CurrentRoom.PlayerCount - 1;
-      
+
         // 각 Player의 spawnManager의 리스폰 위치를 생성한다. 
         CreateSpawn();
 
         // spawnManager의 리스폰 위치에 브롤러 캐릭터 생성한다. 
-        //player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
-        string playerName = PlayerName[ProjectManager.instance.myBrawlerIndex];
-        string prefabName = (myTeamIdx == 1) ? playerName : "Reverse" + playerName;
+        string _playerName = PlayerName[ProjectManager.instance.myBrawlerIndex];
+        string prefabName = _playerName;
+
         player = PhotonNetwork.Instantiate(prefabName, spawnPos[index], Quaternion.identity);
-        if (player.gameObject.name.Contains("Reverse"))
-        {
-            player.transform.rotation = new Quaternion(0, 180, 0, 0);
-        }
+
+        //player = PhotonNetwork.Instantiate(prefabName, spawnPos[index], Quaternion.identity);
+
+        //player.transform.rotation = (myTeamIdx == 1) ? Quaternion.identity : new Quaternion(0,180,0,0);
+
+
+        //if (player.gameObject.name.Contains("Reverse"))
+        //{
+        //    player.transform.rotation = new Quaternion(0, 180, 0, 0);
+        //}
 
         // 마우스 포인터를 비 활성화.
         Cursor.visible = false;
@@ -182,6 +186,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     public List<PhotonView> allPlayer = new List<PhotonView>();
+    public Dictionary<int, PhotonView> allPhotonView = new Dictionary<int, PhotonView>();
 
     //public Dictionary<int,MoveHandler>
 
@@ -189,6 +194,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void AddPlayer(PhotonView pv)
     {
         allPlayer.Add(pv);
+        allPhotonView[pv.ViewID] = pv;
 
         // 마스터인 플레이어만 RPC 실행.
         if (PhotonNetwork.IsMasterClient)
@@ -196,6 +202,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
         }
 
+        // maxplayer와 현재 들어온 플레이어가 같으면 그때 
     }
 
     public int myTeamIdx;
@@ -262,7 +269,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
 
-  
+
 
 
 

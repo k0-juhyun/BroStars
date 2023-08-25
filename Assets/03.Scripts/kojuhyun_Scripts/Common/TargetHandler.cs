@@ -6,6 +6,8 @@ using Photon.Pun;
 public class TargetHandler : MonoBehaviourPun
 {
     public bool isDestroy;
+    [HideInInspector]
+    public bool isReverseController = false;
 
     private Camera mainCamera;
 
@@ -20,6 +22,7 @@ public class TargetHandler : MonoBehaviourPun
 
     HpHandler hpHandler;
     MoveHandler moveHandler;
+    CameraHandler cameraHandler;
 
     public int teamIdx;
     private void Awake()
@@ -27,6 +30,7 @@ public class TargetHandler : MonoBehaviourPun
         if (photonView.IsMine == false)
             return;
         mainCamera = transform.GetChild(0).GetComponent<Camera>();
+        cameraHandler = GetComponentInChildren<CameraHandler>();
         moveHandler = GetComponentInChildren<MoveHandler>();
         playerNickName = Target.gameObject.name;
     }
@@ -45,32 +49,29 @@ public class TargetHandler : MonoBehaviourPun
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (hpHandler != null)
         {
-            if (hpHandler != null)
+            if (hpHandler.isDie)
             {
-                if (hpHandler.isDie)
-                {
-                    Vector3 dyingEffectPosition = hpHandler.transform.position;
-                    bool isDyingEffectActive = true;
+                Vector3 dyingEffectPosition = hpHandler.transform.position;
+                bool isDyingEffectActive = true;
 
-                    NoneTarget.transform.position = dyingEffectPosition;
-                    NoneTarget.SetActive(true);
-                    DyingEffect.SetActive(true);
-                    Target = NoneTarget;
-                    mainCamera.transform.SetParent(null);
-                    isDestroy = true;
-                    hpHandler.isDie = false;
+                NoneTarget.transform.position = dyingEffectPosition;
+                NoneTarget.SetActive(true);
+                DyingEffect.SetActive(true);
+                Target = NoneTarget;
+                mainCamera.transform.SetParent(null);
+                isDestroy = true;
+                hpHandler.isDie = false;
 
-                    photonView.RPC("UpdateDyingEffect", RpcTarget.Others, dyingEffectPosition, isDyingEffectActive);
-                }
+                photonView.RPC("UpdateDyingEffect", RpcTarget.Others, dyingEffectPosition, isDyingEffectActive);
             }
+        }
 
-            if (Target == NoneTarget)
-            {
-                print("복제");
-                StartCoroutine(RespawnPlayer(5.0f));
-            }
+        if (Target == NoneTarget)
+        {
+            print("복제");
+            StartCoroutine(RespawnPlayer(5.0f));
         }
     }
 
@@ -84,6 +85,16 @@ public class TargetHandler : MonoBehaviourPun
     [PunRPC]
     public void SetMyTeamIdx(int index)
     {
+        if (photonView.IsMine)
+        {
+            if (index == 2)
+            {
+                transform.rotation = new Quaternion(0, 180, 0, 0);
+                isReverseController = true;
+                cameraHandler.isReverse = true;
+            }
+        }
+
         teamIdx = index;
         if (photonView.IsMine)
         {
@@ -116,7 +127,6 @@ public class TargetHandler : MonoBehaviourPun
             RespawnPlayer.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
-        print("여기2");
         respawnCoroutine = null;
         PhotonNetwork.Destroy(this.gameObject);
     }

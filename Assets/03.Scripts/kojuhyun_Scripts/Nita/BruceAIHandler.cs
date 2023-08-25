@@ -36,7 +36,7 @@ public class BruceAIHandler : MonoBehaviourPun
 
     private void Update()
     {
-        photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+        //photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
     }
 
     private void FindClosestPlayer()

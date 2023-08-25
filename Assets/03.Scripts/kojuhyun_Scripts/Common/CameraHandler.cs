@@ -33,6 +33,7 @@ public class CameraHandler : MonoBehaviourPun
     public float startCamSpeed = 0.1f;
 
     public bool gameStart;
+    public bool isReverse;
 
     private void Awake()
     {
@@ -49,6 +50,10 @@ public class CameraHandler : MonoBehaviourPun
         {
             Messages.gameObject.SetActive(false);
         }
+    }
+    private void Start()
+    {
+        
     }
 
     private void LateUpdate()
@@ -70,6 +75,10 @@ public class CameraHandler : MonoBehaviourPun
 
         else
         {
+            if(isReverse)
+            {
+                distanceZFromTarget = 110;
+            }
             float targetZPos = target.transform.position.z + distanceZFromTarget;
             float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 

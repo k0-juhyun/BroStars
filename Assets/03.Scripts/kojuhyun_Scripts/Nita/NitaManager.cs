@@ -10,6 +10,7 @@ public class NitaManager : MonoBehaviourPun
     MoveHandler moveHandler;
     HpHandler hpHandler;
     NitaAttackHandler nitaAttackHandler;
+    TargetHandler targetHandler;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class NitaManager : MonoBehaviourPun
         {
             this.enabled = false;
         }
+        targetHandler = GetComponentInParent<TargetHandler>();
         moveHandler = GetComponent<MoveHandler>();
         hpHandler = GetComponent<HpHandler>();
         nitaAttackHandler = GetComponent<NitaAttackHandler>();
@@ -26,13 +28,25 @@ public class NitaManager : MonoBehaviourPun
     {
         if (photonView.IsMine == false)
             return;
+        HandleReverse();
 
         moveHandler.HandleMovement();
 
         nitaAttackHandler.HandleNormalAttack();
         nitaAttackHandler.HandleUltimateAttack();
 
-        photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
-        photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+        hpHandler.UpdateHp();
+        //photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+
+        //photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+    }
+
+    void HandleReverse()
+    {
+        if (targetHandler.isReverseController)
+        {
+            moveHandler.isReverse = true;
+            nitaAttackHandler.isReverse = true;
+        }
     }
 }

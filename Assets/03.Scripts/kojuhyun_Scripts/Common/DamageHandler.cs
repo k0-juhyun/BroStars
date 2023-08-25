@@ -6,11 +6,20 @@ using Photon.Pun;
 public class DamageHandler : MonoBehaviour
 {
     public float damage;
-    public PhotonView attacker;
+    private PhotonView attacker;
+    public int attackviewID;
+
+    public void SetAttackerInfo(PhotonView attackerView)
+    {
+        this.attacker = attackerView;
+        attackviewID = attackerView.ViewID;
+    }
 
     [PunRPC]
     public void SetAttacker(PhotonView attackerView)
     {
         attacker = attackerView;
     }
+
+
 }
