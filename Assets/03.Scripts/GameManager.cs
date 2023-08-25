@@ -17,7 +17,7 @@ using static GameManager;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
-
+   
     // 게임 종료 여부 
     private bool isGameOver;
 
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 스폰 Pos
     public List<Vector3> spawnPos;
 
+    // 플레이어 오브젝트. 
     GameObject player;
 
     // 플레이어의 인원
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // 잼 점수표 : 우리팀
         public int myTeamScore = 0;
+
         // 팀원 리스트 
         public List<Player> myMembers;
 
@@ -79,15 +81,17 @@ public class GameManager : MonoBehaviourPunCallbacks
             myMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
 
-        public void CalculateScore()
-        {
-            for (int i = 0; i < myMembers.Count; i++)
-            {
-                int score = myMembers[i].player.GetComponentInChildren<GemHandler>().gem;
-                myTeamScore += score;
-            }
 
-        }
+
+        //public void CalculateScore()
+        //{
+        //    for (int i = 0; i < myMembers.Count; i++)
+        //    {
+        //        int score = myMembers[i].player.GetComponentInChildren<GemHandler>().gem;
+        //        myTeamScore += score;
+        //    }
+
+        //}
 
     }
 
@@ -108,15 +112,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             enemyMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
-        public void CalculateScore()
-        {
-            for (int i = 0; i < enemyMembers.Count; i++)
-            {
-                int score = enemyMembers[i].player.GetComponentInChildren<GemHandler>().gem;
-                EnemyTeamScore += score;
-            }
+        //public void CalculateScore()
+        //{
+        //    for (int i = 0; i < enemyMembers.Count; i++)
+        //    {
+        //        int score = enemyMembers[i].player.GetComponentInChildren<GemHandler>().gem;
+        //        EnemyTeamScore += score;
+        //    }
 
-        }
+        //}
 
 
     }
@@ -128,6 +132,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -136,11 +141,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
         spawnManager = Resources.Load<GameObject>("Prefabs/SpawnManager");
-
-        DontDestroyOnLoad(gameObject);
-
     }
-
 
     private void Start()
     {
@@ -155,7 +156,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 30;
 
         // spawnManager를 생성한다. 
-        Instantiate(spawnManager);
+        //Instantiate(spawnManager);
 
         // 참여한 플레이어의 인원 초기화. 
         PlayerLength = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -167,8 +168,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         CreateSpawn();
 
         // spawnManager의 리스폰 위치에 브롤러 캐릭터 생성한다. 
-        //player = PhotonNetwork.Instantiate(PlayerName[index], spawnPos[index], Quaternion.identity);
         player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
+
         // 생성하면 무적 이펙트 기능
 
         if (player.gameObject.name.Contains("Reverse"))
@@ -181,6 +182,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
+   
     public List<PhotonView> allPlayer = new List<PhotonView>();
 
     // 각자 플레이어 게임 매니저에서 AddPlayer메소드를 통해서 PhotonView를 추가.

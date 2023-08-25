@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class SceneLoad : MonoBehaviour
+public class LodingSceneManager : MonoBehaviour
 {
     public Slider progressbar;
     public TMP_Text loadText;

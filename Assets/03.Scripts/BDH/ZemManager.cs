@@ -61,7 +61,7 @@ public class ZemManager : MonoBehaviourPun
             Vector3 zemsRandomPosition = new Vector3(centerX, rangeObject.transform.position.y, centerZ);
 
             // Zem 积己 荤款靛 角青.
-            SoundManager.instance.PlayZemBGM();
+            //SoundManager.instance.PlayZemBGM();
 
             // Zem阑 积己茄促.
             GameObject Zems = PhotonNetwork.Instantiate("Crystal_Sparkle", zemsRandomPosition, Quaternion.identity);
