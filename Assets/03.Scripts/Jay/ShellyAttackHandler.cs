@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Unity.VisualScripting;
-
+using Photon.Pun.Demo.Asteroids;
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 public class ShellyAttackHandler : MonoBehaviourPun
 {
@@ -29,9 +31,6 @@ public class ShellyAttackHandler : MonoBehaviourPun
     public LineRenderer specialLR;
 
     [Header("Normal Attack Event")]
-    //public Transform[] RightHand;
-    //public GameObject bulletFactory;
-    //public GameObject Mesh;
     //카트리지 
     //public float shootingSlowness;
     //public GameObject Cardridge;
@@ -44,8 +43,11 @@ public class ShellyAttackHandler : MonoBehaviourPun
     public Transform firePos;
     public float startAngle = -10;
     //public Transform rayStartPos;
+    public float fireDistance = 5f; //사정거리
 
     private float TrailDistance = 4f;
+
+    public GameObject Mesh;
     public float meshResolution;
     private float launchForce = 10;
 
@@ -82,7 +84,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
     public void HandleNormalAttack()
     {
-       
+
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
             attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
@@ -90,62 +92,13 @@ public class ShellyAttackHandler : MonoBehaviourPun
             attackLR.gameObject.SetActive(true);
 
             transform.LookAt(new Vector3(attackLookPoint.position.x, 5.1f, attackLookPoint.position.z));
-            //Vector3 rayStartPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-
-            Ray ray = new Ray(firePos.position, firePos.forward);
-
-            
-           
-            //if (Physics.Raycast(ray, transform.forward, out hit, TrailDistance))
-            {
-               // print("111");
-                Shot();
-
-            }
         }
         else
         {
             attackLR.gameObject.SetActive(false);
         }
     }
-    
-    void Shot()
-    {
-        photonView.RPC(nameof(RpcShot), RpcTarget.All, firePos.transform.position, firePos.transform.forward);
-
-        //firePos.transform.rotation = originalRotation;
-    }
-
-    [PunRPC]
-    void RpcShot(Vector3 firePos, Vector3 fireForward)
-    {
-        int numBullets = 5;
-
-        float spreadAngle = 5f;
-
-        if(audioSource.isPlaying == false)
-        {
-           audioSource.Play();
-        }
-        for (int i = 0; i < numBullets; i++)
-        {
-            Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
-
-            Vector3 bulletDirection = bulletRotation * fireForward;
-
-            GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
-
-            bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
-            //bullet.transform.forward = firePos.transform.forward;
-            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-            //bullet.GetComponent<ShellyEffectBullet1>().attackHandler = this;
-            
-            Destroy(bullet, 0.6f);
-        }
-        
-    }
-
 
     public void HandleUltimateAttack()
     {
@@ -168,110 +121,238 @@ public class ShellyAttackHandler : MonoBehaviourPun
         }
         else
         {
-            specialLR.gameObject.SetActive(false );
+            specialLR.gameObject.SetActive(false);
         }
 
     }
 
-    //슈퍼쉘 수정
-
-    public void CallShoot()
+    [PunRPC]
+    public void Shot()
     {
-        StartCoroutine(SuperShell());
+        RpcShot(firePos.transform.position, firePos.transform.forward);
+        animatorHandler.playTargetAnimRpc("Attack");
     }
-    IEnumerator SuperShell()
+    [PunRPC]
+    public void SuperShell()
     {
-        //총알 나오는 위치의 각도를 조정
-        firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
-        for (int i = 0; i < 5; i++)
+        RpcSuperShell(firePos.transform.position, firePos.transform.forward);
+        animatorHandler.playTargetAnimRpc("Attack");
+    }
+
+    [PunRPC]
+    void RpcShot(Vector3 firePos, Vector3 fireForward)
+    {
+        int numBullets = 5;
+
+        float spreadAngle = 5f;
+
+        if (audioSource.isPlaying == false)
         {
-            //print("1");
-            GameObject bullet = Instantiate(attackBulletFactory, firePos.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
-            //자식 하위오브젝트에서 생성
-            bullet.transform.forward = this.transform.forward;
-            //각도 설정
-            firePos.transform.Rotate(0, -(startAngle * 2) / 4, 0);
-            Destroy(bullet, 0.7f);
+            audioSource.Play();
         }
-        animatorHandler.playTargetAnim("Attack");
-        //animator.Play("attack");
+
+        for (int i = 0; i < numBullets; i++)
+        {
+            Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
+
+            Vector3 bulletDirection = bulletRotation * fireForward;
+
+            GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
+
+            bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
+            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+            #region 거리별 데미지
+            //나를 제외한 player 태그 
+
+            //if (gameObject.CompareTag("Player"))
+            //{
+
+            //DamageHandler damageHandler = GetComponent<DamageHandler>();
+            //1차 사거리
+            //float firstDistance = 1.5f;
+            ////2차 사거리
+            //float secondDistance = 3.5f;
+            ////3차 사거리
+            //float thirdDistance = 5f;
+
+            //// 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
+            //float range = Vector3.Distance(transform.position, transform.position);
+
+            ////사거리 안에 있으면 
+            //if (range < firstDistance)
+            //{
+            //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //5배
+            //}
+            //else if (firstDistance < range && range < secondDistance)
+            //{
+            //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage; //3배
+            //}
+            //else if (secondDistance < range && range < thirdDistance)
+            //{
+            //    bullet.GetComponent<DamageHandler>().damage  = hpHandler.AttackDamage; //1배
+            //}
+            //}
+            #endregion
+            Destroy(bullet, 0.6f);
+        }
+
     }
+    #region 오토에임
 
+    List<GameObject> player = new List<GameObject>();
+    private float[] dstFromPlayer;
+    private string Tag;
+    public void AutoAim()
+    {
+        for (int i = 0; i < player.Count; i++)
+        {
+            //게임오브젝트 더하기
+            player.Add(GameObject.FindWithTag("Player"));
+        }
 
-    //    //총알 나오는 위치의 각도를 조정
-    //    firePos.transform.localEulerAngles = new Vector3(0, startAngle, 0);
-    //    List<GameObject> spawnedSpecialBullets = new List<GameObject>();
-    //        for (int i = 0; i< 10; i++)
-    //        {
-    //            GameObject specialBullet = Instantiate(specialBulletFactory, firePos.position, firePos.rotation);
-    //    spawnedSpecialBullets.Add(specialBullet);
-    //            //각도 설정
-    //            firePos.transform.Rotate(0, -(startAngle* 2) / 4, 0);
-    //            //Destroy(specialBullet, 2f);
-    //        }
-    ////animator.Play("attack");
-    ////StartCoroutine(Shooting());
+    }
+    //list<gameobject> list = new list<gameobject>();
+    //private float[] disatancefrombrawlers;
 
-    //foreach (GameObject bullet in spawnedSpecialBullets)
+    //private string tag;
+
+    //awake()
     //{
-    //    Destroy(bullet, 2f);
-    //}
-    //private IEnumerator Shooting()
-    //{
-    //    beingHandled = true;
-    //    GameObject cardridge;
-    //    for (int i = 0; i <= 5; i++)
+    //    for (int i = 0; i < go.length; i++)
     //    {
-    //        if (firePos) cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.right, firePos.transform.rotation);
-    //        else cardridge = (GameObject)Instantiate(Cardridge, firePos.transform.position + firePos.transform.forward, firePos.transform.rotation);
-
-    //    }
-    //    yield return new WaitForSeconds(shootingSlowness);
-
-    //    beingHandled = false;
-
-    //}
-
-    //public void HandleUltimateAttack()
-    //{
-    //    Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
-    //    Vector3 startVelocity = joystickDirection * launchForce;
-
-    //    if (Mathf.Abs(skillJoystick.Horizontal) > 0 || Mathf.Abs(skillJoystick.Vertical) > 0)
-    //    {
-    //        StartCoroutine(ResetTransparencyAfterDelay(6));
+    //        list.add(gameobject.findwithtag("player"));
     //    }
     //}
-
-    //private void HandleDamageTransparent(float parameter)
+    //private void fixedupdate()
     //{
-    //    int meshCount = Mesh.transform.childCount;
-
-    //    for (int i = 0; i < meshCount; i++)
+    //    for (int i = 0; i < list.count; i++)
     //    {
-    //        SkinnedMeshRenderer playerMesh = Mesh.transform.GetChild(i).GetComponent<SkinnedMeshRenderer>();
-    //        Color materialColor = playerMesh.materials[0].color;
-    //        materialColor.a = parameter;
-    //        playerMesh.materials[0].color = materialColor;
+    //        float testdis = vector3.distance(transform.position, list[i].transform.position)
+    //        testdis = disatancefrombrawlers[i];
+    //        testdis = list[i].transform.position;
+    //    }
+    //    for (int i = 0; i < disatancefrombrawlers.length; i++)
+    //    {
+    //        //최솟값 크기 비교
+    //    }
+    //    //min
+    //}
+
+    #endregion
+
+
+    #region  슈퍼쉘
+    [PunRPC]
+    void RpcSuperShell(Vector3 firePos, Vector3 fireForward)
+    {
+        int numBullets = 10;
+
+        float spreadAngle = 5f;
+
+        if (audioSource.isPlaying == false)
+        {
+            audioSource.Play();
+        }
+        for (int i = 0; i < numBullets; i++)
+        {
+            Quaternion bulletRotation = Quaternion.Euler(0, -(numBullets - 1) * spreadAngle * 0.5f + i * spreadAngle, 0);
+
+            Vector3 bulletDirection = bulletRotation * fireForward;
+
+            GameObject bullet = Instantiate(specialBulletFactory, firePos, Quaternion.identity);
+
+            bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
+
+            if (gameObject.CompareTag("Player"))
+            {
+                ////DamageHandler damageHandler = GetComponent<DamageHandler>();
+                ////1차 사거리
+                //float firstDistance = 1.5f;
+                ////2차 사거리
+                //float secondDistance = 3.5f;
+                ////3차 사거리
+                //float thirdDistance = 5f;
+
+                //// 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
+                //float range = Vector3.Distance(transform.position, transform.position);
+
+                ////사거리 안에 있으면 
+                //if (range < firstDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+                //    //5배
+                //}
+
+                //else if (firstDistance < range && range < secondDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+                //    //3배
+                //}
+                //else if (secondDistance < range && range < thirdDistance)
+                //{
+                //    bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+
+                //    //1배
+                //}
+            }
+            bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+
+            Destroy(bullet, 0.9f);
+        }
+    }
+    #endregion
+
+    #region  거리별 데미지
+    //상대방과 거리의 따른 데미지 및 콜리젼
+    //void DamageOnDistance(float distance)
+
+    //상대방과 나와의 거리를 재고
+    //Vector3 aaa= Vector3.Distance(this.transform.position, gameObject.name.Contains("Controller"))
+
+    //그 값이 사거리내에 있으면
+
+    //데미지를 준다
+
+    // 충돌체의 태그가 player일때
+    //if (collision.gameObject.CompareTag("Player"))
+    //{
+    //    //DamageHandler damageHandler = GetComponent<DamageHandler>();
+    //    //1차 사거리
+    //    float firstDistance = 1.5f;
+    //    //2차 사거리
+    //    float secondDistance = 3.5f;
+    //    //3차 사거리
+    //    float thirdDistance = 5f;
+
+    //    // 총알과 player가 충돌했을때 나와 충돌플레이어 사이의거리
+    //    float range = Vector3.Distance(transform.position, collision.transform.position);
+
+    //    //사거리 안에 있으면 
+    //    if (range < firstDistance)
+    //    {
+    //        bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+    //    }
+
+    //    else if (firstDistance < range && range < secondDistance)
+    //    {
+    //        bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
+    //    }
+    //    else if (secondDistance < range && range < thirdDistance)
+    //    {
+    //        bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
     //    }
     //}
 
-    //private IEnumerator ResetTransparencyAfterDelay(float delay)
-    //{
-    //    HandleDamageTransparent(0.2f);
-    //    moveHandler.moveSpeed = 4;
 
-    //    yield return new WaitForSeconds(delay);
 
-    //    HandleDamageTransparent(1.0f);
-    //    moveHandler.moveSpeed = 2;
-    //}
-    //float backSpeed = 0.5f;
-    //#region 일반 공격 애니메이션 이벤트
-    //public void HandleBackEvent()
-    //{
-    //    //뒤로 0.5f만큼 흔들리고싶다
-    //    transform.position = transform.position.z * backSpeed * Time.deltaTime;
-    //}
+
 }
+#endregion
+
+#region 일반 공격 애니메이션 이벤트
+//public void HandleBackEvent()
+//{
+//    //뒤로 0.5f만큼 흔들리고싶다
+//    transform.position = transform.position.z * backSpeed * Time.deltaTime;
+//}
+#endregion
