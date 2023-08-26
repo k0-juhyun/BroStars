@@ -1,73 +1,69 @@
 using Photon.Pun;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LogHandler : MonoBehaviour
 {
-    GameManager GameManager;
+    private Dictionary<string, int> playerKills = new Dictionary<string, int>();
+    private Dictionary<string, int> playerDeaths = new Dictionary<string, int>();
+    public Dictionary<int, Dictionary<string, int>> teamPlayerKills = new Dictionary<int, Dictionary<string, int>>();
 
-    private List<PhotonView> playerViewList = new List<PhotonView>();
-
-    private void Awake()
+    public void RecordKill(string killerName)
     {
-        playerViewList = GameManager.instance.allPlayer;
-    }
-
-    private void Start()
-    {
-           
-    }
-
-    [System.Serializable]
-    public class KillLog
-    {
-        public int killerViewID;
-        public int victimViewID;
-        public int killCount;
-    }
-
-    public List<KillLog> killLogs = new List<KillLog>();
-
-    public void AddKillLog(int killerViewID, int victimViewID, int killCount)
-    {
-        KillLog newLog = new KillLog
+        if (playerKills.ContainsKey(killerName))
         {
-            killerViewID = killerViewID,
-            victimViewID = victimViewID,
-            killCount = killCount
-        };
-        killLogs.Add(newLog);
-    }
-
-    public int GetTotalKillCountForPlayer(int playerViewID)
-    {
-        int totalKillCount = 1;
-        foreach (var log in killLogs)
-        {
-            if (log.killerViewID == playerViewID)
-            {
-                totalKillCount += log.killCount;
-            }
+            playerKills[killerName]++;
         }
-        return totalKillCount;
+        else
+        {
+            playerKills[killerName] = 1;
+        }
     }
 
-    private void Update()
+    public void RecordDeath(string playerName)
     {
-        foreach (var log in killLogs)
+        if (playerDeaths.ContainsKey(playerName))
         {
-            PhotonView killerView = playerViewList.Find(view => view.ViewID == log.killerViewID);
-            PhotonView victimView = playerViewList.Find(view => view.ViewID == log.victimViewID);
-
-            if (killerView != null && victimView != null)
-            {
-                string killerName = killerView.Owner.NickName;
-                string victimName = victimView.Owner.NickName;
-                int killCount = log.killCount;
-
-                string message = $"{killerName} killed {victimName} ({killCount} times).";
-                Debug.Log(message);
-            }
+            playerDeaths[playerName]++;
         }
+        else
+        {
+            playerDeaths[playerName] = 1;
+        }
+    }
+
+    // 플레이어 킬 수를 가져옴
+    public int GetPlayerKills(string playerName)
+    {
+        if (playerKills.ContainsKey(playerName))
+        {
+            return playerKills[playerName];
+        }
+        return 0;
+    }
+
+    // 플레이어 데스 수를 가져옴
+    public int GetPlayerDeaths(string playerName)
+    {
+        if (playerDeaths.ContainsKey(playerName))
+        {
+            return playerDeaths[playerName];
+        }
+        return 0;
+    }
+
+    // 섹스섹스
+    public string GetPlayerWithMostKillsInTeam(int teamIdx)
+    {
+        if (teamPlayerKills.TryGetValue(teamIdx, out var teamKills))
+        {
+            var mostKills = teamKills.Max(pair => pair.Value);
+            var playerWithMostKills = teamKills.FirstOrDefault(pair => pair.Value == mostKills).Key;
+
+            return playerWithMostKills;
+        }
+
+        return string.Empty;
     }
 }

@@ -9,7 +9,6 @@ public class CameraHandler : MonoBehaviourPun
     Joystick joystick;
     HpHandler hpHandler;
     TargetHandler targetHandler;
-    ObjectHandler objectHandler;
     PlayTimer timer;
 
     [HideInInspector]
@@ -34,13 +33,13 @@ public class CameraHandler : MonoBehaviourPun
     public float shakeMagnitude = 0.1f;
     public float startCamSpeed = 0.1f;
 
-    public bool gameStart;
+    public bool gameReady;
     public bool isReverse;
+    private bool tt;
 
     private void Awake()
     {
         targetHandler = GetComponentInParent<TargetHandler>();
-        objectHandler = FindObjectOfType<ObjectHandler>();
 
         mainCamera = this.gameObject;
 
@@ -50,15 +49,6 @@ public class CameraHandler : MonoBehaviourPun
         target = targetHandler.Target.transform;
         timer = target.GetComponentInChildren<PlayTimer>();
         hpHandler = target.GetComponent<HpHandler>();
-
-        if (photonView.IsMine)
-        {
-            Messages.gameObject.SetActive(false);
-        }
-    }
-    private void Start()
-    {
-
     }
 
     private void LateUpdate()
@@ -87,19 +77,20 @@ public class CameraHandler : MonoBehaviourPun
             float targetZPos = target.transform.position.z + distanceZFromTarget;
             float currentZpos = Mathf.SmoothDamp(this.transform.position.z, targetZPos, ref currentVelocity, smoothTime);
 
-            if (gameStart == false)
+            if (gameReady == false || !tt)
             {
                 Vector3 startCamPos = new Vector3(startXPos, startYPos, currentZpos);
                 transform.position = Vector3.Lerp(transform.position, startCamPos, startCamSpeed);
                 if (Vector3.Distance(transform.position, startCamPos) < 0.05f && photonView.IsMine)
                 {
-                    Messages.SetActive(false);
-                    Canvas.SetActive(true);
-
-                    gameStart = true;
+                    gameReady = true;
+                }
+                else if (CanvasHandler.instance.handleCanvas)
+                {
+                    ActivateCanvas();
+                    tt = true;
                 }
             }
-
             else
             {
                 this.transform.position = new Vector3(startXPos, startYPos, currentZpos);
@@ -149,5 +140,12 @@ public class CameraHandler : MonoBehaviourPun
             yield return new WaitForSeconds(duration);
             UrgentImage.gameObject.SetActive(false);
         }
+    }
+
+    public void ActivateCanvas()
+    {
+        Messages.SetActive(false);
+        Canvas.SetActive(true);
+        print("Á¦¹ß");
     }
 }

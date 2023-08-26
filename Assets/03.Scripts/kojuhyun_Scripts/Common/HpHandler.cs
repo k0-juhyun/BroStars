@@ -13,6 +13,8 @@ public class HpHandler : MonoBehaviourPun
     GemHandler gemHandler;
     LogHandler logHandler;
     HitHandler hitHandler;
+    KillLogUiHandler killLogUiHandler;
+    KillLogTextHandler killLogTextHandler;
 
     [Header("HP Bar")]
     public Slider HpBar;
@@ -41,6 +43,9 @@ public class HpHandler : MonoBehaviourPun
     public bool isUrgent;
     [HideInInspector]
     public bool isDie;
+    private bool isDead;
+    bool isKillLogVisible = false;
+
 
     // 추가 오브젝트
     private GameObject gem;
@@ -59,6 +64,8 @@ public class HpHandler : MonoBehaviourPun
         gemHandler = GetComponent<GemHandler>();
         logHandler = FindObjectOfType<LogHandler>();
         hitHandler = GetComponent<HitHandler>();
+        killLogUiHandler = FindObjectOfType<KillLogUiHandler>();
+        killLogTextHandler = FindObjectOfType<KillLogTextHandler>();
 
         if (this.gameObject.name != "Bruce")
         {
@@ -159,7 +166,7 @@ public class HpHandler : MonoBehaviourPun
                 gemHandler.gem = 0;
                 if (lastAttacker != null)
                 {
-                    Debug.Log(lastAttacker.Owner.NickName + " killed " + this.gameObject.name);
+                    Debug.Log(lastAttacker.Owner.NickName + " 가 " + this.gameObject.name +"를 죽였습니다.");
                     Die(lastAttacker.ViewID);
                 }
             }
@@ -173,18 +180,67 @@ public class HpHandler : MonoBehaviourPun
 
     public void Die(int attackerViewID)
     {
-        photonView.RPC(nameof(HandleDeath), RpcTarget.All, attackerViewID, photonView.ViewID);
+        if(!isDead)
+        {
+            photonView.RPC(nameof(HandleDeath), RpcTarget.All, attackerViewID, photonView.ViewID);
+            isDead = true;
+        }
     }
 
     [PunRPC]
     public void HandleDeath(int attackerViewID, int playerViewID)
     {
+        int teamIdx = targetHandler.teamIdx;
+
         PhotonView attacker = PhotonView.Find(attackerViewID);
         PhotonView player = PhotonView.Find(playerViewID);
 
+        if (!logHandler.teamPlayerKills.ContainsKey(teamIdx))
+        {
+            logHandler.teamPlayerKills[teamIdx] = new Dictionary<string, int>();
+        }
+
         if (attacker != null && player != null)
         {
-            Debug.Log(attacker.Owner.NickName + " killed " + player.gameObject.name);
+            string attackerName = attacker.Owner.NickName;
+            string playerName = player.Owner.NickName;
+
+            if (!logHandler.teamPlayerKills[teamIdx].ContainsKey(attackerName))
+            {
+                logHandler.teamPlayerKills[teamIdx][attackerName] = 1;
+            }
+            else
+            {
+                logHandler.teamPlayerKills[teamIdx][attackerName]++;
+            }
+
+            if (teamIdx == 1)
+            {
+                killLogUiHandler.myTeamKill = true;
+                killLogUiHandler.enemyTeamKill = false;
+            }
+            else if (teamIdx == 2)
+            {
+                killLogUiHandler.myTeamKill = false;
+                killLogUiHandler.enemyTeamKill = true;
+            }
+
+            logHandler.RecordKill(attackerName);
+            logHandler.RecordDeath(playerName);
+
+            Debug.Log(attackerName + "가 " + playerName + "을(를) 죽였습니다.");
+            string killLogText = attackerName + "가 " + playerName + "을(를) 처치했습니다.";
+
+            if (!isKillLogVisible)
+            {
+                killLogTextHandler.SetKillLog(killLogText);
+                isKillLogVisible = true;
+            }
+
+            string playerWithMostKillsInTeam = logHandler.GetPlayerWithMostKillsInTeam(teamIdx);
+            int mostKillsInTeam = logHandler.teamPlayerKills[teamIdx][playerWithMostKillsInTeam];
+
+            Debug.Log("팀 " + teamIdx + "에서 가장 많은 킬을 기록한 플레이어: " + playerWithMostKillsInTeam + " (" + mostKillsInTeam + " 킬)");
         }
     }
 

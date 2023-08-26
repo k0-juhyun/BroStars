@@ -36,7 +36,7 @@ public class BruceAIHandler : MonoBehaviourPun
 
     private void Update()
     {
-        //photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+        photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
     }
 
     private void FindClosestPlayer()
@@ -47,7 +47,7 @@ public class BruceAIHandler : MonoBehaviourPun
 
         foreach (GameObject player in players)
         {
-            if (player.name != "Nita")
+            if (player.layer != this.gameObject.layer)
             {
                 float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
                 if (distanceToPlayer < shortestDistance)

@@ -13,12 +13,8 @@ public class NicknameHandler : MonoBehaviourPun
         nickNameText = GetComponent<Text>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        if (photonView.IsMine)
-        {
-            nickNameText.text = PhotonNetwork.NickName;
-        }
+        nickNameText.text = photonView.Owner.NickName;
     }
 }

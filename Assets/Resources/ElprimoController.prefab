@@ -4147,7 +4147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6351333745630562360
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4371,7 +4371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6351333745752325352
 Transform:
   m_ObjectHideFlags: 0
@@ -4569,7 +4569,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6351333745761424832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5516,7 +5516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6351333746385581614
 Transform:
   m_ObjectHideFlags: 0
@@ -7899,7 +7899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 6351333747142301767}
-  Messages: {fileID: 6351333745637718447}
+  Messages: {fileID: 6351333746736463604}
   Canvas: {fileID: 6351333746349582619}
   UrgentImage: {fileID: 6351333746477962195}
   RespawnImage: {fileID: 8374964670765955113}
@@ -7907,7 +7907,7 @@ MonoBehaviour:
   distanceZFromTarget: -110
   shakeMagnitude: 0.1
   startCamSpeed: 0.1
-  gameStart: 0
+  gameReady: 0
   isReverse: 0
 --- !u!114 &6351333747142301791
 MonoBehaviour:

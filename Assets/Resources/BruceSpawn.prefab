@@ -801,11 +801,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HpBar: {fileID: 3193361374536988622}
+  allyCanvas: {fileID: 0}
+  enemyCanvas: {fileID: 0}
   HealPrefab: {fileID: 3193361373456088880}
   Mesh: {fileID: 249535706069358073}
   curHp: 0
-  maxHp: 4000
-  AttackDamage: 2
+  maxHp: 2000
+  AttackDamage: 100
   SkillDamage: 0
   hpRegenValue: 0
   isDamaged: 0
@@ -905,7 +907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  attacker: {fileID: 0}
+  attackviewID: 0
 --- !u!114 &7467565591032619534
 MonoBehaviour:
   m_ObjectHideFlags: 0

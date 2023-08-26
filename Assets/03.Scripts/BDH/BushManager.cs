@@ -110,7 +110,7 @@ public class BushManager : MonoBehaviourPun
         int length = playerComponent.transform.childCount;
         bool shouldHide = false;
 
-        if (isBush && playerComponent.GetComponentInParent<TargetHandler>().teamIdx != targetHandler.teamIdx)
+        if (isBush && playerComponent.GetComponentInParent<TargetHandler>().teamIdx != GameManager.instance.myTeamIdx)
         {
             shouldHide = true;
         }

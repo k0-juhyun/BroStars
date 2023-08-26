@@ -2950,7 +2950,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2724276264332227867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3518,7 +3518,7 @@ MonoBehaviour:
   distanceZFromTarget: -110
   shakeMagnitude: 0.1
   startCamSpeed: 0.1
-  gameStart: 0
+  gameReady: 0
   isReverse: 0
 --- !u!114 &2724276264450136238
 MonoBehaviour:
@@ -3838,7 +3838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2724276264509079595
 Transform:
   m_ObjectHideFlags: 0
@@ -4987,7 +4987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2724276264779926427
 Transform:
   m_ObjectHideFlags: 0

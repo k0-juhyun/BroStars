@@ -22,6 +22,7 @@ public class SpawnBruce : MonoBehaviourPun
         if (Physics.Raycast(ray, maxDistance, groundLayer))
         {
             Bruce.SetActive(true);
+            Bruce.layer = this.gameObject.layer;
             Bruce.transform.SetParent(null);
             Destroy(this.gameObject); 
         }

@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 3
+    AppVersion: 18
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -74,6 +74,10 @@ MonoBehaviour:
   - Timer
   - sexTimer
   - HandleDeath
+  - SetAllPlayerReady
+  - SetGameReady
+  - ActivateCanvas
+  - SetHandleCanvas
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

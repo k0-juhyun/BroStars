@@ -165,10 +165,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         CreateSpawn();
 
         // spawnManager의 리스폰 위치에 브롤러 캐릭터 생성한다. 
-        string _playerName = PlayerName[ProjectManager.instance.myBrawlerIndex];
-        string prefabName = _playerName;
 
-        player = PhotonNetwork.Instantiate(prefabName, spawnPos[index], Quaternion.identity);
+        player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
 
         //player = PhotonNetwork.Instantiate(prefabName, spawnPos[index], Quaternion.identity);
 
