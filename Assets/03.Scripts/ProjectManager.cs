@@ -26,11 +26,6 @@ public class ProjectManager : MonoBehaviourPun
         }
     }
 
-    private void Update()
-    {
-        //print("사용자의 닉네임 : " + myNickName);
-        //print("사용자의 브롤러 인덱스 : " + myBrawlerIndex.ToString());
-        //print("사용자의 룸 입장한 인덱스 : " + myPosIndex.ToString());
-    }
+  
 
 }

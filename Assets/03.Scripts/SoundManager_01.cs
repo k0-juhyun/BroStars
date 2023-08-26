@@ -8,7 +8,7 @@ public class SoundManager_01 : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if(instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -55,6 +55,7 @@ public class SoundManager_01 : MonoBehaviour
         //플레이 할 bgm 설정
         audioBGM.clip = bgms[(int)bgmIdx];
         audioBGM.Play();
+        audioBGM.loop = true; 
     }
 
     // BGM STOP 메소드 

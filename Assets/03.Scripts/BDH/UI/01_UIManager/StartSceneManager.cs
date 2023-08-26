@@ -16,6 +16,8 @@ public class StartSceneManager : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
+        // StartScene BGM 실행.
+        SoundManager_01.instance.PlayBGM(SoundManager_01.EBgm.BGM_StartScene);
 
         // 버튼에 OnCick 클릭 리스너 함수 사용 -> OnClickConnect
         btnConnect.onClick.AddListener(OnClickConnect);

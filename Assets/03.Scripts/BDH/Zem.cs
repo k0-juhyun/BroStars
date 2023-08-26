@@ -61,7 +61,7 @@ public class Zem : MonoBehaviourPun
             
             if (photonView.IsMine)
             {
-                // GemHandler의 PlusGem() 메소드를 토해 gem 변수 카운드 증가. 
+                // GemHandler의 PlusGem() 메소드를 통해 gem 변수 카운드 증가. 
                 GemHandler gemCountUp = collision.gameObject.GetComponent<GemHandler>();
                 // RPC ALL로 PlusGem()를 사용하여 Gem의 갯수를 증가시킨다. 
                 gemCountUp.PlusGem();

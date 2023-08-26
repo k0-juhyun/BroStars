@@ -14,7 +14,9 @@ public class LodingSceneManager : MonoBehaviour
 
     public void Start()
     {
-      
+        // LodingScene BGM STOP
+        SoundManager_01.instance.StopBGM();
+
         PhotonNetwork.AutomaticallySyncScene = true;
         if (PhotonNetwork.IsMasterClient)
         {

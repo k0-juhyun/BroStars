@@ -14,6 +14,7 @@ using static GameManager;
 // 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
 // 3. 균형이 무너지는 순간 카운트 다운 실행. 
 
+
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
@@ -195,6 +196,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
         }
+
+        // 타이머 여기서 처리. 
+        
 
     }
 
