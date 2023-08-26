@@ -7,8 +7,9 @@ public class ShellyEffectBullet1 : MonoBehaviour
 {
     [Header("Speed")]
     Rigidbody rb;
-    public float bulletSpeed = 10.33f;
-    Vector3 startPos;
+    public float bulletSpeed = 20f;
+    //Vector3 startPos;
+    private Vector3 startForward;
 
     //public GameObject attackBulelt;
     //public GameObject specialBullet;
@@ -23,36 +24,36 @@ public class ShellyEffectBullet1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.gameObject.transform.SetParent(null);
-        rb = GetComponent<Rigidbody>();
-        startPos = transform.position;
+        startForward = transform.forward;
     }
     private void OnEnable()
     {
+        transform.forward = startForward;
         sphereCollider = GetComponent<SphereCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = transform.forward * bulletSpeed;
+        Vector3 movement = startForward * bulletSpeed * Time.deltaTime;
+
+        transform.position += movement;
     }
+    IEnumerator DestroyAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator HandleCollider(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        sphereCollider.enabled = true;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-
-        //bulletSmoke.Play();
-        //muzzleSmoke.Play();
-        var otherRB = collision.gameObject.GetComponent<Rigidbody>();
-
-        if (otherRB != null)
-        {
-            otherRB.AddForce(transform.forward * otherRB.mass * 0.3f, ForceMode.Impulse);
-            //print("2222");
-
-        }
-
-        //Destroy(collision.gameObject);
+        //print("111");
         Destroy(this.gameObject);
-
     }
 }

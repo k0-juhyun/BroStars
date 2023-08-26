@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4492041527b1094593add9bd46781b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 10.33
+  bulletSpeed: 15
   bulletPrefab: []
 --- !u!33 &4001234322606886394
 MeshFilter:

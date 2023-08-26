@@ -6,8 +6,8 @@ public class shellyBullet1 : MonoBehaviour
 {
     [Header("Speed")]
     Rigidbody rb;
-    public float bulletSpeed = 10.33f;
-    Vector3 startPos;
+    public float bulletSpeed = 15;
+    //Vector3 startPos;
     private Vector3 startForward;
 
     SphereCollider sphereCollider;
@@ -62,7 +62,7 @@ public class shellyBullet1 : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print("111");
+        //print("111");
         Destroy(this.gameObject);
     }
 
