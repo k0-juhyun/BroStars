@@ -9,7 +9,7 @@ using System;
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
     int currentPlayer;
-    int maxPlayerCount = 3;
+    int maxPlayerCount = 4;
 
     public Text curText;
     public Text maxText;

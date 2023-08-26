@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     public MyTeam myTeam;
     public EnemyTeam enemyTeam;
 
+    public int myTeamTotalGemCount;
+    public int enemyTeamTotalGemCount;
+
     [Serializable]
     public class Player
     {
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // 잼 점수표 : 우리팀
         public int myTeamScore = 0;
+       
         // 팀원 리스트 
         public List<Player> myMembers;
 
@@ -78,17 +82,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             myMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
-
-        public void CalculateScore()
-        {
-            for (int i = 0; i < myMembers.Count; i++)
-            {
-                int score = myMembers[i].player.GetComponentInChildren<GemHandler>().gem;
-                myTeamScore += score;
-            }
-
-        }
-
     }
 
     [Serializable]
@@ -108,19 +101,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             enemyMembers.Add(new Player(gameobject, PlayerName[index], respawnPos));
         }
-        public void CalculateScore()
-        {
-            for (int i = 0; i < enemyMembers.Count; i++)
-            {
-                int score = enemyMembers[i].player.GetComponentInChildren<GemHandler>().gem;
-                EnemyTeamScore += score;
-            }
-
-        }
-
-
     }
 
+    private void Update()
+    {
+        print("myTeam: "+myTeam.myTeamScore);
+        print("enemyTeam: "+enemyTeam.EnemyTeamScore);
+    }
     private void Awake()
     {
         if (instance == null)
@@ -159,7 +146,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerLength = PhotonNetwork.CurrentRoom.PlayerCount;
 
         // 내가 위치해야 하는 index.
-        index = ProjectManager.instance.myPosIndex - 1;// PhotonNetwork.CurrentRoom.PlayerCount - 1;
+        index = ProjectManager.instance.myPosIndex - 1;
 
         // 각 Player의 spawnManager의 리스폰 위치를 생성한다. 
         CreateSpawn();
@@ -168,17 +155,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
 
-        //player = PhotonNetwork.Instantiate(prefabName, spawnPos[index], Quaternion.identity);
-
-        //player.transform.rotation = (myTeamIdx == 1) ? Quaternion.identity : new Quaternion(0,180,0,0);
-
-
-        //if (player.gameObject.name.Contains("Reverse"))
-        //{
-        //    player.transform.rotation = new Quaternion(0, 180, 0, 0);
-        //}
-
-        // 마우스 포인터를 비 활성화.
         Cursor.visible = false;
 
     }
@@ -186,37 +162,36 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<PhotonView> allPlayer = new List<PhotonView>();
     public Dictionary<int, PhotonView> allPhotonView = new Dictionary<int, PhotonView>();
 
-    //public Dictionary<int,MoveHandler>
-
     // 각자 플레이어 게임 매니저에서 AddPlayer메소드를 통해서 PhotonView를 추가.
     public void AddPlayer(PhotonView pv)
     {
         allPlayer.Add(pv);
         allPhotonView[pv.ViewID] = pv;
-
-        // 마스터인 플레이어만 RPC 실행.
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
-        //}
-
-        // maxplayer와 현재 들어온 플레이어가 같으면 그때
     }
 
     public int myTeamIdx;
     public void SetTeamInfo()
     {
-        if (PhotonNetwork.IsMasterClient == false) return;
-        if (allPlayer.Count < 4) return;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            print("마스터일때만 들어와라");
+            //if (allPlayer.Count < 4) return;
 
-        StartCoroutine(AAA());
+            if (photonView.IsMine && PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(AAA());
+            }
+        }
     }
 
     IEnumerator AAA()
     {
         yield return new WaitForSeconds(3);
+
+        print("한번호출되어야함");
         for (int i = 0; i < allPlayer.Count; i++)
         {
+            print("4번호출되어야함");
             photonView.RPC(nameof(RpcSetMyMebers), RpcTarget.AllBuffered, allPlayer[i].ViewID, i);
         }
     }
@@ -225,27 +200,27 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RpcSetMyMebers(int viewId, int index)
     {
-
         TargetHandler th;
         for (int i = 0; i < allPlayer.Count; i++)
         {
+            print("11");
             if (allPlayer[i].ViewID == viewId)
             {
-
+                print("22");
                 th = allPlayer[i].GetComponent<TargetHandler>();
                 print("th.teamIdx " + th.teamIdx);
                 if (myTeamIdx == th.teamIdx)
                 {
                     // 플레이어의 참여한 순서 index가 2명 이하 이면 같은 팀.
                     myTeam.SetMyMebers(allPlayer[i].gameObject, index, spawnPos[index]);
+                    break;
                 }
                 else
                 {
                     // 플레이어의 참여한 순서 index가 2명 이상 이면 다른 팀.
                     enemyTeam.SetMyMebers(allPlayer[i].gameObject, index, spawnPos[index]);
+                    break;
                 }
-                break;
-
             }
         }
     }
@@ -264,56 +239,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
     }
-
-
-
-
-
-
-
-    //public int myTeam
-    //{
-    //    get
-    //    {
-    //        return myTeamScore;
-    //    }
-    //    set
-    //    {
-    //        myTeamScore = value;
-
-    //        if(myTeamScore >= 10 && myTeamScore != EnemyTeamScore)
-    //        {
-    //            // 우리팀 보석을 10개 이상 획득. 
-    //            isGameOver = true;
-
-    //            // 우리팀 승리 카운드 15초 시작. 
-    //            StartCoroutine(WinerTeamTimer());
-    //        }
-    //    }
-    //}
-
-    //public int EnemyTeam
-    //{
-    //    get
-    //    {
-    //        return EnemyTeamScore;
-    //    }
-
-    //    set
-    //    {
-    //        EnemyTeamScore = value;
-
-    //        if(EnemyTeamScore >= 10 && myTeamScore != EnemyTeamScore)
-    //        {
-    //            // 상대팀 보석을 10개 이상 획득. 
-    //            isGameOver = false;
-
-    //            // 상대팀 승리 카운트 다운 시작. 
-    //            StartCoroutine(WinerTeamTimer());
-    //        }
-    //    }
-    //}
-
 
     IEnumerator WinerTeamTimer()
     {

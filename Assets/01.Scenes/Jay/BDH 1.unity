@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657773, g: 0.4964133, b: 0.57481754, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -30142,6 +30142,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -7.499
       objectReference: {fileID: 0}
+    - target: {fileID: 5413987657528294450, guid: e7cf77f9ab0a3e340a6bb28c78f19127,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5736105393271909807, guid: e7cf77f9ab0a3e340a6bb28c78f19127,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -30281,6 +30286,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneViewId
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525329079164984890, guid: e7cf77f9ab0a3e340a6bb28c78f19127,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8206148257599127491, guid: e7cf77f9ab0a3e340a6bb28c78f19127,
         type: 3}
@@ -42830,6 +42840,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec0929cc9ed91784cad5b6831d7c27c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPos: []
+  index: 0
   myTeam:
     myTeamScore: 0
     myMembers: []

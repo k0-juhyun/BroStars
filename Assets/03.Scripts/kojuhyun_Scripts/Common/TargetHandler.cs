@@ -25,6 +25,7 @@ public class TargetHandler : MonoBehaviourPun
     CameraHandler cameraHandler;
 
     public int teamIdx;
+
     private void Awake()
     {
         if (photonView.IsMine == false)
@@ -96,12 +97,12 @@ public class TargetHandler : MonoBehaviourPun
         }
 
         teamIdx = index;
+
         if (photonView.IsMine)
         {
             GameManager.instance.myTeamIdx = index;
-            print("∆¿ ¿Œµ¶Ω∫ : " + index);
+            GameManager.instance.SetTeamInfo();
         }
-        GameManager.instance.SetTeamInfo();
 
         if (teamIdx == 1)
         {

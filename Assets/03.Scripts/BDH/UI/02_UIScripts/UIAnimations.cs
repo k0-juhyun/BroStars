@@ -50,18 +50,10 @@ public class UIAnimations : MonoBehaviour
             anim.Play(animationName, -1, 0f);
             timer = 0;
         }
-      
     }
 
     public void EndAnimation()
     {
         endBool = true;
-       
-
     }
-
-   
-
-
-
 }

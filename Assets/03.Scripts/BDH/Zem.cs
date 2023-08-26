@@ -58,52 +58,64 @@ public class Zem : MonoBehaviourPun
         {
             StartCoroutine(AbsorptedToCollider(collision));
 
-            
+
             if (photonView.IsMine)
             {
-                // GemHandler의 PlusGem() 메소드를 통해 gem 변수 카운드 증가. 
-                GemHandler gemCountUp = collision.gameObject.GetComponent<GemHandler>();
-                // RPC ALL로 PlusGem()를 사용하여 Gem의 갯수를 증가시킨다. 
-                gemCountUp.PlusGem();
+                if (collision.gameObject.layer == LayerMask.NameToLayer("myTeam"))
+                {
+                    // GemHandler의 PlusGem() 메소드를 통해 gem 변수 카운드 증가. 
+                    GemHandler gemCountUp = collision.gameObject.GetComponent<GemHandler>();
+                    // RPC ALL로 PlusGem()를 사용하여 Gem의 갯수를 증가시킨다. 
+                    gemCountUp.PlusGem();
+                    GameManager.instance.myTeam.myTeamScore++;
+                    PhotonNetwork.Destroy(gameObject);
+                }
+                else if (collision.gameObject.layer == LayerMask.NameToLayer("enemyTeam"))
+                {
+                    // GemHandler의 PlusGem() 메소드를 통해 gem 변수 카운드 증가. 
+                    GemHandler gemCountUp = collision.gameObject.GetComponent<GemHandler>();
+                    // RPC ALL로 PlusGem()를 사용하여 Gem의 갯수를 증가시킨다. 
+                    gemCountUp.PlusGem();
+                    GameManager.instance.enemyTeam.EnemyTeamScore++;
+                    PhotonNetwork.Destroy(gameObject);
+                }
 
-                PhotonNetwork.Destroy(gameObject);
             }
-            
         }
-    }
 
-    IEnumerator AbsorptedToCollider(Collision collision)
-    {
-        float time = 0;
-        float absortionTime = 0.7f;
-        Vector3 startPos = transform.position;
-        Vector3 originalScale = transform.localScale;
-
-        // 잼 획득 사운드 추가 
-        //SoundManager.instance.PlayZemBGM();
-
-        // 잼 획득 이펙트 추가.
-
-
-        while (time < absortionTime)
+        IEnumerator AbsorptedToCollider(Collision collision)
         {
-            time += Time.deltaTime;
+            float time = 0;
+            float absortionTime = 0.7f;
+            Vector3 startPos = transform.position;
+            Vector3 originalScale = transform.localScale;
 
-            transform.position =
-                Vector3.Lerp(
-                    startPos,
-                    collision.transform.position + new Vector3(0, 1, 0),
-                    time / absortionTime);
-            transform.localScale =
-                Vector3.Lerp(
-                    originalScale,
-                    new Vector3(0, 0, 0),
-                    time / absortionTime);
+            // 잼 획득 사운드 추가 
+            //SoundManager.instance.PlayZemBGM();
 
-            yield return null;
+            // 잼 획득 이펙트 추가.
+
+
+            while (time < absortionTime)
+            {
+                time += Time.deltaTime;
+
+                transform.position =
+                    Vector3.Lerp(
+                        startPos,
+                        collision.transform.position + new Vector3(0, 1, 0),
+                        time / absortionTime);
+                transform.localScale =
+                    Vector3.Lerp(
+                        originalScale,
+                        new Vector3(0, 0, 0),
+                        time / absortionTime);
+
+                yield return null;
+            }
+
+
         }
 
-
     }
-
 }
