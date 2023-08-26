@@ -41,6 +41,8 @@ public class LeonManager : MonoBehaviourPun
             photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
             photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
 
+
+            hpHandler.HandleCanvasInBush();
             //photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
             //hpHandler.UpdateHp();
             //hpHandler.RegenerateHpInBush();

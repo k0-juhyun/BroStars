@@ -98,10 +98,9 @@ public class ShellyAttackHandler : MonoBehaviourPun
                 Direction = new Vector3(-Direction.x, 0, -Direction.z);
             }
 
-            attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
+            attackLookPoint.position = new Vector3(Direction.x + transform.position.x, 4.11f, Direction.z + transform.position.z);
 
             attackLR.gameObject.SetActive(true);
-
 
             Vector3 directionToLookPoint = (attackLookPoint.position - transform.position).normalized;
 
@@ -134,7 +133,8 @@ public class ShellyAttackHandler : MonoBehaviourPun
             {
                 specialLR.gameObject.SetActive(true);
             }
-            skillLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
+
+            skillLookPoint.position = new Vector3(joystickDirection.x + transform.position.x, 4.11f, joystickDirection.z + transform.position.z);
 
             transform.LookAt(new Vector3(skillLookPoint.position.x, 4.1f, skillLookPoint.position.z));
 

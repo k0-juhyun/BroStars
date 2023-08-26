@@ -78,6 +78,9 @@ MonoBehaviour:
   - SetGameReady
   - ActivateCanvas
   - SetHandleCanvas
+  - RpcSuperShell
+  - Shot
+  - SuperShell
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -47,6 +47,7 @@ public class ShellyManager : MonoBehaviourPun
             attackHandler.HandleUltimateAttack();
             photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
             photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
+            hpHandler.HandleCanvasInBush();
         }
 
 

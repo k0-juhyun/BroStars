@@ -89,6 +89,22 @@ public class HpHandler : MonoBehaviourPun
         HpBar.value = curHp / maxHp;
     }
 
+    public void HandleCanvasInBush()
+    {
+        if(bushManager.isBush)
+        {
+            if (targetHandler.teamIdx == GameManager.instance.myTeamIdx)
+            {
+                allyCanvas.SetActive(true);
+                enemyCanvas.SetActive(false);
+            }
+            else
+            {
+                allyCanvas.SetActive(false);
+                enemyCanvas.SetActive(false);
+            }
+        }
+    }
 
     [PunRPC]
     public float HandleHP(float damage, int attackerViewID)
@@ -214,16 +230,16 @@ public class HpHandler : MonoBehaviourPun
                 logHandler.teamPlayerKills[teamIdx][attackerName]++;
             }
 
-            if (teamIdx == 1)
-            {
-                killLogUiHandler.myTeamKill = true;
-                killLogUiHandler.enemyTeamKill = false;
-            }
-            else if (teamIdx == 2)
-            {
-                killLogUiHandler.myTeamKill = false;
-                killLogUiHandler.enemyTeamKill = true;
-            }
+            //if (teamIdx == 1)
+            //{
+            //    killLogUiHandler.myTeamKill = true;
+            //    killLogUiHandler.enemyTeamKill = false;
+            //}
+            //else if (teamIdx == 2)
+            //{
+            //    killLogUiHandler.myTeamKill = false;
+            //    killLogUiHandler.enemyTeamKill = true;
+            //}
 
             logHandler.RecordKill(attackerName);
             logHandler.RecordDeath(playerName);
