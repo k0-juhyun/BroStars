@@ -38,19 +38,7 @@ public class ShellyManager : MonoBehaviourPun
         attackHandler.HandleNormalAttack();
         attackHandler.HandleUltimateAttack();
         //attackHandler.UpdateFire();
-        hpHandler.RegenerateHpInBush();
+        photonView.RPC(nameof(hpHandler.UpdateHp), RpcTarget.All);
+        photonView.RPC(nameof(hpHandler.RegenerateHpInBush), RpcTarget.All);
     }
-
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.IsWriting)
-    //    {
-    //        stream.SendNext(hpHandler.curHp);
-    //    }
-    //    else
-    //    {
-    //        float newHp = (float)stream.ReceiveNext();
-    //        hpHandler.UpdateHp(newHp);
-    //    }
-    //}
 }
