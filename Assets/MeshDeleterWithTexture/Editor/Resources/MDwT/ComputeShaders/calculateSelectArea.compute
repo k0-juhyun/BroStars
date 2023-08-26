@@ -21,9 +21,9 @@ int PenSize;
 
 int Width;
 
-CGPROGRAM
+
 #include "draw.cginc"
-ENDCG
+
 
 [numthreads(32, 32, 1)]
 void CSAddPoint(uint2 id : SV_DispatchThreadID)

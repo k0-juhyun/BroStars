@@ -16,9 +16,7 @@ int PreviousPos[2];
 float4 PenColor;
 int PenSize;
 
-CGPROGRAM
 #include "draw.cginc"
-ENDCG
 
 [numthreads(32,32,1)]
 void CSPen (uint2 id : SV_DispatchThreadID)
