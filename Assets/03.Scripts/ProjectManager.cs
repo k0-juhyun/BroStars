@@ -13,6 +13,8 @@ public class ProjectManager : MonoBehaviourPun
     public int myBrawlerIndex;
     public int myPosIndex;
 
+    public int teamIdx;
+
     private void Awake()
     {
         if(instance == null)

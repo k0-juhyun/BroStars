@@ -9,7 +9,7 @@ using System;
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
     int currentPlayer;
-    int maxPlayerCount = 3;
+    int maxPlayerCount = 4;
 
     public Text curText;
     public Text maxText;
@@ -119,8 +119,11 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
         ProjectManager.instance.myPosIndex = currentPlayer;
 
         // isConnection 으로 연결 가능.
-        isConnection = true; 
+        isConnection = true;
 
+        ProjectManager.instance.teamIdx = (PhotonNetwork.CurrentRoom.PlayerCount - 1) / 2 + 1;
+
+        print("teamIdx: " + ProjectManager.instance.teamIdx);
 
     }
 

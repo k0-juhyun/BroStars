@@ -40,6 +40,7 @@ public class TargetHandler : MonoBehaviourPun
         if (photonView.IsMine)
         {
             mainCamera.gameObject.SetActive(true);
+            photonView.RPC(nameof(SetMyTeamIdx), RpcTarget.AllBuffered, ProjectManager.instance.teamIdx);
         }
 
         hpHandler = GetComponentInChildren<HpHandler>();
@@ -98,6 +99,7 @@ public class TargetHandler : MonoBehaviourPun
         if (photonView.IsMine)
         {
             GameManager.instance.myTeamIdx = index;
+            print("∆¿ ¿Œµ¶Ω∫ : " + index);
         }
         GameManager.instance.SetTeamInfo();
 

@@ -197,10 +197,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         allPhotonView[pv.ViewID] = pv;
 
         // 마스터인 플레이어만 RPC 실행.
-        if (PhotonNetwork.IsMasterClient)
-        {
-            pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
-        }
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    pv.RPC("SetMyTeamIdx", RpcTarget.AllBuffered, (allPlayer.Count - 1) / 2 + 1);
+        //}
 
         // maxplayer와 현재 들어온 플레이어가 같으면 그때
     }
