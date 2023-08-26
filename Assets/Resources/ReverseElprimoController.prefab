@@ -2088,6 +2088,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HpBar: {fileID: 6402487906898460911}
+  allyCanvas: {fileID: 0}
+  enemyCanvas: {fileID: 0}
   HealPrefab: {fileID: 6402487907393638589}
   Mesh: {fileID: 6402487905523475660}
   curHp: 0
@@ -4153,7 +4155,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6402487906240471043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4839,6 +4841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestroy: 0
+  isReverseController: 0
   Target: {fileID: 6060540003446880846}
   DyingEffect: {fileID: 6402487905621209580}
   NoneTarget: {fileID: 1718071440179938547}
@@ -5171,6 +5174,7 @@ MonoBehaviour:
   shakeMagnitude: 0.1
   startCamSpeed: 0.1
   gameStart: 0
+  isReverse: 0
 --- !u!114 &6402487906679860636
 MonoBehaviour:
   m_ObjectHideFlags: 0

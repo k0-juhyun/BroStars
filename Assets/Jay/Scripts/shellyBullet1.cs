@@ -4,48 +4,82 @@ using UnityEngine;
 
 public class shellyBullet1 : MonoBehaviour
 {
-    //총알이 앞으로 나간다
-    public float speed = 10.33f;
+    [Header("Speed")]
     Rigidbody rb;
-    //총알  최대거리
-    public float maxDistance = 5f;
+    public float bulletSpeed = 15;
+    //Vector3 startPos;
+    private Vector3 startForward;
 
-    //총알 생성위치
-    private Vector3 firePos;
+    SphereCollider sphereCollider;
+
+    [SerializeField]
+    [Header("Particle")]
+    public ParticleSystem[] bulletPrefab;
+
+    //[Header("KnockBack")]
+    //public float knockBackSpeed = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
-        firePos = transform.position;
-        rb = GetComponent<Rigidbody>();
-        
-        //rb.velocity = transform.forward * speed;
+        //this.gameObject.transform.SetParent(null);
+        //rb = GetComponent<Rigidbody>();
+        startForward = transform.forward;
+    }
+    private void OnEnable()
+    {
+        transform.forward = startForward;
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //rb.velocity = transform.forward * bulletSpeed;
+        //rb.velocity = transform.forward * bulletSpeed;
 
-        float currentDistnace = Vector3.Distance(firePos, transform.position);
+        Vector3 movement = startForward * bulletSpeed * Time.deltaTime;
 
-        //앞으로 이동하고싶다
-        transform.position += transform.forward * speed * Time.deltaTime;
+        transform.position += movement;
 
-        if(currentDistnace > maxDistance)
-        {
-            //총알 파괴
-            Destroy(gameObject);
-        }
+        //transform.eulerAngles += new Vector3(0,)
+
+
+
     }
+
+    IEnumerator DestroyAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator HandleCollider(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        sphereCollider.enabled = true;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        //만약 부딪힌 물체에 리지드바디가 있다면
-        var otherRB = collision.gameObject.GetComponent<Rigidbody>();
-        //내 앞방향으로 힘을 가하고싶다
-        if (otherRB != null)
-        {
-            otherRB.AddForce(transform.forward * otherRB.mass * 3, ForceMode.Impulse);
-        }
+        //print("111");
         Destroy(this.gameObject);
-        
     }
+
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    Destroy(this.gameObject);
+
+    //}
+    //is collider를 비활성화
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    if (collider.gameObject.GetComponent<CapsuleCollider>() != null)
+    //    {
+    //        print(collider.gameObject + "충돌 된 이름");
+    //        //콜라이더 기능을 끄고싶다
+    //        //collider.gameObject.SetActive(false)
+    //        collider.enabled = false;
+    //    }
+    //}
 }
