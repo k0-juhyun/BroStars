@@ -106,35 +106,28 @@ public class BushManager : MonoBehaviourPun
 
     private void IsPlayerTransparent(float parameter)
     {
-        //// Shelly_GEO의 컴포넌트의 갯수
         int length = playerComponent.transform.childCount;
-        bool shouldHide = false;
-
-        if (isBush && playerComponent.GetComponentInParent<TargetHandler>().teamIdx != ProjectManager.instance.myBrawlerIndex)
-        {
-            shouldHide = true;
-        }
+        bool isSameTeam = playerComponent.GetComponentInParent<TargetHandler>().teamIdx == targetHandler.teamIdx;
 
         for (int index = 0; index < length; index++)
         {
-            // 플레이어의 SkinnedMeshRenderer 컴포넌트를 가져온다. 
             SkinnedMeshRenderer playerRenderer = playerComponent.transform.GetChild(index).GetComponent<SkinnedMeshRenderer>();
-            // SkinnedMeshRenderer 컬러값을 가져온다. 
             Color playerMaterialColor = playerRenderer.materials[0].color;
-            // SkinnedMeshRenderer 알파 값을 변경합니다.
             playerMaterialColor.a = parameter;
-
-            //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
             playerRenderer.materials[0].color = playerMaterialColor;
 
-            //if (!photonView.IsMine)
-            //{
-            //    playerRenderer.enabled = (!shouldHide && parameter == 1f);
-            //}
+            if (!isSameTeam)
+            {
+                playerRenderer.enabled = parameter != 1f;
+            }
+            else
+            {
+                playerRenderer.enabled = true;
+            }
+
             if (photonView.IsMine)
             {
-                playerRenderer.enabled = !shouldHide || parameter != 1f;
-                myCanvas.gameObject.SetActive(!shouldHide || parameter != 1f);
+                myCanvas.gameObject.SetActive(isSameTeam || parameter != 1f);
             }
         }
     }
