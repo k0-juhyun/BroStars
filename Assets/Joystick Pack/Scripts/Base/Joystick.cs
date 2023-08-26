@@ -79,10 +79,11 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
 
         Vector2 limitedInput = Vector2.ClampMagnitude((eventData.position - position) / (radius * canvas.scaleFactor), 0.2f);
 
-        if(this.gameObject.name == "skillJoyStick")
+        if (this.gameObject.name == "skillJoyStick")
         {
             input = limitedInput;
         }
+
         input = (eventData.position - position) / (radius * canvas.scaleFactor);
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);

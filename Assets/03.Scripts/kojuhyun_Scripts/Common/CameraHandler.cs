@@ -124,6 +124,8 @@ public class CameraHandler : MonoBehaviourPun
             shakeOffset.z = 0;
             this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z) + shakeOffset;
 
+            Handheld.Vibrate();
+
             yield return null;
         }
 
