@@ -20,9 +20,6 @@ public class MainSceneManager : MonoBehaviour
     // 브롤러 리스트
     public List<GameObject> brawlList;
 
-    // 브롤러 인덱스 변수
-    public string brawlListIndex; 
-
     // 인덱스 전역변수
     private int index = 0;
     private int max_length;
@@ -31,6 +28,8 @@ public class MainSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // MainScene BGM 실행.
+        SoundManager_01.instance.PlayBGM(SoundManager_01.EBgm.BGM_MainScene);
         
         max_length = brawlList.Count;
 
@@ -40,12 +39,6 @@ public class MainSceneManager : MonoBehaviour
         btnPlay.onClick.AddListener(OnClickConnect);
         leftBtn.onClick.AddListener(OnClickLeftConnect);
         rightBtn.onClick.AddListener(OnClickRightConnect);
-    }
-
-    private void Update()
-    {
-        //print(index);
-       // print(brawlList[index]);
     }
 
     private void OnClickRightConnect()
@@ -59,6 +52,7 @@ public class MainSceneManager : MonoBehaviour
     
         // 해당 인덱스 GameObject 활성화
         brawlList[index].SetActive(true);
+
     }
 
     private void OnClickLeftConnect()
@@ -85,7 +79,8 @@ public class MainSceneManager : MonoBehaviour
   
         // 저장한 브롤러 Index 정보를 ProjectManager에 저장.
         ProjectManager.instance.myBrawlerIndex = index;
-        print(brawlList[index] + " ㅇㄴㄻㄴㅇ :" + index);
+        
+          
         // 03_ConnectionScene으로 이동.
         PhotonNetwork.LoadLevel("03_ConnectionScene");
     }

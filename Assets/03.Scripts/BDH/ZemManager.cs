@@ -66,6 +66,7 @@ public class ZemManager : MonoBehaviourPun
             // Zem을 생성한다.
             GameObject Zems = PhotonNetwork.Instantiate("Crystal_Sparkle", zemsRandomPosition, Quaternion.identity);
 
+           
             // Zem을 생성할 수 있는 최대 29개로 제한한다.  
             limitZemCount -= 1;
            
