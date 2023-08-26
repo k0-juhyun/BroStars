@@ -9,10 +9,14 @@ using JetBrains.Annotations;
 
 public class ShellyAttackHandler : MonoBehaviourPun
 {
+    [SerializeField]
+    public bool isReverse;
+
     private SoundHandler soundHandler;
     private HpHandler hpHandler;
     private MoveHandler moveHandler;
     private AnimatorHandler animatorHandler;
+    private TargetHandler targetHandler;
     //private Animator animator;
     private Rigidbody rb;
     //attackJoystic을 누르면 총이 발사된다.
@@ -45,13 +49,13 @@ public class ShellyAttackHandler : MonoBehaviourPun
     //public Transform rayStartPos;
     public float fireDistance = 5f; //사정거리
 
-    private float TrailDistance = 4f;
+    //private float TrailDistance = 4f;
 
     public GameObject Mesh;
     public float meshResolution;
     private float launchForce = 10;
 
-    private bool isTransparented;
+    //private bool isTransparented;
 
     public LayerMask groundLayer;
 
@@ -77,9 +81,9 @@ public class ShellyAttackHandler : MonoBehaviourPun
         skillLookPoint = transform.GetChild(2).gameObject.GetComponent<Transform>();
         Player = GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
-        //animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         moveHandler = GetComponent<MoveHandler>();
+        targetHandler = GetComponentInParent<TargetHandler>();
     }
 
     public void HandleNormalAttack()
@@ -87,12 +91,26 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
         if (Mathf.Abs(attackJoystick.Horizontal) > 0.3f || Mathf.Abs(attackJoystick.Vertical) > 0.3f)
         {
+            Vector3 Direction = new Vector3(attackJoystick.Horizontal, 0, attackJoystick.Vertical);
+
+            if (isReverse)
+            {
+                Direction = new Vector3(-Direction.x, 0, -Direction.z);
+            }
+
             attackLookPoint.position = new Vector3(attackJoystick.Horizontal + transform.position.x, 4.11f, attackJoystick.Vertical + transform.position.z);
 
             attackLR.gameObject.SetActive(true);
 
-            transform.LookAt(new Vector3(attackLookPoint.position.x, 5.1f, attackLookPoint.position.z));
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+            Vector3 directionToLookPoint = (attackLookPoint.position - transform.position).normalized;
+
+            float rotationAngle = Mathf.Atan2(directionToLookPoint.x, directionToLookPoint.z) * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
+
+            //transform.LookAt(new Vector3(attackLookPoint.position.x, 5.1f, attackLookPoint.position.z));
+            //transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
         else
         {
@@ -103,8 +121,11 @@ public class ShellyAttackHandler : MonoBehaviourPun
     public void HandleUltimateAttack()
     {
         Vector3 joystickDirection = new Vector3(skillJoystick.Horizontal, 0.5f, skillJoystick.Vertical);
+        if (isReverse)
+        {
+            joystickDirection = new Vector3(-joystickDirection.x, 0.5f, -joystickDirection.z);
+        }
         Vector3 startVelocity = joystickDirection * launchForce;
-
 
         if (Mathf.Abs(skillJoystick.Horizontal) > 0f || Mathf.Abs(skillJoystick.Vertical) > 0f)
         {
@@ -265,6 +286,8 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
             if (gameObject.CompareTag("Player"))
             {
+
+                #region 거리별 데미지
                 ////DamageHandler damageHandler = GetComponent<DamageHandler>();
                 ////1차 사거리
                 //float firstDistance = 1.5f;
@@ -294,6 +317,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
                 //    //1배
                 //}
+                #endregion
             }
             bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
 

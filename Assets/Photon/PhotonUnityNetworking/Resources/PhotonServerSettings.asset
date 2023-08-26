@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 3
+    AppVersion: 1
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -74,6 +74,9 @@ MonoBehaviour:
   - Timer
   - sexTimer
   - HandleDeath
+  - RpcSuperShell
+  - Shot
+  - SuperShell
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

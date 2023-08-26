@@ -38,32 +38,18 @@ public class shellyBullet1 : MonoBehaviour
         //rb.velocity = transform.forward * bulletSpeed;
         rb.velocity = transform.forward * bulletSpeed;
     }
-    private void OnTriggerEnter(Collider collider)
+
+    private void OnCollisionEnter(Collision collision)
     {
-        //ParticleSystem particles = Instantiate(bulletPrefab[0]);
-        //particles.Play();
-        //Destroy(particles.gameObject);
-        //rb.velocity = Vector3.zero;
-        //rb.isKinematic = true;
-        //rb.detectCollisions = false;
-
-        //if(sphereCollider != null)
-        //{
-        //    sphereCollider.enabled = false;
-        //}
-
-        ////if (specialBullet != null)
-        //{
-        //    var otherRB = collision.gameObject.GetComponent<Rigidbody>();
-        //    if (otherRB != null)
-        //    {
-        //        //otherRB.AddForce(transform.forward * otherRB.mass * 0.3f, ForceMode.Impulse);
-        //    }
-        //}
-        //Destroy(collision.gameObject);
+        print("111");
         Destroy(this.gameObject);
-
     }
+
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    Destroy(this.gameObject);
+
+    //}
     //is collider를 비활성화
     //private void OnTriggerEnter(Collider collider)
     //{

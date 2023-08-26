@@ -9,13 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7708014865340578997}
+  - component: {fileID: 756585575950971987}
   - component: {fileID: 4001234322606886394}
   - component: {fileID: 1598982069853017183}
   - component: {fileID: 985379166692373299}
   - component: {fileID: -1727926412902566789}
   - component: {fileID: 6017872210988016009}
   - component: {fileID: 6161100813391030408}
-  - component: {fileID: 756585575950971987}
+  - component: {fileID: 5987256240372871091}
+  - component: {fileID: -7321958045288616295}
   m_Layer: 26
   m_Name: AttackBullet 1
   m_TagString: Untagged
@@ -38,6 +40,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &756585575950971987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7432803646438753741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4492041527b1094593add9bd46781b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 10.33
+  bulletPrefab: []
 --- !u!33 &4001234322606886394
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -247,8 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  attacker: {fileID: 0}
---- !u!114 &756585575950971987
+  attackviewID: 0
+--- !u!114 &5987256240372871091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,8 +273,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 7432803646438753741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4492041527b1094593add9bd46781b2, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10.33
-  maxDistance: 5
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: -7321958045288616295}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-7321958045288616295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7432803646438753741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
