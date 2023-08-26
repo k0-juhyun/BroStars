@@ -10,7 +10,7 @@ public class CameraHandler : MonoBehaviourPun
     HpHandler hpHandler;
     TargetHandler targetHandler;
     ObjectHandler objectHandler;
-    PlayTimer timer;
+    //PlayTimer timer;
 
     [HideInInspector]
     public GameObject mainCamera;
@@ -48,7 +48,7 @@ public class CameraHandler : MonoBehaviourPun
         this.startYPos = this.transform.position.y;
 
         target = targetHandler.Target.transform;
-        timer = target.GetComponentInChildren<PlayTimer>();
+       // timer = target.GetComponentInChildren<PlayTimer>();
         hpHandler = target.GetComponent<HpHandler>();
 
         if (photonView.IsMine)

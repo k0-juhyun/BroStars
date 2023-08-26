@@ -29,7 +29,7 @@ public class PlayTimer : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC("Timer", RpcTarget.All);
+            //photonView.RPC("Timer", RpcTarget.All);
         }
     }
 
@@ -38,7 +38,7 @@ public class PlayTimer : MonoBehaviourPunCallbacks
     {
         // PhotonNetwork를 통해서 마스터만 실행 가능하도록.! -> PRC ALL. 
 
-        StartCoroutine(StartTimer());
+       // StartCoroutine(StartTimer());
     }
 
     IEnumerator StartTimer()

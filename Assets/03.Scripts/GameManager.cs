@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public MyTeam myTeam;
     public EnemyTeam enemyTeam;
 
+    
+
     [Serializable]
     public class Player
     {
@@ -220,6 +222,17 @@ public class GameManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < allPlayer.Count; i++)
         {
             photonView.RPC(nameof(RpcSetMyMebers), RpcTarget.AllBuffered, allPlayer[i].ViewID, i);
+        }
+    }
+
+    private void Update()
+    {
+        print(ProjectManager.instance.myBrawlerIndex);
+        print(ProjectManager.instance.teamIdx);
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            PhotonNetwork.LoadLevel("06_PlayerResultScene");
         }
     }
 
