@@ -8,9 +8,8 @@ public class shellyBullet1 : MonoBehaviour
     Rigidbody rb;
     public float bulletSpeed = 10.33f;
     Vector3 startPos;
+    private Vector3 startForward;
 
-    //public GameObject attackBulelt;
-    //public GameObject specialBullet;
     SphereCollider sphereCollider;
 
     [SerializeField]
@@ -23,12 +22,13 @@ public class shellyBullet1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.gameObject.transform.SetParent(null);
-        rb = GetComponent<Rigidbody>();
-        startPos = transform.position;
+        //this.gameObject.transform.SetParent(null);
+        //rb = GetComponent<Rigidbody>();
+        startForward = transform.forward;
     }
     private void OnEnable()
     {
+        transform.forward = startForward;
         sphereCollider = GetComponent<SphereCollider>();
     }
 
@@ -36,7 +36,28 @@ public class shellyBullet1 : MonoBehaviour
     void Update()
     {
         //rb.velocity = transform.forward * bulletSpeed;
-        rb.velocity = transform.forward * bulletSpeed;
+        //rb.velocity = transform.forward * bulletSpeed;
+
+        Vector3 movement = startForward * bulletSpeed * Time.deltaTime;
+
+        transform.position += movement;
+
+        //transform.eulerAngles += new Vector3(0,)
+
+
+
+    }
+
+    IEnumerator DestroyAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator HandleCollider(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        sphereCollider.enabled = true;
     }
 
     private void OnCollisionEnter(Collision collision)
