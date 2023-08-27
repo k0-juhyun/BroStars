@@ -69,7 +69,8 @@ public class LodingSceneManager : MonoBehaviour
                 operation.allowSceneActivation = true;
             }
         }
-
-
     }
+
+   
+
 }

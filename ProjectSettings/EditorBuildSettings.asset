@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/BDH.unity
     guid: 45d597d0ed547604b8d3dc8797f25b87
+  - enabled: 1
+    path: Assets/01.Scenes/Gui/05_PlayerResultScene.unity
+    guid: 7c9726ec2b2af4c469a2556712341a7b
   m_configObjects: {}

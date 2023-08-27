@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+
 
 // 필요한 정보 : 구별된 팀의 정보, 스타 플레이어 브롤러의 정보
 
@@ -11,26 +14,37 @@ using UnityEngine;
 
 // 5. 승리한 팀에서 스타 플레이어 브롤러의 정보에 맞게 UI를 SetActive(true)를 한다. 
 
-public class PlayerResultManager : MonoBehaviour
+public class PlayerResultManager : MonoBehaviourPun
 {
 
-   
     private GameObject playerResultBrawls;
-    public Transform Quad; 
+    public Transform Quad;
+    public Button SceneChangeBtn; 
     public Transform[] brawlsSpawnPos; 
 
     // Start is called before the first frame update
     void Start()
     {
         // BGM(mvp_jingle_01)
+        SoundManager_01.instance.PlayBGM(SoundManager_01.EBgm.BGM_PlayerResultScene);
 
         // Resources/Prefabs/PlayerResultBrawls -> Resources.Load() 브롤러 호출.
-        playerResultBrawls = Resources.Load<GameObject>("Prefabs/PlayerResultBrawls");
-   
-        // 다음 버튼 클릭 리스러 생성. - > 다음 버튼 효과음(ulti_button_press_01) 
+        //playerResultBrawls = Resources.Load<GameObject>("Prefabs/PlayerResultBrawls");
 
-        SetWinnerTeam();
+        // 다음 버튼 클릭 리스러 생성. - > 다음 버튼 효과음(ulti_button_press_01) 
+        SceneChangeBtn.onClick.AddListener(MoveScene);
+
+
+        //SetWinnerTeam();
     }
+
+    private void MoveScene()
+    {
+        // 메인 씬으로 이동. 
+        // 02_MainScene 이동. 
+        PhotonNetwork.LoadLevel("02_MainScene");
+
+    } 
 
     private void SetWinnerTeam()
     {

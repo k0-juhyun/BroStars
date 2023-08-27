@@ -13,8 +13,10 @@ public class GemHandler : MonoBehaviourPun
         if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC(nameof(PlusGemRPC), RpcTarget.All);
+
             // GameManger CheckPlayWinner메소드 호출.
-            GameManager.instance.CheckPlayWinner(GameManager.instance.myTeam.myTeamScore, GameManager.instance.enemyTeam.EnemyTeamScore);
+            //GameManager.instance.CheckPlayWinner(GameManager.instance.myTeam.myTeamScore, GameManager.instance.enemyTeam.EnemyTeamScore);
+            GameManager.instance.StartCountDown();
         }
 
         
@@ -29,13 +31,4 @@ public class GemHandler : MonoBehaviourPun
     }
 
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

@@ -91,7 +91,7 @@ public class Zem : MonoBehaviourPun
             Vector3 originalScale = transform.localScale;
 
             // ¿Î »πµÊ ªÁøÓµÂ √ﬂ∞° 
-            //SoundManager.instance.PlayZemBGM();
+            SoundManager_01.instance.PlaySFX(SoundManager_01.ESfx.GEM_GAINSOUND);
 
             // ¿Î »πµÊ ¿Ã∆Â∆Æ √ﬂ∞°.
 

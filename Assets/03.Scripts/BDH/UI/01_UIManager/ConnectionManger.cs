@@ -9,7 +9,7 @@ using System;
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
     int currentPlayer;
-    int maxPlayerCount = 3;
+    int maxPlayerCount = 1;
 
     public Text curText;
     public Text maxText;
@@ -53,7 +53,7 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
     private void OnClickExit()
     {
         // 종료 버튼 효과음(ulti_button_cancel_01)
-
+        SoundManager_01.instance.PlaySFX(SoundManager_01.ESfx.Main_SFX_Change_Btn);
         // PhotonNetwork 현재 참여한 Room에서 나간다. 
         PhotonNetwork.Disconnect();
     }

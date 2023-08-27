@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using System;
 using static GameManager;
+using Photon.Realtime;
 
 // GameManager 스크립트
 // 1. 게임 플레이 씬의 리스폰 지역에서 브롤러 생성
@@ -13,8 +14,6 @@ using static GameManager;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
-
-
 
     // 승리 카운트 15초 
     private float winerTimer = 15f;
@@ -102,6 +101,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         spawnManager = Resources.Load<GameObject>("Prefabs/SpawnManager");
 
-        DontDestroyOnLoad(gameObject);
+
 
     }
 
@@ -235,96 +235,84 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 1. 팀원들이 모은 총 보석이 10개 이상. (상대 팀보다 더 많은 수의 보석을 보유해야 함)
     // 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
     // 3. 균형이 무너지는 순간 카운트 다운 실행. 
-
+    private bool counting = false;
+    private bool HandleCountSfx = false;
+    public GameObject GameTimer;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+
+        // counting이 true일 때 로직 실행
+        if (counting)
         {
-            myTeam.myTeamScore -= 1;
-        }
-    }
 
-
-    public void CheckPlayWinner(int myScore, int enemyScore)
-    {
-        // 게임 종료 카운트 여부 
-        bool isGameOverCount = false;
-
-        print("우리 팀 스코어 시발아 " + myTeam.myTeamScore);
-        print("상대 팀 스코어 시발아 " + enemyTeam.EnemyTeamScore);
-
-        if (myScore >= 10 || enemyScore >= 10)
-        {
-            print("1_10개이상은 넘었다. 카운트 준비");
-            if (myScore != enemyScore)
+            if (myTeam.myTeamScore >= 10 || enemyTeam.EnemyTeamScore >= 10)
             {
-                if (!isGameOverCount)
+                HandleCountSfx = true;
+                // 조건을 만족하면 15초 카운트 다운. 
+                winerTimer -= Time.deltaTime;
+
+                // 시계 카운트 다운 소리(clock_01)
+                if (HandleCountSfx)
                 {
-                    print("2_서로 같지 않으면 코루틴 실행.");
-                    // 카운트 다운 코루틴 시작. 
-                    isGameOverCount = true;
-                    StartCoroutine(WinerTeamTimer());
+                    GameTimer.SetActive(true);
+                }
+
+            }
+            else
+            {
+                HandleCountSfx = false;
+                GameTimer.SetActive(false);
+            }
+
+            if (winerTimer <= 0)
+            {
+                ResetCountDown();
+                // 누가 승자인지 판단. 
+                if (myTeam.myTeamScore > enemyTeam.EnemyTeamScore)
+                {
+                    // 우리팀 승리.
+                    print("우리팀 승리.");
+                    OnGameExit();
+                }
+                else
+                {
+                    // 상대팀 승리.
+                    print("상대팀 승리.");
+                    OnGameExit();
                 }
 
 
 
             }
-
         }
-        else
-        {
-            isGameOverCount = false;
-            print("승리 팀을 결정하는코루틴 종료. ");
-            StopCoroutine(WinerTeamTimer());
-
-        }
-
 
 
     }
 
-
-    IEnumerator WinerTeamTimer()
+    private void OnGameExit()
     {
+        // PhotonNetwork 현재 참여한 Room에서 나간다. 
+        PhotonNetwork.Disconnect();
+    }
 
-        winnerCurrentTimer = winerTimer;
-        print("3_승리 코루틴 시작");
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
 
-        while (winnerCurrentTimer > 0)
-        {
-            winnerCurrentTimer -= Time.deltaTime;
-
-
-
-            // 여기서 한번 더 판단. 
-            if (myTeam.myTeamScore < 10)
-            {
-                print(" 우리팀 -> 10개 미만임. ");
-                CheckPlayWinner(myTeam.myTeamScore, enemyTeam.EnemyTeamScore);
-                break;
-            }
-
-            if (enemyTeam.EnemyTeamScore < 10)
-            {
-                print("상대팀 -> 10개 미만임.");
-                // 여기서 문제가 일어남. 
-
-            }
+        // 05_PlayerResultScene으로 이동. 
+        PhotonNetwork.LoadLevel("05_PlayerResultScene");
+    }
 
 
-            yield return null;
+    public void StartCountDown()
+    {
+        counting = true;
+        winerTimer = 15f;
+    }
 
-
-            if (winnerCurrentTimer <= 0)
-            {
-                print("15초 승리 카운트 종료 -> 승자 패자 결정됨,");
-
-                // 누가 승자인지 판단. 
-                winnerCurrentTimer = 0;
-                yield break;
-
-            }
-
-        }
+    private void ResetCountDown()
+    {
+        counting = false;
+        winerTimer = 0f;
     }
 }
