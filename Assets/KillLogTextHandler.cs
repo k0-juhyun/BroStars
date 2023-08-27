@@ -27,7 +27,7 @@ public class KillLogTextHandler : MonoBehaviour
     {
         // 메시지 나타내기
         killLog.text = log;
-        yield return new WaitForSeconds(1.0f); // 메시지 표시 시간
+        yield return new WaitForSeconds(2.0f); // 메시지 표시 시간
 
         // 메시지 지우기
         killLog.text = "";

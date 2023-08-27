@@ -50,7 +50,6 @@ public class HpHandler : MonoBehaviourPun
     // 추가 오브젝트
     private GameObject gem;
     PhotonView lastAttacker;
-    CapsuleCollider cc;
 
     private void Awake()
     {
@@ -67,7 +66,6 @@ public class HpHandler : MonoBehaviourPun
         hitHandler = GetComponent<HitHandler>();
         killLogUiHandler = FindObjectOfType<KillLogUiHandler>();
         killLogTextHandler = FindObjectOfType<KillLogTextHandler>();
-        cc = GetComponent<CapsuleCollider>();
 
         if (this.gameObject.name != "Bruce")
         {
@@ -93,7 +91,7 @@ public class HpHandler : MonoBehaviourPun
 
     public void HandleCanvasInBush()
     {
-        if(bushManager.isBush)
+        if (bushManager.isBush)
         {
             if (targetHandler.teamIdx == GameManager.instance.myTeamIdx)
             {
@@ -144,7 +142,7 @@ public class HpHandler : MonoBehaviourPun
     {
         if (bushManager.isBush && curHp < maxHp)
         {
-            HandleHP(1,0);
+            HandleHP(1, 0);
             HealPrefab.SetActive(true);
             soundHandler.enabled = true;
         }
@@ -171,28 +169,20 @@ public class HpHandler : MonoBehaviourPun
 
         if (curHp <= 0)
         {
+            isDie = true;
             if (targetHandler.isDestroy)
             {
-                isDie = true;
-                cc.isTrigger = true;
                 int length = gemHandler.gem;
+
                 for (int i = 0; i < length; i++)
                 {
                     Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
-                    photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
-                }
-                if(targetHandler.teamIdx == 1)
-                {
-                    gemHandler.MinusMyTeamGem(length);
-                }
-                else if (targetHandler.teamIdx == 2)
-                {
-                    gemHandler.MinusEnemyTeamGem(length);
+                    //photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
                 }
                 gemHandler.gem = 0;
                 if (lastAttacker != null)
                 {
-                    Debug.Log(lastAttacker.Owner.NickName + " 가 " + this.gameObject.name +"를 죽였습니다.");
+                    Debug.Log(lastAttacker.Owner.NickName + " 가 " + this.gameObject.name + "를 죽였습니다.");
                     Die(lastAttacker.ViewID);
                 }
             }
@@ -203,9 +193,10 @@ public class HpHandler : MonoBehaviourPun
             }
         }
     }
+
     public void Die(int attackerViewID)
     {
-        if(!isDead)
+        if (!isDead)
         {
             photonView.RPC(nameof(HandleDeath), RpcTarget.All, attackerViewID, photonView.ViewID);
             isDead = true;
