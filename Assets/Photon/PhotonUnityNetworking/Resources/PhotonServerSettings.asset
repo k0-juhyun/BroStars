@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 18
+    AppVersion: 111
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -81,6 +81,11 @@ MonoBehaviour:
   - RpcSuperShell
   - Shot
   - SuperShell
+  - PlusTeamGemRpc
+  - PlusmyTeamGemRpc
+  - PlusEnemyTeamGemRpc
+  - MinusEnemyTeamGemRpc
+  - MinusMyTeamGemRpc
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

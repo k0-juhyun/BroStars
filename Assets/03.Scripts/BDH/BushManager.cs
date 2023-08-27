@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,7 @@ public class BushManager : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        #region 은신
         // 부쉬 대상으로 플레이어의 범위를 측정하는 OverlapSphere 사용,
         Collider[] colArrays = Physics.OverlapSphere(this.transform.position, outOfRadius, layer);
 
@@ -66,7 +68,7 @@ public class BushManager : MonoBehaviourPun
                         {
 
                             // 플레이어가 페이드인 효과가 적용되면서 투명화가 진행된다. 
-                            IsPlayerTransparent(0.2f);
+                            IsPlayerTransparent(0.3f);
                         }
                         else if (isBush == false)
                         {
@@ -86,7 +88,7 @@ public class BushManager : MonoBehaviourPun
 
             }
         }
-
+        #endregion
     }
 
     private void IsBushTransparent(GameObject bushObject, float parameter)
@@ -107,7 +109,6 @@ public class BushManager : MonoBehaviourPun
     private void IsPlayerTransparent(float parameter)
     {
         int length = playerComponent.transform.childCount;
-        bool isSameTeam = playerComponent.GetComponentInParent<TargetHandler>().teamIdx == targetHandler.teamIdx;
 
         for (int index = 0; index < length; index++)
         {
@@ -115,20 +116,6 @@ public class BushManager : MonoBehaviourPun
             Color playerMaterialColor = playerRenderer.materials[0].color;
             playerMaterialColor.a = parameter;
             playerRenderer.materials[0].color = playerMaterialColor;
-
-            if (!isSameTeam)
-            {
-                playerRenderer.enabled = parameter != 1f;
-            }
-            else
-            {
-                playerRenderer.enabled = true;
-            }
-
-            if (photonView.IsMine)
-            {
-                myCanvas.gameObject.SetActive(isSameTeam || parameter != 1f);
-            }
         }
     }
 

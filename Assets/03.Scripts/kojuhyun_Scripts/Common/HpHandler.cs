@@ -50,6 +50,7 @@ public class HpHandler : MonoBehaviourPun
     // 추가 오브젝트
     private GameObject gem;
     PhotonView lastAttacker;
+    CapsuleCollider cc;
 
     private void Awake()
     {
@@ -66,6 +67,7 @@ public class HpHandler : MonoBehaviourPun
         hitHandler = GetComponent<HitHandler>();
         killLogUiHandler = FindObjectOfType<KillLogUiHandler>();
         killLogTextHandler = FindObjectOfType<KillLogTextHandler>();
+        cc = GetComponent<CapsuleCollider>();
 
         if (this.gameObject.name != "Bruce")
         {
@@ -169,15 +171,23 @@ public class HpHandler : MonoBehaviourPun
 
         if (curHp <= 0)
         {
-            isDie = true;
             if (targetHandler.isDestroy)
             {
+                isDie = true;
+                cc.isTrigger = true;
                 int length = gemHandler.gem;
-
                 for (int i = 0; i < length; i++)
                 {
                     Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
-                    //photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                    photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                }
+                if(targetHandler.teamIdx == 1)
+                {
+                    gemHandler.MinusMyTeamGem(length);
+                }
+                else if (targetHandler.teamIdx == 2)
+                {
+                    gemHandler.MinusEnemyTeamGem(length);
                 }
                 gemHandler.gem = 0;
                 if (lastAttacker != null)
@@ -189,11 +199,10 @@ public class HpHandler : MonoBehaviourPun
 
             if (this.gameObject.name == "Bruce")
             {
-                //PhotonNetwork.Destroy(this.gameObject);
+                PhotonNetwork.Destroy(this.gameObject);
             }
         }
     }
-
     public void Die(int attackerViewID)
     {
         if(!isDead)
@@ -229,17 +238,6 @@ public class HpHandler : MonoBehaviourPun
             {
                 logHandler.teamPlayerKills[teamIdx][attackerName]++;
             }
-
-            //if (teamIdx == 1)
-            //{
-            //    killLogUiHandler.myTeamKill = true;
-            //    killLogUiHandler.enemyTeamKill = false;
-            //}
-            //else if (teamIdx == 2)
-            //{
-            //    killLogUiHandler.myTeamKill = false;
-            //    killLogUiHandler.enemyTeamKill = true;
-            //}
 
             logHandler.RecordKill(attackerName);
             logHandler.RecordDeath(playerName);

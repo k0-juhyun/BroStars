@@ -61,6 +61,7 @@ public class TargetHandler : MonoBehaviourPun
                 NoneTarget.transform.position = dyingEffectPosition;
                 NoneTarget.SetActive(true);
                 DyingEffect.SetActive(true);
+                Destroy(Target);
                 Target = NoneTarget;
                 mainCamera.transform.SetParent(null);
                 isDestroy = true;

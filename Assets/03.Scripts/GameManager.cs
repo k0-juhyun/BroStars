@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             print("4번호출되어야함");
             photonView.RPC(nameof(RpcSetMyMebers), RpcTarget.AllBuffered, allPlayer[i].ViewID, i);
         }
-    }
+    } 
 
 
     [PunRPC]
