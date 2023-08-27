@@ -12,6 +12,8 @@ public class ElprimoAttackHandler : MonoBehaviourPun
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
 
+    AudioSource audioSource;
+
     #region 인스펙터창
     [Header("JoyStick")]
     public Joystick attackJoystick;
@@ -54,6 +56,7 @@ public class ElprimoAttackHandler : MonoBehaviourPun
         animatorHandler = GetComponent<AnimatorHandler>();
         targetHandler = GetComponentInParent<TargetHandler>();
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     #region 공격
