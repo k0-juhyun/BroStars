@@ -51,8 +51,10 @@ public class PlayTimer : MonoBehaviourPunCallbacks
             minute = (int)currentTimer / 60;
             second = (int)currentTimer % 60;
             timerText.text = minute.ToString("00") + ":" + second.ToString("00");
-            yield return null;
 
+           
+            yield return null;
+            
             if (currentTimer <= 0)
             {
                 // 게임 종료 -> PhotonNetwork 연결을 종료.
@@ -74,8 +76,9 @@ public class PlayTimer : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        
-        //PhotonNetwork.LoadLevel("02_MainScene");
+
+        // 05_PlayerResultScene으로 이동. 
+        PhotonNetwork.LoadLevel("05_PlayerResultScene");
     }
 
 }

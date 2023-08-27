@@ -40,6 +40,16 @@ public class ZemManager : MonoBehaviourPun
         // BoxCollider의 중심 위치를 가져온다. 
         centerX = rangeCollider.bounds.center.x;
         centerZ = rangeCollider.bounds.center.z;
+
+        // 3초 이후에 start BGM 시작. 
+        Invoke("PlayStartBGM", 3f);
+
+    }
+
+    private void PlayStartBGM()
+    {
+        // BDH씬 PlaySound 추가. 
+        SoundManager_01.instance.PlayBGM(SoundManager_01.EBgm.BGM_BDH);
     }
 
     // 마스터 클라이언트에서 젬을 생성하고 정보를 다른 클라이언트들에게 전달하는 코루틴
@@ -47,7 +57,7 @@ public class ZemManager : MonoBehaviourPun
     {
         while (limitZemCount > 0 )
         {
-            yield return new WaitForSeconds(7f);
+            yield return new WaitForSeconds(1f);
 
             // Zem 이펙트 활성화.
             if (!zemEffect.isPlaying)
@@ -61,7 +71,7 @@ public class ZemManager : MonoBehaviourPun
             Vector3 zemsRandomPosition = new Vector3(centerX, rangeObject.transform.position.y, centerZ);
 
             // Zem 생성 사운드 실행.
-            //SoundManager.instance.PlayZemBGM();
+            SoundManager_01.instance.PlaySFX(SoundManager_01.ESfx.GEM_CREATESOUND);
 
             // Zem을 생성한다.
             GameObject Zems = PhotonNetwork.Instantiate("Crystal_Sparkle", zemsRandomPosition, Quaternion.identity);

@@ -4,22 +4,16 @@ using UnityEngine;
 using Photon.Pun;
 using System;
 using static GameManager;
+using Photon.Realtime;
 
 // GameManager 스크립트
 // 1. 게임 플레이 씬의 리스폰 지역에서 브롤러 생성
 // 2. 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
 
-// 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
-// 1. 팀원들이 모은 총 보석이 10개 이상. (상대 팀보다 더 많은 수의 보석을 보유해야 함)
-// 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
-// 3. 균형이 무너지는 순간 카운트 다운 실행. 
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
-
-    // 게임 종료 여부 
-    private bool isGameOver;
 
     // 승리 카운트 15초 
     private float winerTimer = 15f;
@@ -46,8 +40,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public MyTeam myTeam;
     public EnemyTeam enemyTeam;
 
-    public int myTeamTotalGemCount;
-    public int enemyTeamTotalGemCount;
 
     [Serializable]
     public class Player
@@ -69,7 +61,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // 잼 점수표 : 우리팀
         public int myTeamScore = 0;
-       
+
         // 팀원 리스트 
         public List<Player> myMembers;
 
@@ -103,16 +95,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void Update()
-    {
-        print("myTeam: "+myTeam.myTeamScore);
-        print("enemyTeam: "+enemyTeam.EnemyTeamScore);
-    }
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -122,7 +111,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         spawnManager = Resources.Load<GameObject>("Prefabs/SpawnManager");
 
-        DontDestroyOnLoad(gameObject);
+
 
     }
 
@@ -152,12 +141,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         CreateSpawn();
 
         // spawnManager의 리스폰 위치에 브롤러 캐릭터 생성한다. 
-
         player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
+
+
 
         Cursor.visible = false;
 
     }
+
 
     public List<PhotonView> allPlayer = new List<PhotonView>();
     public Dictionary<int, PhotonView> allPhotonView = new Dictionary<int, PhotonView>();
@@ -174,24 +165,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            print("마스터일때만 들어와라");
-            //if (allPlayer.Count < 4) return;
 
             if (photonView.IsMine && PhotonNetwork.IsMasterClient)
             {
-                StartCoroutine(AAA());
+                StartCoroutine(Delay());
             }
         }
     }
 
-    IEnumerator AAA()
+
+
+    IEnumerator Delay()
     {
         yield return new WaitForSeconds(3);
 
-        print("한번호출되어야함");
+
         for (int i = 0; i < allPlayer.Count; i++)
         {
-            print("4번호출되어야함");
+
             photonView.RPC(nameof(RpcSetMyMebers), RpcTarget.AllBuffered, allPlayer[i].ViewID, i);
         }
     }
@@ -203,12 +194,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         TargetHandler th;
         for (int i = 0; i < allPlayer.Count; i++)
         {
-            print("11");
+
             if (allPlayer[i].ViewID == viewId)
             {
-                print("22");
+
                 th = allPlayer[i].GetComponent<TargetHandler>();
-                print("th.teamIdx " + th.teamIdx);
+
                 if (myTeamIdx == th.teamIdx)
                 {
                     // 플레이어의 참여한 순서 index가 2명 이하 이면 같은 팀.
@@ -240,34 +231,88 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
-    IEnumerator WinerTeamTimer()
+    // 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
+    // 1. 팀원들이 모은 총 보석이 10개 이상. (상대 팀보다 더 많은 수의 보석을 보유해야 함)
+    // 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
+    // 3. 균형이 무너지는 순간 카운트 다운 실행. 
+    private bool counting = false;
+    private bool HandleCountSfx = false;
+    public GameObject GameTimer;
+    private void Update()
     {
-        winnerCurrentTimer = winerTimer;
 
-        while (winnerCurrentTimer > 0)
+        // counting이 true일 때 로직 실행
+        if (counting)
         {
-            winnerCurrentTimer -= Time.deltaTime;
 
-            yield return null;
-
-            if (winnerCurrentTimer <= 0)
+            if (myTeam.myTeamScore >= 10 || enemyTeam.EnemyTeamScore >= 10)
             {
-                if (isGameOver == true)
-                {
-                    // 우리 팀 승리.!! 
+                HandleCountSfx = true;
+                // 조건을 만족하면 15초 카운트 다운. 
+                winerTimer -= Time.deltaTime;
 
+                // 시계 카운트 다운 소리(clock_01)
+                if (HandleCountSfx)
+                {
+                    GameTimer.SetActive(true);
+                }
+
+            }
+            else
+            {
+                HandleCountSfx = false;
+                GameTimer.SetActive(false);
+            }
+
+            if (winerTimer <= 0)
+            {
+                ResetCountDown();
+                // 누가 승자인지 판단. 
+                if (myTeam.myTeamScore > enemyTeam.EnemyTeamScore)
+                {
+                    // 우리팀 승리.
+                    print("우리팀 승리.");
+                    OnGameExit();
                 }
                 else
                 {
-                    // 상태 팀 승리.!! 
+                    // 상대팀 승리.
+                    print("상대팀 승리.");
+                    OnGameExit();
                 }
 
 
-                winnerCurrentTimer = 0;
-                yield break;
+
             }
         }
+
+
+    }
+
+    private void OnGameExit()
+    {
+        // PhotonNetwork 현재 참여한 Room에서 나간다. 
+        PhotonNetwork.Disconnect();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+
+        // 05_PlayerResultScene으로 이동. 
+        PhotonNetwork.LoadLevel("05_PlayerResultScene");
     }
 
 
+    public void StartCountDown()
+    {
+        counting = true;
+        winerTimer = 15f;
+    }
+
+    private void ResetCountDown()
+    {
+        counting = false;
+        winerTimer = 0f;
+    }
 }

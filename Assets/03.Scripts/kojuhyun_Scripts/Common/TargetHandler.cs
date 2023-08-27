@@ -72,7 +72,7 @@ public class TargetHandler : MonoBehaviourPun
 
         if (Target == NoneTarget)
         {
-            print("º¹Á¦");
+            
             StartCoroutine(RespawnPlayer(5.0f));
         }
     }

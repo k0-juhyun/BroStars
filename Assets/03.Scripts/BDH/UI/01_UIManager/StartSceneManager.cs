@@ -54,6 +54,9 @@ public class StartSceneManager : MonoBehaviourPun
     public void OnClickConnect()
     {
 
+        // 캐릭터 변경 버튼 효과음 (ulti_button_press_01)
+        SoundManager_01.instance.PlaySFX(SoundManager_01.ESfx.Main_SFX_Change_Btn);
+
         // 닉네임 설정
         PhotonNetwork.NickName = inputNickName.text;
 

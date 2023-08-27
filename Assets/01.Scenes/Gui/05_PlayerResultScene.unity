@@ -3938,6 +3938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Quad: {fileID: 1728915889}
+  SceneChangeBtn: {fileID: 6635284302117077328}
   brawlsSpawnPos: []
 --- !u!4 &2066543059
 Transform:

@@ -17,17 +17,16 @@ public class SoundManager_01 : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        audioSFX = GetComponentInChildren<AudioSource>();
     }
 
     // Scene마다 Bgm의 종류. 
-    // Scene 전환 플로우 순서대로 나열.
+    
     public enum EBgm
     {
         BGM_StartScene,
         BGM_MainScene,
-        BGM_ConnectionScene,
-        BGM_LodingScene,
-        BGM_GamePlayScene,
         BGM_BDH,
         BGM_PlayerResultScene,
         BGM_PlayerScoreScene
@@ -36,18 +35,25 @@ public class SoundManager_01 : MonoBehaviour
     // SFX 
     public enum ESfx
     {
-        SFX_BUTTON,
-        SFX_JUMP
+        Main_SFX_Change_Btn,
+        Main_SFX_Cancel_Btn,
+        BGM_GAMETIMER,
+        GEM_GAINSOUND,
+        GEM_CREATESOUND
+
+
     }
 
-    [Header("사운드")]
+    
     // AudioSource 변수
     public AudioSource audioBGM;
+    [HideInInspector]
     public AudioSource audioSFX;
 
     // AudioSource의 audio clip을 담을 수 있는 배열.
     public AudioClip[] bgms;
     public AudioClip[] sfxs;
+    public AudioClip[] mainBrawlsSfxs;
 
     //BGM Play 메소드
     public void PlayBGM(EBgm bgmIdx)
@@ -71,5 +77,6 @@ public class SoundManager_01 : MonoBehaviour
         audioSFX.PlayOneShot(sfxs[(int)sfxIdx]);
     }
 
+   
 
 }
