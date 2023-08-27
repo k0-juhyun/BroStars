@@ -130,8 +130,8 @@ public class CameraHandler : MonoBehaviourPun
         }
 
         this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z);
-        hpHandler.isDamaged = false;
         target.GetComponent<CamShakeHandler>().camShake = false;
+        hpHandler.isDamaged = false;
     }
 
     IEnumerator HandleActivateUrgentImage(float duration)

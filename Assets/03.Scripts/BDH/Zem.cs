@@ -67,7 +67,10 @@ public class Zem : MonoBehaviourPun
                     GemHandler gemCountUp = collision.gameObject.GetComponent<GemHandler>();
                     // RPC ALL로 PlusGem()를 사용하여 Gem의 갯수를 증가시킨다. 
                     gemCountUp.PlusGem();
-                    GameManager.instance.myTeam.myTeamScore++;
+                    
+                    GemHandler teamGemCountUp = collision.gameObject.GetComponent<GemHandler>();
+                    teamGemCountUp.PlusMyTeamGem();
+
                     PhotonNetwork.Destroy(gameObject);
                 }
                 else if (collision.gameObject.layer == LayerMask.NameToLayer("enemyTeam"))
@@ -76,7 +79,10 @@ public class Zem : MonoBehaviourPun
                     GemHandler gemCountUp = collision.gameObject.GetComponent<GemHandler>();
                     // RPC ALL로 PlusGem()를 사용하여 Gem의 갯수를 증가시킨다. 
                     gemCountUp.PlusGem();
-                    GameManager.instance.enemyTeam.EnemyTeamScore++;
+
+                    GemHandler teamGemCountUp = collision.gameObject.GetComponent<GemHandler>();
+                    teamGemCountUp.PlusEnemyTeamGem();
+
                     PhotonNetwork.Destroy(gameObject);
                 }
 

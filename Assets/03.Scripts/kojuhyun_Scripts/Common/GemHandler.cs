@@ -13,20 +13,65 @@ public class GemHandler : MonoBehaviourPun
         photonView.RPC(nameof(PlusGemRPC), RpcTarget.All);
     }
 
+    public void MinusGem()
+    {
+        photonView.RPC(nameof(MinusGemRPC), RpcTarget.All);
+    }
+
+    public void PlusMyTeamGem()
+    {
+        photonView.RPC(nameof(PlusMyTeamGemRPC),RpcTarget.All);
+    }
+
+    public void MinusMyTeamGem(int count)
+    {
+        photonView.RPC(nameof(MinusMyTeamGemRPC), RpcTarget.All, count);
+    }
+
+    public void PlusEnemyTeamGem()
+    {
+        photonView.RPC(nameof(PlusEnemyTeamGemRPC), RpcTarget.All);
+    }
+
+    public void MinusEnemyTeamGem(int count)
+    {
+        photonView.RPC(nameof(MinusEnemyTeamGemRPC), RpcTarget.All, count);
+    }
+
     [PunRPC]
-    void PlusGemRPC()
+    private void PlusGemRPC()
     {
         gem++;
     }
 
-
-    void Start()
+    [PunRPC]
+    private void MinusGemRPC(int count)
     {
-        
+        gem -= count;
     }
 
-    void Update()
+
+    [PunRPC]
+    private void PlusMyTeamGemRPC()
     {
-        
+        GameManager.instance.myTeam.myTeamScore++;
+    }
+
+    [PunRPC]
+    private void PlusEnemyTeamGemRPC()
+    {
+        GameManager.instance.enemyTeam.EnemyTeamScore++;
+    }
+
+    [PunRPC]
+    private void MinusMyTeamGemRPC(int count)
+    {
+        GameManager.instance.myTeam.myTeamScore -= count;
+    }
+
+    [PunRPC]
+    private void MinusEnemyTeamGemRPC(int count)
+    {
+        GameManager.instance.enemyTeam.EnemyTeamScore -= count;
     }
 }

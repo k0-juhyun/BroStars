@@ -145,6 +145,7 @@ public class NitaAttackHandler : MonoBehaviourPun
             GameObject bruceSpawn = PhotonNetwork.Instantiate("BruceSpawn", SpawnPos.transform.position, Quaternion.identity);
             bruceSpawn.GetComponent<Rigidbody>().velocity = startVelocity;
             bruceSpawn.layer = (bruceIndex == 1) ? LayerMask.NameToLayer("myTeam") : LayerMask.NameToLayer("enemyTeam");
+            bruceSpawn.GetComponent<SpawnBruce>()._teamIdx = bruceIndex;
         }
     }
 

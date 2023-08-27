@@ -12,6 +12,8 @@ public class BushManager : MonoBehaviourPun
 {
     // 플레이어의 SkinedRenderer를 가지고 있는 게임 오브젝트. 
     public GameObject playerComponent;
+    public GameObject FootEffect;
+    public GameObject MyCanvas;
 
     // 부쉬 레이어 변수.
     private int layer;
@@ -106,28 +108,38 @@ public class BushManager : MonoBehaviourPun
 
     private void IsPlayerTransparent(float parameter)
     {
+        //// Shelly_GEO의 컴포넌트의 갯수
         int length = playerComponent.transform.childCount;
-        bool isSameTeam = playerComponent.GetComponentInParent<TargetHandler>().teamIdx == targetHandler.teamIdx;
+        bool shouldHide = false;
+
+        if (isBush && playerComponent.GetComponentInParent<TargetHandler>().teamIdx != GameManager.instance.myTeamIdx)
+        {
+            shouldHide = true;
+        }
 
         for (int index = 0; index < length; index++)
         {
+            // 플레이어의 SkinnedMeshRenderer 컴포넌트를 가져온다. 
             SkinnedMeshRenderer playerRenderer = playerComponent.transform.GetChild(index).GetComponent<SkinnedMeshRenderer>();
+            // SkinnedMeshRenderer 컬러값을 가져온다. 
             Color playerMaterialColor = playerRenderer.materials[0].color;
+            // SkinnedMeshRenderer 알파 값을 변경합니다.
             playerMaterialColor.a = parameter;
+
+            //  SkinnedMeshRenderer 변경된 컬러 값을 재질에 적용합니다.
             playerRenderer.materials[0].color = playerMaterialColor;
-
-            if (!isSameTeam)
-            {
-                playerRenderer.enabled = parameter != 1f;
-            }
-            else
-            {
-                playerRenderer.enabled = true;
-            }
-
             if (photonView.IsMine)
             {
-                myCanvas.gameObject.SetActive(isSameTeam || parameter != 1f);
+                playerRenderer.enabled = !shouldHide || parameter != 1f;
+                myCanvas.gameObject.SetActive(!shouldHide || parameter != 1f);
+                FootEffect.SetActive(!shouldHide || parameter != 1f);
+            }
+
+            if (!photonView.IsMine)
+            {
+                playerRenderer.enabled = (!shouldHide && parameter == 1f);
+                myCanvas.gameObject.SetActive(!shouldHide || parameter == 1f);
+                FootEffect.SetActive(!shouldHide || parameter == 1f);
             }
         }
     }

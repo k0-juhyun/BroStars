@@ -15,6 +15,7 @@ public class HpHandler : MonoBehaviourPun
     HitHandler hitHandler;
     KillLogUiHandler killLogUiHandler;
     KillLogTextHandler killLogTextHandler;
+    CapsuleCollider cc;
 
     [Header("HP Bar")]
     public Slider HpBar;
@@ -27,6 +28,8 @@ public class HpHandler : MonoBehaviourPun
     [Header("Particle System")]
     public GameObject HealPrefab;
     public GameObject Mesh;
+    public GameObject FootEffect;
+    public GameObject MyCanvas;
 
     [Header("플레이어 스탯")]
     public float curHp;
@@ -66,6 +69,7 @@ public class HpHandler : MonoBehaviourPun
         hitHandler = GetComponent<HitHandler>();
         killLogUiHandler = FindObjectOfType<KillLogUiHandler>();
         killLogTextHandler = FindObjectOfType<KillLogTextHandler>();
+        cc = GetComponent<CapsuleCollider>();
 
         if (this.gameObject.name != "Bruce")
         {
@@ -74,24 +78,27 @@ public class HpHandler : MonoBehaviourPun
     }
     private void Start()
     {
-        if (targetHandler.teamIdx == GameManager.instance.myTeamIdx)
+        if (targetHandler != null)
         {
-            allyCanvas.gameObject.SetActive(true);
-            enemyCanvas.gameObject.SetActive(false);
-            HpBar = allyCanvas.GetComponentInChildren<Slider>();
-        }
-        else
-        {
-            allyCanvas.gameObject.SetActive(false);
-            enemyCanvas.gameObject.SetActive(true);
-            HpBar = enemyCanvas.GetComponentInChildren<Slider>();
+            if (targetHandler.teamIdx == GameManager.instance.myTeamIdx)
+            {
+                allyCanvas.gameObject.SetActive(true);
+                enemyCanvas.gameObject.SetActive(false);
+                HpBar = allyCanvas.GetComponentInChildren<Slider>();
+            }
+            else
+            {
+                allyCanvas.gameObject.SetActive(false);
+                enemyCanvas.gameObject.SetActive(true);
+                HpBar = enemyCanvas.GetComponentInChildren<Slider>();
+            }
         }
         HpBar.value = curHp / maxHp;
     }
 
     public void HandleCanvasInBush()
     {
-        if(bushManager.isBush)
+        if (bushManager.isBush)
         {
             if (targetHandler.teamIdx == GameManager.instance.myTeamIdx)
             {
@@ -142,7 +149,7 @@ public class HpHandler : MonoBehaviourPun
     {
         if (bushManager.isBush && curHp < maxHp)
         {
-            HandleHP(1,0);
+            HandleHP(1, 0);
             HealPrefab.SetActive(true);
             soundHandler.enabled = true;
         }
@@ -170,33 +177,51 @@ public class HpHandler : MonoBehaviourPun
         if (curHp <= 0)
         {
             isDie = true;
-            if (targetHandler.isDestroy)
+            Mesh.gameObject.SetActive(false);
+            FootEffect.gameObject.SetActive(false);
+            MyCanvas.gameObject.SetActive(false);
+            if (targetHandler != null)
             {
-                int length = gemHandler.gem;
+                if (targetHandler.isDestroy)
+                {
+                    int length = gemHandler.gem;
 
-                for (int i = 0; i < length; i++)
-                {
-                    Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
-                    //photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                    for (int i = 0; i < length; i++)
+                    {
+                        Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
+                        photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                    }
+                    if (targetHandler.teamIdx == 1)
+                    {
+                        gemHandler.MinusMyTeamGem(length);
+                    }
+                    else if (targetHandler.teamIdx == 2)
+                    {
+                        gemHandler.MinusEnemyTeamGem(length);
+                    }
+                    cc.isTrigger = true;
+                    gemHandler.gem = 0;
+                    if (lastAttacker != null)
+                    {
+                        Debug.Log(lastAttacker.Owner.NickName + " 가 " + this.gameObject.name + "를 죽였습니다.");
+                        Die(lastAttacker.ViewID);
+                    }
                 }
-                gemHandler.gem = 0;
-                if (lastAttacker != null)
-                {
-                    Debug.Log(lastAttacker.Owner.NickName + " 가 " + this.gameObject.name +"를 죽였습니다.");
-                    Die(lastAttacker.ViewID);
-                }
+
             }
-
-            if (this.gameObject.name == "Bruce")
+            else
             {
-                //PhotonNetwork.Destroy(this.gameObject);
+                if (this.gameObject.name == "Bruce")
+                {
+                    PhotonNetwork.Destroy(this.gameObject);
+                }
             }
         }
     }
 
     public void Die(int attackerViewID)
     {
-        if(!isDead)
+        if (!isDead)
         {
             photonView.RPC(nameof(HandleDeath), RpcTarget.All, attackerViewID, photonView.ViewID);
             isDead = true;
@@ -265,7 +290,10 @@ public class HpHandler : MonoBehaviourPun
     private void HandleDieEffect(Vector3 ranPos)
     {
         // Zem을 생성한다.
-        Instantiate(gem, ranPos, Quaternion.identity);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Instantiate("Crystal_Sparkle", ranPos, Quaternion.identity);
+        }
     }
 
     // 잼을 떨어지는 위치를 랜덤한 위치로 생성하는 메소드

@@ -15,6 +15,11 @@ public class BruceAIHandler : MonoBehaviourPun
 
     private bool isDie;
 
+    public int teamIdx;
+
+    public GameObject allyCanvas;
+    public GameObject enemyCanvas;
+
     private void Awake()
     {
         animatorHandler = GetComponent<AnimatorHandler>();
@@ -26,6 +31,16 @@ public class BruceAIHandler : MonoBehaviourPun
     private void Start()
     {
         damageHandler.damage = hpHandler.AttackDamage;
+        if(teamIdx == GameManager.instance.myTeamIdx)
+        {
+            allyCanvas.SetActive(true);
+            enemyCanvas.SetActive(false);
+        }
+        else
+        {
+            allyCanvas.SetActive(false);
+            enemyCanvas.SetActive(true);
+        }
     }
 
     private void FixedUpdate()

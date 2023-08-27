@@ -8,6 +8,7 @@ public class SpawnBruce : MonoBehaviourPun
     public GameObject Bruce;
     public LayerMask groundLayer;
     HpHandler hpHandler;
+    public int _teamIdx;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class SpawnBruce : MonoBehaviourPun
             Bruce.SetActive(true);
             Bruce.layer = this.gameObject.layer;
             Bruce.transform.SetParent(null);
+            Bruce.GetComponent<BruceAIHandler>().teamIdx = _teamIdx;
             Destroy(this.gameObject); 
         }
     }
