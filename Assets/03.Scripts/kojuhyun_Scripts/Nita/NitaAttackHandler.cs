@@ -11,6 +11,7 @@ public class NitaAttackHandler : MonoBehaviourPun
     TargetHandler targetHandler;
     NitaManager nitaManager;
     HpHandler hpHandler;
+    SFxHandler sFxHandler;
 
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
@@ -55,6 +56,7 @@ public class NitaAttackHandler : MonoBehaviourPun
         Player = targetHandler.Target.GetComponent<Transform>();
         animatorHandler = GetComponent<AnimatorHandler>();
         rb = GetComponent<Rigidbody>();
+        sFxHandler = GetComponentInChildren<SFxHandler>();
     }
 
     #region АјАн
@@ -153,6 +155,7 @@ public class NitaAttackHandler : MonoBehaviourPun
     public void LaunchBearRPC(float h, float v)
     {
         LaunchBear(h, v);
+        sFxHandler.playSound("Ulti");
     }
     #endregion
 
@@ -162,6 +165,7 @@ public class NitaAttackHandler : MonoBehaviourPun
     {
         Vector3 pos = normalAttackTransform.position;
         Quaternion rot = normalAttackTransform.rotation;
+        sFxHandler.playSound("Normal");
 
         GameObject nitaNormalAttack = Instantiate(nitaNormal, pos, rot);
         nitaNormalAttack.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;

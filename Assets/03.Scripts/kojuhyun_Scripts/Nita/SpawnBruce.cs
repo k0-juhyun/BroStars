@@ -7,12 +7,17 @@ public class SpawnBruce : MonoBehaviourPun
 {
     public GameObject Bruce;
     public LayerMask groundLayer;
-    HpHandler hpHandler;
     public int _teamIdx;
+
+
+    SFxHandler sFxHandler;
+
+    HpHandler hpHandler;
 
     private void Awake()
     {
         hpHandler = GetComponentInChildren<HpHandler>();
+        sFxHandler = FindObjectOfType<SFxHandler>();
     }
 
     private void Update()
@@ -23,6 +28,7 @@ public class SpawnBruce : MonoBehaviourPun
         if (Physics.Raycast(ray, maxDistance, groundLayer))
         {
             Bruce.SetActive(true);
+            sFxHandler.playSound("SpawnBruce");
             Bruce.layer = this.gameObject.layer;
             Bruce.transform.SetParent(null);
             Bruce.GetComponent<BruceAIHandler>().teamIdx = _teamIdx;

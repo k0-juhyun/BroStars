@@ -16,6 +16,7 @@ public class HpHandler : MonoBehaviourPun
     KillLogUiHandler killLogUiHandler;
     KillLogTextHandler killLogTextHandler;
     CapsuleCollider cc;
+    SFxHandler sfxHandler;
 
     [Header("HP Bar")]
     public Slider HpBar;
@@ -69,6 +70,7 @@ public class HpHandler : MonoBehaviourPun
         hitHandler = GetComponent<HitHandler>();
         killLogUiHandler = FindObjectOfType<KillLogUiHandler>();
         killLogTextHandler = FindObjectOfType<KillLogTextHandler>();
+        sfxHandler =GetComponentInChildren<SFxHandler>();
         cc = GetComponent<CapsuleCollider>();
 
         if (this.gameObject.name != "Bruce")
@@ -131,6 +133,7 @@ public class HpHandler : MonoBehaviourPun
                 if (isDamaged)
                 {
                     StartCoroutine(HandlePlayerMat());
+                    sfxHandler.playSound("Hurt");
                 }
             }
         }
@@ -177,6 +180,7 @@ public class HpHandler : MonoBehaviourPun
         if (curHp <= 0)
         {
             isDie = true;
+            sfxHandler.playSound("Die");
             Mesh.gameObject.SetActive(false);
             FootEffect.gameObject.SetActive(false);
             MyCanvas.gameObject.SetActive(false);

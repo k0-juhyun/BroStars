@@ -1094,6 +1094,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
   teamIdx: 0
+  allyCanvas: {fileID: 6379339538228615046}
+  enemyCanvas: {fileID: 8232056292493565680}
 --- !u!114 &9023961214196017463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2340,6 +2342,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 2147483648
+  _teamIdx: 0
 --- !u!114 &4392946512589774333
 MonoBehaviour:
   m_ObjectHideFlags: 0

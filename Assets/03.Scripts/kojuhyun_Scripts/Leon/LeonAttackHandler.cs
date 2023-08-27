@@ -14,6 +14,7 @@ public class LeonAttackHandler : MonoBehaviourPun
     private AnimatorHandler animatorHandler;
     private Rigidbody rb;
     private TargetHandler targetHandler;
+    private SFxHandler sfxHandler;
 
     [Header("JoyStick")]
     public Joystick attackJoystick;
@@ -51,6 +52,7 @@ public class LeonAttackHandler : MonoBehaviourPun
         hpHandler = GetComponent<HpHandler>();
         rb = GetComponent<Rigidbody>();
         moveHandler = GetComponent<MoveHandler>();
+        sfxHandler =GetComponentInChildren<SFxHandler>();
     }
 
     public void HandleNormalAttack()
@@ -95,6 +97,7 @@ public class LeonAttackHandler : MonoBehaviourPun
     [PunRPC]
     public void HandleShurikenEvent()
     {
+        sfxHandler.playSound("Normal");
         HandleShurikenEventRPC();
     }
 
@@ -172,6 +175,7 @@ public class LeonAttackHandler : MonoBehaviourPun
             shuriken.SetActive(true);
             shuriken.transform.forward = transform.forward;
 
+
             DamageHandler damageHandler = shuriken.GetComponent<DamageHandler>();
             damageHandler.damage = hpHandler.AttackDamage;
             damageHandler.attackviewID = photonView.ViewID;
@@ -208,7 +212,7 @@ public class LeonAttackHandler : MonoBehaviourPun
     private IEnumerator ResetTransparencyCoroutine(float alpha, float delay)
     {
         yield return new WaitForSeconds(delay);
-
+        sfxHandler.playSound("LeonUltiEnd");
         photonView.RPC(nameof(HandleDamageTransparent), RpcTarget.All, 1.0f);
         moveHandler.moveSpeed = 2;
     }
