@@ -180,12 +180,12 @@ public class HpHandler : MonoBehaviourPun
         if (curHp <= 0)
         {
             isDie = true;
-            sfxHandler.playSound("Die");
             Mesh.gameObject.SetActive(false);
             FootEffect.gameObject.SetActive(false);
             MyCanvas.gameObject.SetActive(false);
             if (targetHandler != null)
             {
+                sfxHandler.playSound("Die");
                 if (targetHandler.isDestroy)
                 {
                     int length = gemHandler.gem;
@@ -217,6 +217,7 @@ public class HpHandler : MonoBehaviourPun
             {
                 if (this.gameObject.name == "Bruce")
                 {
+                    print("Why");
                     PhotonNetwork.Destroy(this.gameObject);
                 }
             }

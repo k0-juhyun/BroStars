@@ -3400,6 +3400,7 @@ MonoBehaviour:
   Canvas: {fileID: 2724276265843539204}
   UrgentImage: {fileID: 2724276264062476671}
   RespawnImage: {fileID: 5445481526069903037}
+  startSound: {fileID: 8300000, guid: 9fdffff6a85f1c343abc8d0861c3f4db, type: 3}
   smoothTime: 0.3
   distanceZFromTarget: -110
   shakeMagnitude: 0.1

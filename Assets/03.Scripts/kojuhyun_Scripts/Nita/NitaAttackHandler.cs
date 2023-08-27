@@ -149,13 +149,13 @@ public class NitaAttackHandler : MonoBehaviourPun
             bruceSpawn.layer = (bruceIndex == 1) ? LayerMask.NameToLayer("myTeam") : LayerMask.NameToLayer("enemyTeam");
             bruceSpawn.GetComponent<SpawnBruce>()._teamIdx = bruceIndex;
         }
+        sFxHandler.playSound("Ulti");
     }
 
     [PunRPC]
     public void LaunchBearRPC(float h, float v)
     {
         LaunchBear(h, v);
-        sFxHandler.playSound("Ulti");
     }
     #endregion
 

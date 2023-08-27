@@ -10,6 +10,7 @@ public class CameraHandler : MonoBehaviourPun
     HpHandler hpHandler;
     TargetHandler targetHandler;
     PlayTimer timer;
+    AudioSource audioSource;
 
     [HideInInspector]
     public GameObject mainCamera;
@@ -21,6 +22,8 @@ public class CameraHandler : MonoBehaviourPun
     [Header("피격 이미지")]
     public Image UrgentImage;
     public Image RespawnImage;
+
+    public AudioClip startSound;
 
     private Transform target;
 
@@ -36,6 +39,7 @@ public class CameraHandler : MonoBehaviourPun
     public bool gameReady;
     public bool isReverse;
     private bool tt;
+    private bool StartSound = true;
 
     private void Awake()
     {
@@ -49,6 +53,7 @@ public class CameraHandler : MonoBehaviourPun
         target = targetHandler.Target.transform;
         timer = target.GetComponentInChildren<PlayTimer>();
         hpHandler = target.GetComponent<HpHandler>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void LateUpdate()
@@ -89,6 +94,11 @@ public class CameraHandler : MonoBehaviourPun
                 {
                     ActivateCanvas();
                     tt = true;
+                    if(StartSound)
+                    {
+                        audioSource.PlayOneShot(startSound);
+                        StartSound= false;
+                    }
                 }
             }
             else
