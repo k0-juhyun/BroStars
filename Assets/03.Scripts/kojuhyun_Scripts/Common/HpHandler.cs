@@ -172,12 +172,14 @@ public class HpHandler : MonoBehaviourPun
             isDie = true;
             if (targetHandler.isDestroy)
             {
+                // 캐릭터별 죽음 사운드 (Character.name_die) 
+
                 int length = gemHandler.gem;
 
                 for (int i = 0; i < length; i++)
                 {
                     Vector3 gemsRandomPosition = CreateRandomPosition(this.transform);
-                    //photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
+                    photonView.RPC(nameof(HandleDieEffect), RpcTarget.All, gemsRandomPosition);
                 }
                 gemHandler.gem = 0;
                 if (lastAttacker != null)

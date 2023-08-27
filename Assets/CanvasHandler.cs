@@ -28,17 +28,17 @@ public class CanvasHandler : MonoBehaviourPunCallbacks, IPunObservable
     {
         yield return new WaitForSeconds(delay);
         photonView.RPC("SetHandleCanvas", RpcTarget.AllBuffered, true);
-        print("테스트1");
+   
     }
 
     [PunRPC]
     private void SetHandleCanvas(bool value)
     {
-        print("테스트2");
+   
         handleCanvas = value;
         if (handleCanvas)
         {
-            print("테스트3");
+
             ActivateCanvas();
         }
     }
@@ -48,7 +48,7 @@ public class CanvasHandler : MonoBehaviourPunCallbacks, IPunObservable
     {
         for (int i = 0; i < Canvas.Length; i++)
         {
-            print("테스트4");
+
             Canvas[i].SetActive(true);
         }
     }
@@ -58,12 +58,12 @@ public class CanvasHandler : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(handleCanvas);
-            print("테스트5");
+
         }
         else
         {
             handleCanvas = (bool)stream.ReceiveNext();
-            print("테스트6");
+ 
         }
     }
 }

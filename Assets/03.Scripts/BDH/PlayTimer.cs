@@ -51,6 +51,9 @@ public class PlayTimer : MonoBehaviourPunCallbacks
             minute = (int)currentTimer / 60;
             second = (int)currentTimer % 60;
             timerText.text = minute.ToString("00") + ":" + second.ToString("00");
+
+            // 시계 카운트 다운 소리(clock_01)
+
             yield return null;
 
             if (currentTimer <= 0)

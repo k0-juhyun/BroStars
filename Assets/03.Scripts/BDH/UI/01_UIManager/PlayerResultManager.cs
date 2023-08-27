@@ -22,9 +22,13 @@ public class PlayerResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // BGM(mvp_jingle_01)
+
         // Resources/Prefabs/PlayerResultBrawls -> Resources.Load() 브롤러 호출.
         playerResultBrawls = Resources.Load<GameObject>("Prefabs/PlayerResultBrawls");
    
+        // 다음 버튼 클릭 리스러 생성. - > 다음 버튼 효과음(ulti_button_press_01) 
+
         SetWinnerTeam();
     }
 

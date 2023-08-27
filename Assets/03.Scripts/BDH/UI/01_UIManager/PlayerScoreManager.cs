@@ -28,6 +28,9 @@ public class PlayerScoreManager : MonoBehaviour
 
         //  UI 배치 SCALE을 조정. 
 
+        // 내가 승리했는 지 , 패배했는 지 (맞게 사운드 실행 )
+
+        // 종료 버튼 리스러 -> 종료버튼 효과음
 
 
 

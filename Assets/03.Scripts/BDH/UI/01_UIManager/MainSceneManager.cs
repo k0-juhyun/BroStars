@@ -43,6 +43,7 @@ public class MainSceneManager : MonoBehaviour
 
     private void OnClickRightConnect()
     {
+        // 캐릭터 변경 버튼 효과음 (ulti_button_press_01)
        
         // 기존의 GameObject는 비활성화
         brawlList[index].SetActive(false);
@@ -57,7 +58,8 @@ public class MainSceneManager : MonoBehaviour
 
     private void OnClickLeftConnect()
     {
-       
+        // 캐릭터 변경 버튼 효과음 (ulti_button_press_01)
+
         // 기존의 GameObject는 비활성화
         brawlList[index].SetActive(false);
 
@@ -76,6 +78,7 @@ public class MainSceneManager : MonoBehaviour
 
     public void OnClickConnect()
     {
+        // 플레이 버튼 효과음 (ulti_ready_01) 
   
         // 저장한 브롤러 Index 정보를 ProjectManager에 저장.
         ProjectManager.instance.myBrawlerIndex = index;

@@ -43,8 +43,8 @@ public class UIAnimations : MonoBehaviour
             
             endBool = false;
 
-            // SoundManager를 통한 사운드 실행. 
-
+            // 1. 캐릭터 별 등장 사운드(Character,name_start) SoundManager를 통한 사운드 실행. 
+            
      
             // 애니메이션 실행
             anim.Play(animationName, -1, 0f);

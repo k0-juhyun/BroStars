@@ -9,17 +9,12 @@ using static GameManager;
 // 1. 게임 플레이 씬의 리스폰 지역에서 브롤러 생성
 // 2. 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
 
-// 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
-// 1. 팀원들이 모은 총 보석이 10개 이상. (상대 팀보다 더 많은 수의 보석을 보유해야 함)
-// 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
-// 3. 균형이 무너지는 순간 카운트 다운 실행. 
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
 
-    // 게임 종료 여부 
-    private bool isGameOver;
+
 
     // 승리 카운트 15초 
     private float winerTimer = 15f;
@@ -46,8 +41,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public MyTeam myTeam;
     public EnemyTeam enemyTeam;
 
-    public int myTeamTotalGemCount;
-    public int enemyTeamTotalGemCount;
 
     [Serializable]
     public class Player
@@ -69,7 +62,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // 잼 점수표 : 우리팀
         public int myTeamScore = 0;
-       
+
         // 팀원 리스트 
         public List<Player> myMembers;
 
@@ -103,11 +96,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void Update()
-    {
-        print("myTeam: "+myTeam.myTeamScore);
-        print("enemyTeam: "+enemyTeam.EnemyTeamScore);
-    }
+
     private void Awake()
     {
         if (instance == null)
@@ -152,12 +141,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         CreateSpawn();
 
         // spawnManager의 리스폰 위치에 브롤러 캐릭터 생성한다. 
-
         player = PhotonNetwork.Instantiate(PlayerName[ProjectManager.instance.myBrawlerIndex], spawnPos[index], Quaternion.identity);
+
+
 
         Cursor.visible = false;
 
     }
+
 
     public List<PhotonView> allPlayer = new List<PhotonView>();
     public Dictionary<int, PhotonView> allPhotonView = new Dictionary<int, PhotonView>();
@@ -174,24 +165,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            print("마스터일때만 들어와라");
-            //if (allPlayer.Count < 4) return;
 
             if (photonView.IsMine && PhotonNetwork.IsMasterClient)
             {
-                StartCoroutine(AAA());
+                StartCoroutine(Delay());
             }
         }
     }
 
-    IEnumerator AAA()
+
+
+    IEnumerator Delay()
     {
         yield return new WaitForSeconds(3);
 
-        print("한번호출되어야함");
+
         for (int i = 0; i < allPlayer.Count; i++)
         {
-            print("4번호출되어야함");
+
             photonView.RPC(nameof(RpcSetMyMebers), RpcTarget.AllBuffered, allPlayer[i].ViewID, i);
         }
     }
@@ -203,12 +194,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         TargetHandler th;
         for (int i = 0; i < allPlayer.Count; i++)
         {
-            print("11");
+
             if (allPlayer[i].ViewID == viewId)
             {
-                print("22");
+
                 th = allPlayer[i].GetComponent<TargetHandler>();
-                print("th.teamIdx " + th.teamIdx);
+
                 if (myTeamIdx == th.teamIdx)
                 {
                     // 플레이어의 참여한 순서 index가 2명 이하 이면 같은 팀.
@@ -240,34 +231,100 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
+    // 게임 승리 조건 : 팀 총합 보석을 10개 이상 얻고 카운트다운이 종료될 때까지 버틴 팀이 승리합니다. 
+    // 1. 팀원들이 모은 총 보석이 10개 이상. (상대 팀보다 더 많은 수의 보석을 보유해야 함)
+    // 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
+    // 3. 균형이 무너지는 순간 카운트 다운 실행. 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            myTeam.myTeamScore -= 1;
+        }
+    }
+
+
+    public void CheckPlayWinner(int myScore, int enemyScore)
+    {
+        // 게임 종료 카운트 여부 
+        bool isGameOverCount = false;
+
+        print("우리 팀 스코어 시발아 " + myTeam.myTeamScore);
+        print("상대 팀 스코어 시발아 " + enemyTeam.EnemyTeamScore);
+
+        if (myScore >= 10 || enemyScore >= 10)
+        {
+            print("1_10개이상은 넘었다. 카운트 준비");
+            if (myScore != enemyScore)
+            {
+                if (!isGameOverCount)
+                {
+                    print("2_서로 같지 않으면 코루틴 실행.");
+                    // 카운트 다운 코루틴 시작. 
+                    isGameOverCount = true;
+                    StartCoroutine(WinerTeamTimer());
+                }
+
+
+
+            }
+
+        }
+        else
+        {
+            isGameOverCount = false;
+            print("승리 팀을 결정하는코루틴 종료. ");
+            StopCoroutine(WinerTeamTimer());
+
+        }
+
+
+
+    }
+
+
     IEnumerator WinerTeamTimer()
     {
+
         winnerCurrentTimer = winerTimer;
+        print("3_승리 코루틴 시작");
 
         while (winnerCurrentTimer > 0)
         {
             winnerCurrentTimer -= Time.deltaTime;
 
+
+
+            // 여기서 한번 더 판단. 
+            if (myTeam.myTeamScore < 10)
+            {
+                print(" 우리팀 -> 10개 미만임. ");
+                CheckPlayWinner(myTeam.myTeamScore, enemyTeam.EnemyTeamScore);
+                break;
+            }
+
+            if (enemyTeam.EnemyTeamScore < 10)
+            {
+                print("상대팀 -> 10개 미만임.");
+                // 여기서 문제가 일어남. 
+
+            }
+
+
             yield return null;
+
 
             if (winnerCurrentTimer <= 0)
             {
-                if (isGameOver == true)
-                {
-                    // 우리 팀 승리.!! 
+                print("15초 승리 카운트 종료 -> 승자 패자 결정됨,");
 
-                }
-                else
-                {
-                    // 상태 팀 승리.!! 
-                }
-
-
+                // 누가 승자인지 판단. 
                 winnerCurrentTimer = 0;
                 yield break;
+
             }
+
         }
     }
-
-
 }

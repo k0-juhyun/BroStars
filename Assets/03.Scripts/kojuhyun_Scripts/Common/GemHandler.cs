@@ -10,13 +10,22 @@ public class GemHandler : MonoBehaviourPun
 
     public void PlusGem()
     {
-        photonView.RPC(nameof(PlusGemRPC), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(PlusGemRPC), RpcTarget.All);
+            // GameManger CheckPlayWinner메소드 호출.
+            GameManager.instance.CheckPlayWinner(GameManager.instance.myTeam.myTeamScore, GameManager.instance.enemyTeam.EnemyTeamScore);
+        }
+
+        
     }
 
     [PunRPC]
     void PlusGemRPC()
     {
         gem++;
+
+        
     }
 
 

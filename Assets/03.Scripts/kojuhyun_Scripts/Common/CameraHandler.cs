@@ -89,6 +89,8 @@ public class CameraHandler : MonoBehaviourPun
                 {
                     ActivateCanvas();
                     tt = true;
+
+                    // 게임 플레이신 캐릭터별 리드 사운드 (Character.name_lead) * 출발 사운드 
                 }
             }
             else
@@ -124,7 +126,7 @@ public class CameraHandler : MonoBehaviourPun
             shakeOffset.z = 0;
             this.transform.position = new Vector3(startXPos, startYPos, this.transform.position.z) + shakeOffset;
 
-            Handheld.Vibrate();
+            //Handheld.Vibrate();
 
             yield return null;
         }

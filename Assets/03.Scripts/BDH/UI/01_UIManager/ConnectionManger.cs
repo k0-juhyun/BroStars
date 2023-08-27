@@ -9,7 +9,7 @@ using System;
 public class ConnectionManger : MonoBehaviourPunCallbacks
 {
     int currentPlayer;
-    int maxPlayerCount = 4;
+    int maxPlayerCount = 3;
 
     public Text curText;
     public Text maxText;
@@ -52,6 +52,8 @@ public class ConnectionManger : MonoBehaviourPunCallbacks
 
     private void OnClickExit()
     {
+        // 종료 버튼 효과음(ulti_button_cancel_01)
+
         // PhotonNetwork 현재 참여한 Room에서 나간다. 
         PhotonNetwork.Disconnect();
     }
