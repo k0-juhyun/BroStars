@@ -42,8 +42,7 @@ public class ZemManager : MonoBehaviourPun
         centerZ = rangeCollider.bounds.center.z;
 
         // 3초 이후에 start BGM 시작. 
-        Invoke("PlayStartBGM", 3f);
-
+        Invoke("PlayStartBGM", 5f);
     }
 
     private void PlayStartBGM()
@@ -65,7 +64,7 @@ public class ZemManager : MonoBehaviourPun
                 zemEffect.Play();
             }
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(5f);
 
             // Zem을 생성할 위치는 BoxCollider의 중심 위치
             Vector3 zemsRandomPosition = new Vector3(centerX, rangeObject.transform.position.y, centerZ);
