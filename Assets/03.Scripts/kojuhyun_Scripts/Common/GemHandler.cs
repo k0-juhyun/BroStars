@@ -10,7 +10,13 @@ public class GemHandler : MonoBehaviourPun
 
     public void PlusGem()
     {
-        photonView.RPC(nameof(PlusGemRPC), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(PlusGemRPC), RpcTarget.All);
+
+            GameManager.instance.StartCountDown();
+
+        }
     }
 
     public void MinusGem()
@@ -20,7 +26,7 @@ public class GemHandler : MonoBehaviourPun
 
     public void PlusMyTeamGem()
     {
-        photonView.RPC(nameof(PlusMyTeamGemRPC),RpcTarget.All);
+        photonView.RPC(nameof(PlusMyTeamGemRPC), RpcTarget.All);
     }
 
     public void MinusMyTeamGem(int count)

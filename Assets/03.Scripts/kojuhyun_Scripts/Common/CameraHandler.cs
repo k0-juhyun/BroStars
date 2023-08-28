@@ -96,8 +96,11 @@ public class CameraHandler : MonoBehaviourPun
                     tt = true;
                     if(StartSound)
                     {
-                        audioSource.PlayOneShot(startSound);
-                        StartSound= false;
+                        if (startSound != null)
+                        {
+                            audioSource.PlayOneShot(startSound);
+                            StartSound = false;
+                        }
                     }
                 }
             }

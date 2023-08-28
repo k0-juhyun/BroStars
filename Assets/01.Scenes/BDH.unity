@@ -42878,8 +42878,6 @@ MonoBehaviour:
   enemyTeam:
     EnemyTeamScore: 0
     enemyMembers: []
-  myTeamTotalGemCount: 0
-  enemyTeamTotalGemCount: 0
   allPlayer: []
   myTeamIdx: 0
   GameTimer: {fileID: 706600684}
@@ -57145,7 +57143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3957265419789409290
 RectTransform:
   m_ObjectHideFlags: 0

@@ -237,6 +237,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 3. ±ÕÇüÀÌ ¹«³ÊÁö´Â ¼ø°£ Ä«¿îÆ® ´Ù¿î ½ÇÇà. 
     private bool counting = false;
     private bool HandleCountSfx = false;
+
+    public bool myTeamWin;
+    public bool enemyTeamWin;
+
     public GameObject GameTimer;
     private void Update()
     {
@@ -256,7 +260,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     GameTimer.SetActive(true);
                 }
-
             }
             else
             {
@@ -272,17 +275,16 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     // ¿ì¸®ÆÀ ½Â¸®.
                     print("¿ì¸®ÆÀ ½Â¸®.");
+                    myTeamWin = true;
                     OnGameExit();
                 }
                 else
                 {
                     // »ó´ëÆÀ ½Â¸®.
                     print("»ó´ëÆÀ ½Â¸®.");
+                    enemyTeamWin = true;
                     OnGameExit();
                 }
-
-
-
             }
         }
 
