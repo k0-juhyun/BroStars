@@ -13,8 +13,12 @@ public class ProjectManager : MonoBehaviourPun
     public int myBrawlerIndex;
     public int myPosIndex;
 
-    public int teamIdx;
+    [Header("모든 플레이어의 닉네임")]
+    public string[] allPlayerNickName;
 
+
+    public int teamIdx;
+    public int winTeamIdx;
     private void Awake()
     {
         if(instance == null)
@@ -27,13 +31,4 @@ public class ProjectManager : MonoBehaviourPun
             Destroy(gameObject);
         }
     }
-
-    //private void Update()
-    //{
-    //    //print("사용자의 닉네임 : " + myNickName);
-    //    //print("사용자의 브롤러 인덱스 : " + myBrawlerIndex.ToString());
-    //    //print("사용자의 룸 입장한 인덱스 : " + myPosIndex.ToString());
-
-    //}
-
 }

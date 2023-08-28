@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameManager instance;
 
     // 승리 카운트 15초 
-    private float winerTimer = 15f;
+    public float winerTimer = 15f;
     private float winnerCurrentTimer;
 
     // 스폰 지역 Manager 
@@ -235,26 +235,21 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 1. 팀원들이 모은 총 보석이 10개 이상. (상대 팀보다 더 많은 수의 보석을 보유해야 함)
     // 2. 만약에 팀원과 상대팀원이 10개 이상 보유한 상태에서도 동일하면 카운트 다운 시작하지 않음. 
     // 3. 균형이 무너지는 순간 카운트 다운 실행. 
-    private bool counting = false;
+    public bool counting = false;
     private bool HandleCountSfx = false;
-
-    public bool myTeamWin;
-    public bool enemyTeamWin;
+    public int _winTeamIdx;
 
     public GameObject GameTimer;
     private void Update()
     {
-
         // counting이 true일 때 로직 실행
         if (counting)
         {
-
             if (myTeam.myTeamScore >= 10 || enemyTeam.EnemyTeamScore >= 10)
             {
                 HandleCountSfx = true;
                 // 조건을 만족하면 15초 카운트 다운. 
                 winerTimer -= Time.deltaTime;
-
                 // 시계 카운트 다운 소리(clock_01)
                 if (HandleCountSfx)
                 {
@@ -275,14 +270,14 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     // 우리팀 승리.
                     print("우리팀 승리.");
-                    myTeamWin = true;
+                    _winTeamIdx = 1;
                     OnGameExit();
                 }
                 else
                 {
                     // 상대팀 승리.
                     print("상대팀 승리.");
-                    enemyTeamWin = true;
+                    _winTeamIdx = 2;
                     OnGameExit();
                 }
             }
@@ -309,7 +304,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void StartCountDown()
     {
         counting = true;
-        winerTimer = 15f;
+        winerTimer = 10f;
     }
 
     private void ResetCountDown()
