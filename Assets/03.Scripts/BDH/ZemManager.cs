@@ -57,7 +57,7 @@ public class ZemManager : MonoBehaviourPun
     {
         while (limitZemCount > 0 )
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(5f);
 
             // Zem 이펙트 활성화.
             if (!zemEffect.isPlaying)

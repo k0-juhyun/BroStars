@@ -45,6 +45,8 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
     private Camera cam;
 
     public Vector2 input = Vector2.zero;
+    private Vector2 restrictedInput = Vector2.zero;
+    private Vector2 startAnchoredPosition;
 
     protected virtual void Start()
     {
@@ -60,7 +62,8 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
         handle.anchorMin = center;
         handle.anchorMax = center;
         handle.pivot = center;
-        handle.anchoredPosition = Vector2.zero;
+       // handle.anchoredPosition = Vector2.zero;
+        startAnchoredPosition = handle.anchoredPosition;
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
@@ -78,8 +81,9 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
         Vector2 radius = background.sizeDelta / 2;
 
         Vector2 limitedInput = Vector2.ClampMagnitude((eventData.position - position) / (radius * canvas.scaleFactor), 0.2f);
+        restrictedInput = limitedInput;
 
-        if (this.gameObject.name == "skillJoyStick")
+        if (this.gameObject.name.Contains("JoyStick"))
         {
             input = limitedInput;
         }
@@ -88,6 +92,9 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
         handle.anchoredPosition = input * radius * handleRange;
+        Vector2 limitedHandlePosition = Vector2.ClampMagnitude(input * radius * handleRange, radius.x);
+
+        handle.anchoredPosition = limitedHandlePosition;
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
@@ -95,10 +102,10 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
         if (magnitude > deadZone)
         {
             if (magnitude > 1)
-                input = normalised;
+                restrictedInput = normalised;
         }
         else
-            input = Vector2.zero;
+            restrictedInput = Vector2.zero;
     }
 
     private void FormatInput()
@@ -146,7 +153,8 @@ public class Joystick : MonoBehaviourPun, IPointerDownHandler, IDragHandler, IPo
     public virtual void OnPointerUp(PointerEventData eventData)
     {
         input = Vector2.zero;
-        handle.anchoredPosition = Vector2.zero;
+        handle.anchoredPosition = startAnchoredPosition;
+        restrictedInput = Vector2.zero;
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
