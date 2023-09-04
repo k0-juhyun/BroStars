@@ -25,6 +25,7 @@ public class HitHandler : MonoBehaviourPun
             float hitDamage = damageHandler.damage;
 
             photonView.RPC(nameof(hpHandler.HandleHP), RpcTarget.All, -hitDamage, damageHandler.attackviewID);
+            print("??");
         }
     }
 }

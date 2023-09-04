@@ -7401,9 +7401,9 @@ MonoBehaviour:
   MyCanvas: {fileID: 2724276263853146981}
   curHp: 0
   maxHp: 3200
-  AttackDamage: 100
+  AttackDamage: 200
   SkillDamage: 0
-  hpRegenValue: 0
+  hpRegenValue: 2
   isDamaged: 0
   isUrgent: 0
   isDie: 0

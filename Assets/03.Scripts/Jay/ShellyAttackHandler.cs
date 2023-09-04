@@ -181,6 +181,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
             GameObject bullet = Instantiate(attackBulletFactory, firePos, Quaternion.identity);
 
             bullet.transform.rotation = Quaternion.LookRotation(bulletDirection);
+            bullet.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
             bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
             #region 거리별 데미지
             //나를 제외한 player 태그 
@@ -222,6 +223,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
 
     List<GameObject> player = new List<GameObject>();
     private float[] dstFromPlayer;
+
     private string Tag;
     public void AutoAim()
     {
@@ -320,7 +322,7 @@ public class ShellyAttackHandler : MonoBehaviourPun
                 #endregion
             }
             bullet.GetComponent<DamageHandler>().damage = hpHandler.AttackDamage;
-
+            bullet.layer = (targetHandler.teamIdx == 1) ? LayerMask.NameToLayer("myTeamAttack") : LayerMask.NameToLayer("enemyTeamAttack");
             Destroy(bullet, 0.9f);
         }
     }

@@ -133,7 +133,10 @@ public class HpHandler : MonoBehaviourPun
                 if (isDamaged)
                 {
                     StartCoroutine(HandlePlayerMat());
-                    sfxHandler.playSound("Hurt");
+                    if(sfxHandler!=null)
+                    {
+                        sfxHandler.playSound("Hurt");
+                    }
                 }
             }
         }
@@ -185,7 +188,10 @@ public class HpHandler : MonoBehaviourPun
             MyCanvas.gameObject.SetActive(false);
             if (targetHandler != null)
             {
-                sfxHandler.playSound("Die");
+                if(sfxHandler != null)
+                {
+                    sfxHandler.playSound("Die");
+                }
                 if (targetHandler.isDestroy)
                 {
                     int length = gemHandler.gem;

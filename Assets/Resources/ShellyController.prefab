@@ -1191,6 +1191,7 @@ MonoBehaviour:
   Canvas: {fileID: 5598488723299745111}
   UrgentImage: {fileID: 3136638260377378448}
   RespawnImage: {fileID: 8019751574360384570}
+  startSound: {fileID: 0}
   smoothTime: 0.3
   distanceZFromTarget: -110
   shakeMagnitude: 0.1
@@ -3791,7 +3792,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4596244937081429815}
   - component: {fileID: 1611884581382058968}
-  - component: {fileID: 1938202386752569169}
   m_Layer: 0
   m_Name: SoundManager (1)
   m_TagString: Untagged
@@ -3910,18 +3910,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1938202386752569169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3074381568519086972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7898a79c1b61874a80e0e0499758c97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3121616310431819057
 GameObject:
   m_ObjectHideFlags: 0
@@ -6730,7 +6718,7 @@ GameObject:
   - component: {fileID: 7413985001454216015}
   - component: {fileID: 3689528888700449078}
   - component: {fileID: 2011730864220366083}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: New Shelly
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6816,7 +6804,7 @@ MonoBehaviour:
   maxHp: 3600
   AttackDamage: 70
   SkillDamage: 120
-  hpRegenValue: 1
+  hpRegenValue: 2
   isDamaged: 0
   isUrgent: 0
   isDie: 0
@@ -11322,7 +11310,7 @@ PrefabInstance:
     - target: {fileID: 756585575950971987, guid: 14215e7625e640e41aa962185b27497e,
         type: 3}
       propertyPath: bulletSpeed
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 985379166692373299, guid: 14215e7625e640e41aa962185b27497e,
         type: 3}

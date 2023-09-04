@@ -6470,7 +6470,6 @@ GameObject:
   - component: {fileID: 5965694774813238415}
   - component: {fileID: 632263404739788709}
   - component: {fileID: 4940804774144204735}
-  - component: {fileID: 5160995158211322160}
   m_Layer: 0
   m_Name: NitaController
   m_TagString: Untagged
@@ -6555,18 +6554,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &5160995158211322160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5965694774813238412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58cd09ca283a91d4c85cc40692db5bd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5965694774852475548
 GameObject:
   m_ObjectHideFlags: 0
@@ -8924,9 +8911,9 @@ MonoBehaviour:
   MyCanvas: {fileID: 5965694774051766944}
   curHp: 0
   maxHp: 3800
-  AttackDamage: 100
+  AttackDamage: 200
   SkillDamage: 400
-  hpRegenValue: 1
+  hpRegenValue: 2
   isDamaged: 0
   isUrgent: 0
   isDie: 0

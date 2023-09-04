@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class WinnerCount : MonoBehaviour
+public class WinnerCount : MonoBehaviourPun
 {
     public GameObject[] team;
     public Text[] Counts;
@@ -18,15 +19,15 @@ public class WinnerCount : MonoBehaviour
     {
         winnerCount = (int)GameManager.instance.winerTimer;
 
-        if(GameManager.instance.counting)
+        if (GameManager.instance.counting)
         {
-            if(GameManager.instance.myTeam.myTeamScore >= 10)
+            if (GameManager.instance.myTeam.myTeamScore >= 10)
             {
                 team[0].SetActive(true);
                 Counts[0].text = winnerCount.ToString();
             }
 
-            else if(GameManager.instance.enemyTeam.EnemyTeamScore >= 10) 
+            else if (GameManager.instance.enemyTeam.EnemyTeamScore >= 10)
             {
                 team[1].SetActive(true);
                 Counts[1].text = winnerCount.ToString();

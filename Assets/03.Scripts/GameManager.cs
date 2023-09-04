@@ -282,8 +282,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-
-
     }
 
     private void OnGameExit()
