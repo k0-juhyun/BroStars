@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         public GameObject player;
         public string PlayerName;
         public Vector3 ResawnPos;
-
+      
         public Player(GameObject gameobject, string name, Vector3 pos)
         {
             this.player = gameobject;
@@ -59,6 +59,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Serializable]
     public class MyTeam
     {
+        // ÆÀ ½Â¸® ¿©ºÎ
+        public bool _checkWinIdx;
+
         // Àë Á¡¼öÇ¥ : ¿ì¸®ÆÀ
         public int myTeamScore = 0;
 
@@ -79,6 +82,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Serializable]
     public class EnemyTeam
     {
+        // ÆÀ ½Â¸® ¿©ºÎ
+        public bool _checkWinIdx;
+
         // Àë Á¡¼öÇ¥ : »ó´ëÆÀ
         public int EnemyTeamScore = 0;
         // ÆÀ¿ø 
@@ -268,16 +274,20 @@ public class GameManager : MonoBehaviourPunCallbacks
                 // ´©°¡ ½ÂÀÚÀÎÁö ÆÇ´Ü. 
                 if (myTeam.myTeamScore > enemyTeam.EnemyTeamScore)
                 {
-                    // ¿ì¸®ÆÀ ½Â¸®.
-                    print("¿ì¸®ÆÀ ½Â¸®.");
+                    // ¿ì¸®ÆÀ ½Â¸® È®Á¤.           
                     _winTeamIdx = 1;
+                    myTeam._checkWinIdx = true;
+                    enemyTeam._checkWinIdx = false; 
                     OnGameExit();
                 }
                 else
                 {
-                    // »ó´ëÆÀ ½Â¸®.
-                    print("»ó´ëÆÀ ½Â¸®.");
+                    // ¿ì¸®ÆÀ ÆÐ¹è È®Á¤.
                     _winTeamIdx = 2;
+                    myTeam._checkWinIdx = false;
+                    enemyTeam._checkWinIdx = true;
+                    
+
                     OnGameExit();
                 }
             }
