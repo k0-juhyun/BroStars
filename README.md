@@ -1,17 +1,20 @@
 # 📖 프로젝트 명
 ### BroStars   
-   
-2023.08.07 ~ 2023.08.31   
-Unity 2019.3.26f1    
+Unity 2019.3.26f1     
+
+# 📆 프로젝트 기간 
+2023.08.07 ~ 2023.08.31     
 
 # 📃 프로젝트 소개
 
-### 라이브 서비스게임 BrawlStars를 모작한 게임 BroStars 입니다.
+### 라이브 서비스게임 BrawlStars를 모작한 게임 BroStars 입니다. 
 
-**Game** : Mobile Game  
-**Game mode**: Player vs Player     
-**Software** : Unity-Mobile  
-**Language** : C#   
+|Category|Content|
+|:---:|:---:|
+|**Game**| Mobile Game|  
+|**Game mode**| Player vs Player |     
+|**Software**|  Unity|  
+|**Language**|  C#| 
 
 # 👩‍🔧 팀원 소개 및 역할
 
