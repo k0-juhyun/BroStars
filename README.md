@@ -2,6 +2,8 @@
 ### BroStars   
 Unity 2019.3.26f1     
 
+![brawl](https://github.com/k0-juhyun/BroStars/assets/79074052/3cb6eea2-f3b8-4106-8e40-4439b96014a6)
+
 # 📆 프로젝트 기간 
 2023.08.07 ~ 2023.08.31     
 
